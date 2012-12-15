@@ -1,0 +1,13 @@
+*.zip
+*.rar
+*.log
+*.db
+.DS_Store*
+
+nbproject/*
+/libs/*
+/app/temp/*
+/app/log/*
+/webtemp/
+adminer.php
+htaccess

@@ -1,0 +1,141 @@
+body {
+    padding-top: 50px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+.fail {
+    background-color: #ff0000;
+}
+
+.required {
+    color: maroon;
+}
+
+.myTable {
+    margin: 0 0 18px;
+    width: auto;
+}
+
+.myModal {
+    display: none;
+}
+
+.roleSelect {
+    font-size: 12px;
+}
+
+#cashbook-tabs {
+    width: 280px;
+    float: left;
+    margin-right: 8px;
+}
+
+#cashbook-tabs input[type="text"], #cashbook-tabs input.date, #cashbook-tabs input[type="number"] {
+    width: 160px;
+}
+#cashbook-tabs .ui-tabs-panel {
+    padding: 0.3em 0 0.5em 0.3em;
+}
+
+#cashbook-tabs form {
+    margin: 0;
+}
+
+form.filter{
+    margin-bottom: 5px;
+}
+
+form.filter input{
+    margin-bottom: 5px;
+}
+form.filter select{
+    width: auto;
+    margin-left: 5px;
+}
+
+form.nonMargin, form.nonMargin input {
+    margin: 0;
+}
+
+.findByName input.combobox-text {
+    width: 150px;
+}
+
+.inout input.combobox-text {
+    width: 150px;
+}
+
+/*JQuery UI */
+.ui-widget {
+    font-size: 0.9em;
+    line-height: 1em;
+}
+
+
+.ui-datepicker {
+    width: 15em;
+}
+
+form label {
+    display: inline;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin: 3px;
+}
+
+#cashbook-tabs table th {
+    width: 100px;
+}
+
+#participants-list form{
+    margin: 0;
+}
+
+#participants-list input {
+    margin-bottom: 0;
+    padding: 2px 0 2px 4px;
+}
+
+.isMinus {
+    background-color:#ff5500;
+}
+
+
+#chitType {
+    margin-bottom: 0;
+}
+
+#chitTypeContent {
+    border-right:1px solid #DDDDDD;
+    padding-top:20px;
+}
+
+
+/* zrušení spinneru pro fancybox*/
+#fancybox-loading {
+    display: none;
+}
+
+#ajax-spinner {
+    background: #000000 url('../images/layout/pacman-loader.gif') no-repeat 50% 50%;
+    height: 60px;
+    width: 60px;
+    margin: 0;
+    border-radius: 6px;
+    Opacity : 0.9;
+    z-index: 123456;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.modal.fade.in {
+    top: 60%;
+}
+
+.ct { /* ct = center, top*/
+    text-align: center;
+    vertical-align: text-top;
+}
+td.r {text-align: right;}
+.b {font-weight: bold;}

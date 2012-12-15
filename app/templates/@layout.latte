@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset=utf-8 />
+        <title>{block #title|striptags|trim}SkaÚčto{/block}</title>
+        <meta name="keywords" content="" />
+        <meta name="author" content="www.sinacek.cz" />
+        <meta name="robots" content="{$robots}" n:ifset="$robots">
+        
+        {control js 'jquery-1.8.2.min.js',
+        'jquery.ui.min.js',
+        'combobox.js',
+        'jquery.nette.js',
+        'bootstrap.js',
+        'jquery.ajaxform.js',
+        'my.js'}
+     
+           {control css 'bootstrap.min.css', 
+            'bootstrap-responsive.min.css',
+            'jquery-ui-1.8.css',
+            'site.css'}
+        <script type="text/javascript">
+            function changeRole(id){
+                 $.post({link changeRole!}, { roleId : id });
+            }
+
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-2900685-25']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+    </head>
+
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" n:href=":Default:">Účetnictví</a>
+                    <div class="nav-collapse" n:inner-if="$user->isLoggedIn()">
+                        <ul class="nav">
+                            <li {ifCurrent :Accountancy:Event:*}class='active'{/ifCurrent}><a n:href=":Accountancy:Event:Default:">Akce</a></li>
+                            <li {ifCurrent :Accountancy:Camp:*}class='active'{/ifCurrent}><a n:href=":Accountancy:Camp:Default:">Tábory</a></li>
+                            <li {ifCurrent :Accountancy:Travel:*}class='active'{/ifCurrent}><a n:href=":Accountancy:Travel:Default:">Cestovní příkazy</a></li>
+                        </ul>
+                        <p class="navbar-text pull-right">
+                            Přihlášen jako {$user->getIdentity()->DisplayName} <a n:href=":Auth:logoutSis">Odhlásit se</a>
+                            Role: <select onchange="changeRole(this.value)" class="roleSelect">
+                                <option n:foreach="$myRoles as $r" value="{$r->ID}" {if $r->ID == $myRole}selected="selected"{/if}>{$r->DisplayName}</option>
+                            </select>
+                        </p>
+                        {else }
+<!--                        <ul class="nav">
+                            <li><a href="#">O projektu</a></li>
+                        </ul>-->
+                        <p class="navbar-text pull-right">
+                            <a n:href=":Auth:logOnSkautIs (isset($backlink)) ? $backlink : NULL">Přihlásit se</a>
+                        </p>
+                      </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="content">
+            {snippet flash}
+                {foreach $flashes as $flash}
+                <div class="alert alert-{$flash->type}">
+                    <a class="close" data-dismiss="alert">×</a>
+                    {$flash->message}
+                </div>
+                {/foreach}
+            {/snippet}
+            {include #content}
+        </div><!-- /content -->
+            <hr style="clear: both" />
+            <footer>
+                <!--Vytvořil <a href="http://sinacek.cz">Sináček.cz</a> z <a href="http://osmnactka.net">18. skautského střediska Kruh Praha 6</a>-->
+            </footer>
+        </div> <!-- /container -->
+    </body>
+</html>

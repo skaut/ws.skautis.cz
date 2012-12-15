@@ -1,0 +1,69 @@
+common:
+    php:
+      date.timezone: Europe/Prague
+  
+    nette:
+        session:
+            autoStart: smart
+            save_path: "%tempDir%/sessions"
+            expiration: "+ 3 days"
+        application:
+            catchExceptions: true
+            errorPresenter: Error
+        debugger:
+            email: %sinacek@gmail.com%
+            strictMode: FALSE
+            maxDepth: 6
+            bar: # panely do Debugger baru
+                #- Nette\DI\Diagnostics\ContainerPanel # alias DI Container baru
+    
+    services:
+        connection:
+            class: DibiConnection
+            factory: dibi::connect(%database%)
+            run: TRUE
+        authService:
+            class: AuthService( @skautIS )
+        userService:
+            class: UserService( @skautIS )
+        skautIS:
+            class: SkautIS
+            factory: SkautIS::getInstance(%skautisid%, %skautisTestMode%)
+
+development < common:
+    nette:
+        application:
+            catchExceptions: false
+            debugger: true
+    parameters:
+        database:
+            driver: mysql
+            host: localhost
+            username: root
+            password: root
+            database: ws
+            charset: utf8
+            profiler: true
+
+        ###SkautIS
+        skautisid : f2197deb-32c8-4192-92d6-f23427757a07 #localhost - bakalarka
+        skautisTestMode : true #isTestMode?
+        #skautisid = 590db6c9-e46b-43bb-b3b7-701cb556b91c #localhost - appOsmnactka
+
+production < common:
+        
+    parameters:
+        database:
+            driver:   mysql
+            host:     localhost
+            database: 
+            username: 
+            password: 
+            profiler: false
+            charset:  utf8
+            lazy:     true
+
+        ###SkautIS
+        skautisid : 093a637d-fd52-4028-9545-bb9a92d18a0c #u.osmnactka.net - ostrý
+        skautisTestMode : true #isTestMode?
+        #skautisid = 48104fe2-b447-47f5-9a26-051c710da74e #vyvoj.osmnactka.net - test
