@@ -96,16 +96,16 @@ class AppRequestPresenter extends BasePresenter {
         $template->setFile(dirname(__FILE__) . '/../templates/AppRequest/mail.request.latte');
         $template->registerFilter(new LatteFilter);
         $template->values = $values;
-        echo $template;
-die();
+
         $mail = new Mail;
         $mail->setFrom(self::MAIL_FROM);
 //        $mail->addTo($values->email, "uzivatel webu");
-        $mail->addTo('sinacek@gmail.com', 'A');
 //        $mail->addTo(self::MAIL_REQUEST);
-        $mail->setHtmlBody("ahoj"); // nebo $mail->setBody($template) pro textovou šablonu
+        $mail->addTo("sinacek@gmail.com", "AB");
+        $mail->setHtmlBody($template); // nebo $mail->setBody($template) pro textovou šablonu
         $mail->send();
-        $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný email.");
+        $this->flashMessage("Odeslani emailu je vypnuté!", "danger");
+//        $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný email.");
         $this->presenter->redirect("default");
     }
 
