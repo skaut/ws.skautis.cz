@@ -99,13 +99,12 @@ class AppRequestPresenter extends BasePresenter {
 
         $mail = new Mail;
         $mail->setFrom(self::MAIL_FROM);
-//        $mail->addTo($values->email, "uzivatel webu");
-//        $mail->addTo(self::MAIL_REQUEST);
-        $mail->addTo("sinacek@gmail.com", "AB");
+        $mail->addTo(self::MAIL_REQUEST);
+        $mail->addTo($values->email, "žadatel");
         $mail->setHtmlBody($template); // nebo $mail->setBody($template) pro textovou šablonu
         $mail->send();
-        $this->flashMessage("Odeslani emailu je vypnuté!", "danger");
-//        $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný email.");
+//        $this->flashMessage("Odeslani emailu je vypnuté!", "danger");
+        $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný kontaktní email.");
         $this->presenter->redirect("default");
     }
 
