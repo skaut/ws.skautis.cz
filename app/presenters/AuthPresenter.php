@@ -11,7 +11,7 @@ class AuthPresenter extends BasePresenter {
      * @param string $backlink 
      * @param bool $final - je to konečné přesměrování? použít při problémem se zacyklením
      */
-    public function actionDefault($backlink, $final = FALSE) {
+    public function actionDefault($backlink) {
         if (Environment::getUser()->isLoggedIn()) {
             if ($backlink) {
                 $this->restoreRequest($backlink);
@@ -44,7 +44,7 @@ class AuthPresenter extends BasePresenter {
                 "roleId" => $post['skautIS_IDRole'],
                 "unitId" => $post['skautIS_IDUnit']
             ));
-
+            
             if (!$this->context->userService->isLoggedIn()) {
                 throw new SkautIS_AuthenticationException("Nemáte platné přihlášení do skautISu");
             }
@@ -61,11 +61,7 @@ class AuthPresenter extends BasePresenter {
             $this->flashMessage($e->getMessage(), "danger");
             $this->redirect(":Auth:");
         }
-        $this->presenter->redirect(':Accountancy:Default:');
-    }
-    
-    function actionAjax($backlink = NULL) {
-        $this->template->backlink = $backlink;
+        $this->presenter->redirect(':Default:');
     }
 
     /**
@@ -76,12 +72,10 @@ class AuthPresenter extends BasePresenter {
         $this->redirectUrl($this->context->authService->getLogoutUrl());
     }
     
-    
-    
     function actionSkautisLogout() {
         $this->user->logout(TRUE);
         if ($this->request->post['skautIS_Logout']) {
-            $this->presenter->flashMessage("Byl jsi úspěšně odhlášen.");
+            $this->presenter->flashMessage("Byl jsi úspěšně odhlášen ze SkautISu.");
         } else {
             $this->presenter->flashMessage("Odhlášení ze skautISu se nezdařilo", "danger");
         }

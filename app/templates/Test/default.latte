@@ -1,0 +1,48 @@
+{block #content}
+
+
+<div class="row-fluid">
+    <div class="span5">
+        <h2>Testovací formulář</h2>
+        {form testForm}
+        <ul class="errors" n:if="$form->hasErrors()">
+            <li n:foreach="$form->errors as $error">{$error}</li>
+        </ul>
+        <table>
+            <tr>
+                <th class="required">{label wsdl/}</th>
+                <td>{input wsdl}</td>
+            </tr>
+            <tr>
+                <th class="required">{label service/}</th>
+                <td>{input service}</td>
+            </tr>
+            <tr>
+                <th>{label cover/}</th>
+                <td>{input cover}</td>
+            </tr>
+            <tr>
+                <td colspan="2">{input args}</td>
+            </tr>
+            <tr>
+                <th></th>
+                <td style="text-align: right;">{input send}</td>
+            </tr>
+        </table>
+        {/form testForm}
+
+    </div>
+    <div class="span7">
+        <h3>Požadavek na server</h3>
+        <div class="well well-small">
+            {!$request}
+        </div>
+        <h3>Odpověd serveru</h3>
+        <div class="well well-small">
+            {!$response}
+        </div>
+        
+    </div>
+</div>
+
+

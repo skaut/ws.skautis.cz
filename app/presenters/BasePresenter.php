@@ -2,32 +2,31 @@
 
 abstract class BasePresenter extends Presenter {
 
-//    public $oldLayoutMode = FALSE;
-//    public $oldModuleMode = FALSE;
+    /**
+     * backlink
+     */
+    protected $backlink;
 
     protected function startup() {
         parent::startup();
-        // Zapnutí session (pokud neběží)
-//        if (!$this->context->session->isStarted()) {
-//            $this->context->session->start();
-//        }
-        
-//        RequestsPanel::register();
-
+        RequestsPanel::register();
         $this->template->backlink = $this->getParameter("backlink");
-
-        if (!function_exists("FormContainer_addDatePicker")) {
-            function FormContainer_addDatePicker(FormContainer $container, $name, $label = NULL) {
-                return $container[$name] = new DatePicker($label);
-            }
-            FormContainer::extensionMethod('Form::addDatePicker', 'FormContainer_addDatePicker');
-        }
+//        if ($this->user->isLoggedIn()) //prodluzuje přihlášení při každém požadavku
+//            $this->context->authService->updateLogoutTime();
     }
 
     //upravuje roli ve skautISu
     public function handleChangeRole($roleId) {
         $this->context->userService->updateSkautISRole($roleId);
         $this->redirect("this");
+    }
+
+    public function beforeRender() {
+        parent::beforeRender();
+        if ($this->user->isLoggedIn() && $this->context->userService->isLoggedIn()) {
+            $this->template->myRoles = $this->context->userService->getAllSkautISRoles();
+            $this->template->myRole = $this->context->userService->getRoleId();
+        }
     }
 
     public function createComponentCss() {

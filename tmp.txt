@@ -1,0 +1,26 @@
+<!--                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span> responzive menu 
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    
+                    <div class="nav-collapse" n:inner-if="$user->isLoggedIn()">
+                        <ul class="nav">
+                            <li {ifCurrent :Accountancy:Event:*}class='active'{/ifCurrent}><a n:href=":Accountancy:Event:Default:">Akce</a></li>
+                        </ul>
+                        <p class="navbar-text pull-right">
+                            Přihlášen jako {$user->getIdentity()->DisplayName} <a n:href=":Auth:logoutSis">Odhlásit se</a>
+                            Role: <select onchange="changeRole(this.value)" class="roleSelect">
+                                <option n:foreach="$myRoles as $r" value="{$r->ID}" {if $r->ID == $myRole}selected="selected"{/if}>{$r->DisplayName}</option>
+                            </select>
+                        </p>
+                        {else }
+                        <ul class="nav">
+                            <li><a n:href="">Přidat aplikaci</a></li>
+                        </ul>
+                        <p class="navbar-text pull-right">
+                            <a n:href=":Auth:logOnSkautIs (isset($backlink)) ? $backlink : NULL">Přihlásit se</a>
+                        </p>
+                      </div>/.nav-collapse 
+                </div>-->

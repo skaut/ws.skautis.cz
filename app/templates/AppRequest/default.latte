@@ -1,0 +1,96 @@
+{block functionsContainer $arr}
+{? $data = $names[$arr]}
+        {formContainer $arr}
+            {? $tmpSize = count($data)}
+            {? $posun = ceil($tmpSize/3)}
+            {for $i=0;$i<$posun;$i++}
+<tr>
+    <td>{input $data[$i]} {label $data[$i]/}</td>
+    <td n:if="$i+$posun < $tmpSize">{input $data[$i+$posun]} {label $data[$i+$posun]/}</td>
+    <td n:if="$i+$posun*2 < $tmpSize">{input $data[$i+$posun*2]} {label $data[$i+$posun*2]/}</td>
+</tr>
+            {/for}
+        {/formContainer}
+{/block}
+
+
+
+{block content}
+
+<div class="row-fluid">
+
+
+
+    <div class="span2 bs-docs-sidebar">
+        <ul class="nav nav-list affix">
+            {foreach $names as $key => $functions}
+            <li><a href="#header-{$key}"><i class="icon-chevron-right"></i>{$wsdl[$key]['url']}</a></li>
+            {/foreach}
+        </ul>
+    </div>
+
+    <div class="span10">
+
+        <h1>Žádost o povolení aplikace</h1>
+{form addForm}
+        <ul class="errors" n:if="$form->hasErrors()">
+            <li n:foreach="$form->errors as $error">{$error}</li>
+        </ul>
+        <table>
+            <tr>
+                <th class="required">{label name/}</th>
+                <td>{input name}</td>
+            </tr>
+            <tr>
+                <th class="required">{label desc/}</th>
+                <td>{input desc}</td>
+            </tr>
+            <tr>
+                <th>{label isTest/}</th>
+                <td>{input isTest}</td>
+            </tr>
+            <tr>
+                <th class="required">{label email/}</th>
+                <td>{input email}</td>
+            </tr>
+            <tr>
+                <th class="required">{label urlBase/}</th>
+                <td>{input urlBase}</td>
+            </tr>
+            <tr>
+                <th class="required">{label urlLogin/}</th>
+                <td>{input urlLogin}</td>
+            </tr>
+            <tr>
+                <th class="required">{label urlLogout/}</th>
+                <td>{input urlLogout}</td>
+            </tr>
+            <tr>
+                <th>{label urlInfo/}</th>
+                <td>{input urlInfo}</td>
+            </tr>
+            <tr>
+                <th>{label note/}</th>
+                <td>{input note}</td>
+            </tr>
+        </table>
+
+    {foreach $names as $key =>$functions}
+        <div id="header-{$key}" style="margin-bottom: 60px;"></div>
+        <h2>{$wsdl[$key]['url']}</h2>
+        <table>
+                {include #functionsContainer, arr=>$key}
+        </table>
+        <hr />
+    {/foreach}
+        
+        <div class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner" style="text-align: center;">
+                <p class="nav" style="float: none">
+                    Pokud jsi vyplnil povinné údaje a označil všechny služby, které chceš použít, můžeš to {input send}
+                </p>
+            </div>
+        </div>
+{/form addForm}
+    </div>
+</div>

@@ -15,22 +15,11 @@ class ErrorPresenter extends Presenter {
             $this->template->ex = $exception;
         } elseif ($exception instanceof SkautIS_AuthenticationException) {//vypršelo přihlášení do SkautISu
             $this->user->logout(TRUE);
-            $this->flashMessage("Vypršelo přihlášení do skautISu", "danger");
-            $this->redirect(":Default:");
+            $this->flashMessage($exception->getMessage() != "" ? $exception->getMessage() : "Vypršelo přihlášení do SkautISu" , "danger");
+            $backlink = $exception->backlink ? $exception->backlink : NULL;
+            $this->redirect(":Default:", array("backlink" => $backlink));
         } else {
             $this->setView('500'); // load template 500.latte
-            if($exception instanceof SkautIS_Exception && $exception->getMessage() == "SOAP-ERROR: Encoding: object hasn't 'ID_Login' property"){
-                //@TODO: předělat
-                $m = new Mail();
-                $m->setSubject("Login fail");
-                $m->setHtmlBody(
-                        "ID_Login: ". $this->context->authService->getLoginId() . 
-                        "<br />Role ID: ". $this->context->authService->setRoleId() .
-                        "<br />Unit ID:" . $this->context->authService->getUnitId() . "<hr />"
-                        );
-                $m->addTo("sinacek@gmail.com");
-                $m->send();
-            }
             Debugger::log($exception, Debugger::ERROR); // and log exception
         }
     }

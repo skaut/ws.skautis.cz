@@ -22,21 +22,23 @@ $container = $configurator->createContainer();
 
 // Setup router
 $router = new RouteList;
-//$router[] = new Route('index.php', ':Default:default', Route::ONE_WAY);
-//$router[] = new Route('sign/<action>[/back-<backlink>]', array(
-//    "presenter" => "Auth",
-//    "action" => "default",
-//    "backlink" => NULL
-//));
+$router[] = new Route('index.php', ':Default:default', Route::ONE_WAY);
+$router[] = new Route('sign/<action>[/back-<backlink>]', array(
+    "presenter" => "Auth",
+    "action" => "default",
+    "backlink" => NULL
+));
 
 
 $router[] = new SimpleRouter('Default:default');
+
 
 $container->router = $router;
 
 
 // Configure and run the application!
 $application = $container->application;
+//$application->catchExceptions = TRUE;
 $application->catchExceptions = $configurator->isProductionMode();
 $application->errorPresenter = 'Error';
  if (!Environment::isConsole())

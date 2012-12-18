@@ -6,8 +6,7 @@
 class SkautISAuthenticator extends Object implements IAuthenticator {
 
     public function authenticate(array $credentials) {
-        $data = $credentials[0];
-        return new Identity($data->ID_User);
+        return new Identity($credentials[0]->ID_User);
     }
 
 }

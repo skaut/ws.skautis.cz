@@ -23,7 +23,7 @@ class UserService extends BaseService {
 
     public function getUserDetail() {
         $id = __FUNCTION__;
-        if (!($res = $this->load($id))) {
+        if (!($res = $this->load($id))) {//cache v rámci pozadavku
             $res = $this->save($id, $this->skautIS->user->UserDetail());
         }
         return $res;
