@@ -5,8 +5,7 @@
  */
 class AppRequestPresenter extends BasePresenter {
     
-    const MAIL_REQUEST = '"Ondřej Peřina" <ondrej.perina@junak.cz>';
-    const MAIL_FROM = '"WS" <noreply@ws.skautis.cz>';
+    const WS_MAIL = '"Webové služby" <webove.sluzby@skaut.cz>';
 
 
     protected $wsdl = array(
@@ -42,17 +41,22 @@ class AppRequestPresenter extends BasePresenter {
         foreach ($names as $val) {
             $gEvent->addCheckbox($val, $val);
         }
-        
     }
 
     public function createComponentAddForm($name) {
         $form = new AppForm($this, $name);
         $form->addText("name", "Název aplikace")
                 ->addRule(Form::FILLED, "Zadej název aplikace");
-        $form->addCheckbox("isTest", "Testovací režim?")
-                ->setDefaultValue("TRUE");
         $form->addText("desc", "Popis aplikace")
                 ->addRule(Form::FILLED, "Zadej popis aplikace");
+        $form->addCheckbox("isTest", "Testovací režim?")
+                ->setDefaultValue("TRUE");
+        $form->addText("username", "Jméno a příjmení")
+                ->addRule(Form::FILLED, "Zadejte jméno a příjmení");
+        $form->addText("nick", "Přezdívka");
+        $form->addText("email", "Kontaktní email")
+                ->addRule(Form::EMAIL, "Zadejte email");
+        $form->addText("orgNum", "Reg. číslo jednotky");
         $form->addText("urlBase", "URL aplikace")
                 ->addRule(Form::URL, "Zadej platnou URL aplikace");
         $form->addText("urlLogin", "URL po přihlášení")
@@ -60,8 +64,7 @@ class AppRequestPresenter extends BasePresenter {
         $form->addText("urlLogout", "URL po odhlášení")
                 ->addRule(Form::URL, "Zadej platnou URL po odhlášení");
         $form->addText("urlInfo", "URL informační stránky");
-        $form->addText("email", "Kontaktní email:")
-                ->addRule(Form::EMAIL, "Zadejte email");
+        $form->addText("ip", "IP adresa serveru");
         $form->addTextArea("note", "Poznámka", 40, 5)
                 ->getControlPrototype()->setClass("input-xlarge");
         
@@ -98,11 +101,19 @@ class AppRequestPresenter extends BasePresenter {
         $template->values = $values;
 
         $mail = new Mail;
-        $mail->setFrom(self::MAIL_FROM);
-        $mail->addTo(self::MAIL_REQUEST);
-        $mail->addTo($values->email, "žadatel");
-        $mail->setHtmlBody($template); // nebo $mail->setBody($template) pro textovou šablonu
-        $mail->send();
+        $mail->setHtmlBody($template);
+        $mail->setSubject("Žádost o registraci aplikace ve skautISu");
+        $mailUstredi = $mail;
+        $mailZadatel = $mail;
+        
+        $mailZadatel->setFrom(self::WS_MAIL);
+        $mailZadatel->addTo($values->email, $values->nickname);
+        $mailZadatel->send();
+        
+        $mailUstredi->setFrom($values->email, $values->nickname);
+        $mailUstredi->addTo(self::WS_MAIL);
+        $mailUstredi->send();
+        
 //        $this->flashMessage("Odeslani emailu je vypnuté!", "danger");
         $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný kontaktní email.");
         $this->presenter->redirect("default");

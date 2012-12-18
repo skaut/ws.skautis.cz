@@ -16,11 +16,7 @@
 
 
 {block content}
-
 <div class="row-fluid">
-
-
-
     <div class="span2 bs-docs-sidebar">
         <ul class="nav nav-list affix">
             {foreach $names as $key => $functions}
@@ -38,46 +34,48 @@
         </ul>
         <table>
             <tr>
-                <th class="required">{label name/}</th>
-                <td>{input name}</td>
+                <th class="required">{label name/}*</th><td>{input name}</td>
+                <td class="span1"></td>
+                <th class="required">{label urlBase/}*</th><td>{input urlBase}</td>
             </tr>
             <tr>
-                <th class="required">{label desc/}</th>
-                <td>{input desc}</td>
+                <th class="required">{label desc/}*</th><td>{input desc}</td>
+                <td class="span1"></td>
+                <th class="required">{label urlLogin/}*</th><td>{input urlLogin}</td>
             </tr>
             <tr>
-                <th>{label isTest/}</th>
-                <td>{input isTest}</td>
+                <th>{label isTest/}</th><td>{input isTest}</td>
+                <td class="span1"></td>
+                <th class="required">{label urlLogout/}*</th><td>{input urlLogout}</td>
             </tr>
             <tr>
-                <th class="required">{label email/}</th>
-                <td>{input email}</td>
+                <th class="required">{label username/}*</th><td>{input username}</td>
+                <td class="span1"></td>
+                <th>{label urlInfo/}</th><td>{input urlInfo}</td>
             </tr>
             <tr>
-                <th class="required">{label urlBase/}</th>
-                <td>{input urlBase}</td>
+                <th>{label nick/}</th><td>{input nick}</td>
+                <td class="span1"></td>
+                <th>{label ip/}</th><td>{input ip}</td>
             </tr>
             <tr>
-                <th class="required">{label urlLogin/}</th>
-                <td>{input urlLogin}</td>
+                <th class="required">{label email/}*</th><td>{input email}</td>
+                <td class="span1"></td>
+                <th rowspan="3">{label note/}</th><td rowspan="3">{input note}</td>
             </tr>
             <tr>
-                <th class="required">{label urlLogout/}</th>
-                <td>{input urlLogout}</td>
+                <th>{label orgNum/}</th><td>{input orgNum}</td>
+                <td class="span1"></td>
             </tr>
             <tr>
-                <th>{label urlInfo/}</th>
-                <td>{input urlInfo}</td>
-            </tr>
-            <tr>
-                <th>{label note/}</th>
-                <td>{input note}</td>
+                <td colspan="2"><i>Políčka označená * jsou povinná</i></td>
             </tr>
         </table>
 
     {foreach $names as $key =>$functions}
         <div id="header-{$key}" style="margin-bottom: 60px;"></div>
         <h2>{$wsdl[$key]['url']}</h2>
+        <p><i>{$wsdl[$key]['label']}</i></p>
         <table>
                 {include #functionsContainer, arr=>$key}
         </table>
