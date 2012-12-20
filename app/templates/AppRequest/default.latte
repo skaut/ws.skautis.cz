@@ -1,5 +1,16 @@
 {block functionsContainer $arr}
 {? $data = $names[$arr]}
+
+        {formContainer $arr."gg"}
+<tr>
+    {foreach $generalGroups as $id=>$val}
+        <td>{input $id} {label $id/}</td>
+        {if !($iterator->getCounter()%3)}</tr><tr>{/if}    
+    {/foreach}
+</tr>
+        {/formContainer}
+<tr><td colspan="4"><hr /></td></tr>
+
         {formContainer $arr}
             {? $tmpSize = count($data)}
             {? $posun = ceil($tmpSize/3)}
@@ -41,22 +52,22 @@
             <tr>
                 <th class="required">{label desc/}*</th><td>{input desc}</td>
                 <td class="span1"></td>
-                <th class="required">{label urlLogin/}*</th><td>{input urlLogin}</td>
+                <th class="required">{label urlLogin/}* <span rel="tooltip" title="Stránka, kam SkautIS přesměruje po úspěšném přihlášení"><i class="icon icon-info-sign"></i></span></th><td>{input urlLogin}</td>
             </tr>
             <tr>
                 <th>{label isTest/}</th><td>{input isTest}</td>
                 <td class="span1"></td>
-                <th class="required">{label urlLogout/}*</th><td>{input urlLogout}</td>
+                <th class="required">{label urlLogout/}* <span rel="tooltip" title="Stránka, kam SkautIS přesměruje uživatele po odhlášení"><i class="icon icon-info-sign"></i></span></th><td>{input urlLogout}</td>
             </tr>
             <tr>
                 <th class="required">{label username/}*</th><td>{input username}</td>
                 <td class="span1"></td>
-                <th>{label urlInfo/}</th><td>{input urlInfo}</td>
+                <th>{label urlInfo/} <span rel="tooltip" title="Stránka, zobrazená při přihlašování na SkautISu"><i class="icon icon-info-sign"></i></span></th><td>{input urlInfo}</td>
             </tr>
             <tr>
                 <th>{label nick/}</th><td>{input nick}</td>
                 <td class="span1"></td>
-                <th>{label ip/}</th><td>{input ip}</td>
+                <th>{label ip/} <span rel="tooltip" title="IP adresa serveru, kde stránky běží"><i class="icon icon-info-sign"></i></span></th><td>{input ip}</td>
             </tr>
             <tr>
                 <th class="required">{label email/}*</th><td>{input email}</td>
@@ -64,7 +75,7 @@
                 <th rowspan="3">{label note/}</th><td rowspan="3">{input note}</td>
             </tr>
             <tr>
-                <th>{label orgNum/}</th><td>{input orgNum}</td>
+                <th>{label orgNum/} <span rel="tooltip" title="Číslo jednotky, která bude aplikaci využívat"><i class="icon icon-info-sign"></i></span></th><td>{input orgNum}</td>
                 <td class="span1"></td>
             </tr>
             <tr>

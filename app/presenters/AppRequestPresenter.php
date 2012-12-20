@@ -4,35 +4,47 @@
  * @author sinacek
  */
 class AppRequestPresenter extends BasePresenter {
-    
-    const WS_MAIL = '"Webové služby" <webove.sluzby@skaut.cz>';
 
+    const WS_MAIL = '"Webové služby" <webove.sluzby@skaut.cz>';
+    
+    protected $sendEmails;
 
     protected $wsdl = array(
-        "appMng" => array("url"=> "ApplicationManagement", "label"=>"Webová služba pro správu přístupů externích aplikací"),
-        "evaluation" => array("url"=> "Evaluation", "label"=>"Webová služba pro práci s hodnocením kvality"),
-        "events" => array("url"=> "Events", "label"=>" Webová služba pro práci s akcemi (sněmy apod.)"),
-        "exports" => array("url"=> "Exports", "label"=>"Webová služba pro export dat do jiných systémů"),
-        "googleApps" => array("url"=> "GoogleApps", "label"=>"Webová služba pro práci s GoogleApps (zápis dat do databáze, komunikace s GoogleApps)"),
-        "journal" => array("url"=> "Journal", "label"=>"Webová služba pro práci s časopisy a fakturami"),
-        "msg" => array("url"=> "Message", "label"=>"Interní zpravodajský systém"),
-        "org" => array("url"=> "OrganizationUnit", "label"=>"Webová služba pro práci s organizačními jednotkami a osobami"),
-        "reports" => array("url"=> "Reports", "label"=>"Generování tiskových sestav"),
-        "summary" => array("url"=> "Summary", "label"=>"Exporty/přehledy"),
-        "telephony" => array("url"=> "Telephony", "label"=>"Skautská telefonní síť"),
-        "user" => array("url"=> "UserManagement", "label"=>"Webová služba pro práci s uživateli (zakládání, přidělování rolí, přihlašování apod.)"),
-        "welcome" => array("url"=> "Welcome", "label"=>"Webová služba pro práci s uvítacími balíčky"),
+        "appMng" => array("url" => "ApplicationManagement", "label" => "Webová služba pro správu přístupů externích aplikací"),
+        "evaluation" => array("url" => "Evaluation", "label" => "Webová služba pro práci s hodnocením kvality"),
+        "events" => array("url" => "Events", "label" => " Webová služba pro práci s akcemi (sněmy apod.)"),
+        "exports" => array("url" => "Exports", "label" => "Webová služba pro export dat do jiných systémů"),
+        "googleApps" => array("url" => "GoogleApps", "label" => "Webová služba pro práci s GoogleApps (zápis dat do databáze, komunikace s GoogleApps)"),
+        "journal" => array("url" => "Journal", "label" => "Webová služba pro práci s časopisy a fakturami"),
+        "msg" => array("url" => "Message", "label" => "Interní zpravodajský systém"),
+        "org" => array("url" => "OrganizationUnit", "label" => "Webová služba pro práci s organizačními jednotkami a osobami"),
+        "reports" => array("url" => "Reports", "label" => "Generování tiskových sestav"),
+        "summary" => array("url" => "Summary", "label" => "Exporty/přehledy"),
+        "telephony" => array("url" => "Telephony", "label" => "Skautská telefonní síť"),
+        "user" => array("url" => "UserManagement", "label" => "Webová služba pro práci s uživateli (zakládání, přidělování rolí, přihlašování apod.)"),
+        "welcome" => array("url" => "Welcome", "label" => "Webová služba pro práci s uvítacími balíčky"),
     );
-    
+    protected $generalGroups = array(
+        "ggAll" => "Hledání záznamů (...All)",
+        "ggDetail" => "Načtení detailních informací (...Detail)",
+        "ggInsert" => "Založení nového záznamu (...Insert)",
+        "ggEdit" => "Editace záznamů (...Edit)",
+        "ggDelete" => "Smazání záznamu (...Delete)",
+        "ggReport" => "Generování tiskových sestav (Report)",
+        "ggOther" => "Ostatní funkce",
+    );
+
     protected function startup() {
         parent::startup();
         $this->template->wsdl = $this->wsdl;
+        $this->template->generalGroups = $this->generalGroups;
         $this->template->names = array();
+        $this->sendEmails = !Debugger::isEnabled();
     }
 
     public function actionDefault() {
         foreach ($this->wsdl as $key => $data) {
-            $this->template->names[$key] = $this->getFunctionNames("http://test-is.skaut.cz/JunakWebservice/".$data['url'].".asmx?WSDL");
+            $this->template->names[$key] = $this->getFunctionNames("http://test-is.skaut.cz/JunakWebservice/" . $data['url'] . ".asmx?WSDL");
         }
     }
 
@@ -40,6 +52,12 @@ class AppRequestPresenter extends BasePresenter {
         $gEvent = $form->addContainer($containerName);
         foreach ($names as $val) {
             $gEvent->addCheckbox($val, $val);
+        }
+    }
+    protected function preparegeneralGroups(&$form, $containerName) {
+        $gEvent = $form->addContainer($containerName);
+        foreach ($this->generalGroups as $id=>$val) {
+            $gEvent->addCheckbox($id, $val);
         }
     }
 
@@ -55,7 +73,8 @@ class AppRequestPresenter extends BasePresenter {
                 ->addRule(Form::FILLED, "Zadejte jméno a příjmení");
         $form->addText("nick", "Přezdívka");
         $form->addText("email", "Kontaktní email")
-                ->addRule(Form::EMAIL, "Zadejte email");
+                ->addRule(Form::FILLED, "Zadejte email")
+                ->addRule(Form::EMAIL, "Zadejte platný email");
         $form->addText("orgNum", "Reg. číslo jednotky");
         $form->addText("urlBase", "URL aplikace")
                 ->addRule(Form::URL, "Zadej platnou URL aplikace");
@@ -67,10 +86,11 @@ class AppRequestPresenter extends BasePresenter {
         $form->addText("ip", "IP adresa serveru");
         $form->addTextArea("note", "Poznámka", 40, 5)
                 ->getControlPrototype()->setClass("input-xlarge");
-        
-        foreach ($this->wsdl as $key => $v){
+
+        foreach ($this->wsdl as $key => $v) {
+            $this->preparegeneralGroups($form, $key."gg");
             $this->prepareContainer($form, $key, $this->template->names[$key]);
-        }        
+        }
 
         $form->addSubmit('send', 'Odeslat')
                 ->getControlPrototype()->setClass("btn btn-primary");
@@ -84,17 +104,27 @@ class AppRequestPresenter extends BasePresenter {
 
     public function addFormSubmitted(AppForm $form) {
         $values = $form->values;
-        
+
         foreach ($this->wsdl as $key => $value) {//ziska zakrtnute pole
+            //balicky sluzeb
+            $tmpGG = array();
+            foreach ($values[$key."gg"] as $ggid => $fval) {
+                if ($fval) {
+                    $tmpGG[] = $ggid;
+                }
+            }
+            $values[$key."gg"] = $tmpGG;
+            
+            //jednotlive funkce
             $tmp = array();
             foreach ($values[$key] as $fid => $fval) {
-                if($fval){
+                if ($fval) {
                     $tmp[] = $fid;
                 }
             }
             $values[$key] = $tmp;
         }
-        
+
         $template = $this->template;
         $template->setFile(dirname(__FILE__) . '/../templates/AppRequest/mail.request.latte');
         $template->registerFilter(new LatteFilter);
@@ -105,15 +135,20 @@ class AppRequestPresenter extends BasePresenter {
         $mail->setSubject("Žádost o registraci aplikace ve skautISu");
         $mailUstredi = $mail;
         $mailZadatel = $mail;
-        
+
         $mailZadatel->setFrom(self::WS_MAIL);
-        $mailZadatel->addTo($values->email, $values->nickname);
-        $mailZadatel->send();
+        $mailZadatel->addTo($values->email, $values->username);
         
-        $mailUstredi->setFrom($values->email, $values->nickname);
+        $mailUstredi->setFrom($values->email, $values->username);
         $mailUstredi->addTo(self::WS_MAIL);
-        $mailUstredi->send();
-        
+        if($this->sendEmails){
+            $mailUstredi->send();
+            $mailZadatel->send();
+        } else {
+            echo $template;
+            die();
+        }
+
 //        $this->flashMessage("Odeslani emailu je vypnuté!", "danger");
         $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný kontaktní email.");
         $this->presenter->redirect("default");
@@ -123,11 +158,13 @@ class AppRequestPresenter extends BasePresenter {
         $client = new SoapClient($url);
         $functions = $client->__getFunctions();
 
-        if(!function_exists("getFName")){
+        if (!function_exists("getFName")) {
+
             function getFName($n) {
                 $tmp = preg_split("/[\s()]+/", $n);
                 return $tmp[1];
             }
+
         }
 
         $ret = array_unique(array_map("getFName", $functions));
