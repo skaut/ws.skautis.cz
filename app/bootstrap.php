@@ -6,9 +6,11 @@ require LIBS_DIR . '/Nette/loader.php';
 $configurator = new Configurator;
 
 $configurator->setTempDirectory(dirname(__FILE__) . '/temp');
+$configurator->setDebugMode(array("89.177.96.123"));
 $configurator->enableDebugger(dirname(__FILE__) . '/log', "sinacek@gmail.com");
-//Debugger::enable(FALSE);
-//Debugger::$strictMode = FALSE;
+
+
+//Debugger::$strictMode = TRUE;
 //Debugger::$maxDepth = 6;
 
 $configurator->addConfig(dirname(__FILE__) . '/config.neon');
@@ -29,17 +31,28 @@ $router[] = new Route('sign/<action>[/back-<backlink>]', array(
     "backlink" => NULL
 ));
 
+$router[] = new Route('<presenter>[/<action>]', array(
+            "presenter" => array(
+                Route::VALUE => 'default',
+                Route::FILTER_TABLE => array(
+                    'zadost' => 'AppRequest',
+                    'testovani' => 'Test',
+                ),
+            ),
+            "action" => "default",
+        ));
+
 
 $router[] = new SimpleRouter('Default:default');
-
 
 $container->router = $router;
 
 
 // Configure and run the application!
 $application = $container->application;
-//$application->catchExceptions = TRUE;
 $application->catchExceptions = $configurator->isProductionMode();
-$application->errorPresenter = 'Error';
+//$application->catchExceptions = TRUE;
+//$application->catchExceptions = FALSE;
+//$application->errorPresenter = 'Error';
  if (!Environment::isConsole())
    $application->run();

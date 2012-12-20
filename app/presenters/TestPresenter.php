@@ -20,7 +20,7 @@ class TestPresenter extends BasePresenter {
             $this->context->skautIS->init($post);
         }
         $this->template->skautIsAppId = $this->context->skautIS->getAppId();
-        if (!$this->context->skautIS->isLoggedIn() && $this->action != "default") {
+        if (!$this->context->skautIS->isLoggedIn()) {// && $this->action != "default"
             $this->accessFail();
             $this->flashMessage("Chybí aktivní přihlášení do skautISu", "fail");
             $this->redirect("default");
@@ -37,7 +37,8 @@ class TestPresenter extends BasePresenter {
         $form = new AppForm($this, $name);
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
-                ->addRule(Form::FILLED, "Musís vybrat WSDL");
+                ->addRule(Form::FILLED, "Musís vybrat WSDL")
+                ->setDefaultValue("OrganizationUnit");
         $form->addText("service", "Funkce")
                 ->setDefaultValue("unitAll")
                 ->addRule(FORM::FILLED, "Vypln service");
@@ -78,15 +79,17 @@ class TestPresenter extends BasePresenter {
         try {
             $ret = $this->context->skautIS->{$values['wsdl']}->{$values["service"]}($args, $cover);
         } catch (Exception $e) {
+//            dump($e);
             $this->flashMessage($e->getMessage(), "fail");
             $sess->response = $e->getMessage();
             $this->redirect("this");
         }
+        
         $sess->response = $ret;
 
-        if (!$this->isAjax())
+        if (!$this->isAjax()){
             $this->redirect('this');
-        else {
+        } else {
             $this->invalidateControl('flash');
             $this->invalidateControl('form');
             $this->invalidateControl('testResponse');
