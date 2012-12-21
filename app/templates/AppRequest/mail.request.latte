@@ -8,7 +8,6 @@
             table, th, td { border:#cccccc solid 1px;}
         </style>
     </head>
-
     <body>
         <h1>Žádost o schválení aplikace</h1>
         <table>
@@ -25,22 +24,20 @@
             <tr><th>IP adresa serveru</th><td>{$values->ip}</td></tr>
             <tr><th>Poznámka</th><td>{$values->note}</td></tr>
         </table>
-        {foreach $wsdl as $key=>$val}    
-        {if count($values[$key])>0 || count($values[$key."gg"])>0 }
-        <h2>{$val['url']}</h2>
-            {if count($values[$key.'gg'])>0}
-            <h3>Balíčky funkcí</h3>
-            <ul>
-                <li n:foreach="$values[$key.'gg'] as $fid">{$generalGroups[$fid]}</li>
-            </ul>
-            {/if}
-            {if count($values[$key])>0}
-            <h3>Jednotlivé funkce</h3>
-            <ul>
-                <li n:foreach="$values[$key] as $fid">{$fid}</li>
-            </ul>
-            {/if}
+        {if !empty($values['generalGroups'])}
+        <h2>Skupiny funcí</h2>
+        <ul>
+            <li n:foreach="$values['generalGroups'] as $gid">{$generalGroups[$gid]}</li>
+        </ul>
         {/if}
+
+        {foreach $wsdl as $key=>$val}    
+            {if count($values[$key])>0}
+        <h2>{$val['url']}</h2>
+        <ul>
+            <li n:foreach="$values[$key] as $fid">{$fid}</li>
+        </ul>
+            {/if}
         {/foreach}
         <hr />
         <p>Odesláno z formuláře na {$baseUri}</p>

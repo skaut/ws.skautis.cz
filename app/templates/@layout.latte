@@ -46,7 +46,7 @@
                             </li>
                             
                             <li {ifCurrent :Test:}class='active'{/ifCurrent}><a n:href=":Test:">Testování služeb</a></li>
-                            <li><a n:href=":AppRequest:">Požádat o novou aplikaci</a></li>
+                            <li {ifCurrent :AppRequest:}class='active'{/ifCurrent}><a n:href=":AppRequest:">Žádost o povolení aplikace</a></li>
                         </ul>
                         {if $user->isLoggedIn()}
                         <p class="navbar-text pull-right">

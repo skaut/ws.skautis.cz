@@ -6,9 +6,8 @@
 class AppRequestPresenter extends BasePresenter {
 
     const WS_MAIL = '"Webové služby" <webove.sluzby@skaut.cz>';
-    
-    protected $sendEmails;
 
+    protected $sendEmails;
     protected $wsdl = array(
         "appMng" => array("url" => "ApplicationManagement", "label" => "Webová služba pro správu přístupů externích aplikací"),
         "evaluation" => array("url" => "Evaluation", "label" => "Webová služba pro práci s hodnocením kvality"),
@@ -54,12 +53,6 @@ class AppRequestPresenter extends BasePresenter {
             $gEvent->addCheckbox($val, $val);
         }
     }
-    protected function preparegeneralGroups(&$form, $containerName) {
-        $gEvent = $form->addContainer($containerName);
-        foreach ($this->generalGroups as $id=>$val) {
-            $gEvent->addCheckbox($id, $val);
-        }
-    }
 
     public function createComponentAddForm($name) {
         $form = new AppForm($this, $name);
@@ -87,8 +80,12 @@ class AppRequestPresenter extends BasePresenter {
         $form->addTextArea("note", "Poznámka", 40, 5)
                 ->getControlPrototype()->setClass("input-xlarge");
 
+        $gg = $form->addContainer("generalGroups");
+        foreach ($this->generalGroups as $id => $val) {
+            $gg->addCheckbox($id, $val);
+        }
+
         foreach ($this->wsdl as $key => $v) {
-            $this->preparegeneralGroups($form, $key."gg");
             $this->prepareContainer($form, $key, $this->template->names[$key]);
         }
 
@@ -104,23 +101,21 @@ class AppRequestPresenter extends BasePresenter {
 
     public function addFormSubmitted(AppForm $form) {
         $values = $form->values;
-
-        foreach ($this->wsdl as $key => $value) {//ziska zakrtnute pole
-            //balicky sluzeb
-            $tmpGG = array();
-            foreach ($values[$key."gg"] as $ggid => $fval) {
-                if ($fval) {
-                    $tmpGG[] = $ggid;
-                }
+//        dump($values);
+        //balicky sluzeb
+        $tmpGG = array();
+        foreach ($values["generalGroups"] as $ggid => $gval) {
+            if ($gval) {
+                $tmpGG[] = $ggid;
             }
-            $values[$key."gg"] = $tmpGG;
-            
-            //jednotlive funkce
+        }
+        $values["generalGroups"] = $tmpGG;
+        
+        foreach ($this->wsdl as $key => $value) {//ziska zakrtnute pole
             $tmp = array();
             foreach ($values[$key] as $fid => $fval) {
-                if ($fval) {
+                if ($fval)
                     $tmp[] = $fid;
-                }
             }
             $values[$key] = $tmp;
         }
@@ -138,10 +133,10 @@ class AppRequestPresenter extends BasePresenter {
 
         $mailZadatel->setFrom(self::WS_MAIL);
         $mailZadatel->addTo($values->email, $values->username);
-        
+
         $mailUstredi->setFrom($values->email, $values->username);
         $mailUstredi->addTo(self::WS_MAIL);
-        if($this->sendEmails){
+        if ($this->sendEmails) {
             $mailUstredi->send();
             $mailZadatel->send();
         } else {

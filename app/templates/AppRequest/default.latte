@@ -1,16 +1,6 @@
 {block functionsContainer $arr}
 {? $data = $names[$arr]}
 
-        {formContainer $arr."gg"}
-<tr>
-    {foreach $generalGroups as $id=>$val}
-        <td>{input $id} {label $id/}</td>
-        {if !($iterator->getCounter()%3)}</tr><tr>{/if}    
-    {/foreach}
-</tr>
-        {/formContainer}
-<tr><td colspan="4"><hr /></td></tr>
-
         {formContainer $arr}
             {? $tmpSize = count($data)}
             {? $posun = ceil($tmpSize/3)}
@@ -82,7 +72,17 @@
                 <td colspan="2"><i>Políčka označená * jsou povinná</i></td>
             </tr>
         </table>
-
+        <h2>Skupiny funkcí</h2>
+        <table>
+            {formContainer generalGroups}
+            <tr>
+                {foreach $generalGroups as $id=>$val}
+                    <td>{input $id} {label $id/}</td>
+                    {if !($iterator->getCounter()%3)}</tr><tr>{/if}    
+                {/foreach}
+            </tr>
+        {/formContainer}    
+        </table>
     {foreach $names as $key =>$functions}
         <div id="header-{$key}" style="margin-bottom: 60px;"></div>
         <h2>{$wsdl[$key]['url']}</h2>
