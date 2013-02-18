@@ -1,8 +1,8 @@
 # disable directory listing
 Options -Indexes
 
-RewriteCond %{HTTP_HOST} ^ws\.skauting\.cz [NC]
-RewriteRule ^(.*)$ http://ws.skautis.cz/$1 [R=301,L]
+#RewriteCond %{HTTP_HOST} ^ws\.skauting\.cz [NC]
+#RewriteRule ^(.*)$ http://ws.skautis.cz/$1 [R=301,L]
 
 # mod_rewrite
 <IfModule mod_rewrite.c>

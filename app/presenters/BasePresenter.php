@@ -1,6 +1,6 @@
 <?php
 
-abstract class BasePresenter extends Presenter {
+abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
     /**
      * backlink
@@ -9,7 +9,7 @@ abstract class BasePresenter extends Presenter {
 
     protected function startup() {
         parent::startup();
-        RequestsPanel::register();
+        Extras\Debug\RequestsPanel::register();
         $this->template->backlink = $this->getParameter("backlink");
 //        if ($this->user->isLoggedIn()) //prodluzuje přihlášení při každém požadavku
 //            $this->context->authService->updateLogoutTime();
@@ -30,8 +30,8 @@ abstract class BasePresenter extends Presenter {
     }
 
     public function createComponentCss() {
-        $files = new FileCollection(WWW_DIR . '/css');
-        $compiler = Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
+        $files = new WebLoader\FileCollection(WWW_DIR . '/css');
+        $compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
 
         //s minimalizací zlobí bootstrap
 //        $compiler->addFilter(new VariablesFilter(array('foo' => 'bar')));        
@@ -39,16 +39,16 @@ abstract class BasePresenter extends Presenter {
 //            return CssMin::minify($code);
 //        }
 //        $compiler->addFilter("mini");
-        $control = new CssLoader($compiler, $this->context->httpRequest->url->baseUrl . 'webtemp');
+        $control = new WebLoader\Nette\CssLoader($compiler, $this->context->httpRequest->url->baseUrl . 'webtemp');
         $control->setMedia('screen');
 
         return $control;
     }
 
     public function createComponentJs() {
-        $files = new FileCollection(WWW_DIR . '/js');
-        $compiler = Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
-        return new JavaScriptLoader($compiler, $this->context->httpRequest->url->baseUrl . 'webtemp');
+        $files = new WebLoader\FileCollection(WWW_DIR . '/js');
+        $compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
+        return new WebLoader\Nette\JavaScriptLoader($compiler, $this->context->httpRequest->url->baseUrl . 'webtemp');
     }
 
 }

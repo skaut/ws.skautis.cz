@@ -70,6 +70,14 @@ class TestPresenter extends BasePresenter {
         $sess->defaults = $values;
 
         $args = Neon::decode($values['args']);
+        foreach ($args as $key => $value) {
+            if($value instanceof DateTime){
+                $args[$key] = $value->format("c");
+            }
+            
+        }
+//        $args["StartDate"] = "2012-02-01T00:00:00";
+//        $args["EndDate"] = "2012-02-05T00:00:00";
 
         //dump($args);die();
         $cover = trim($values['cover']);

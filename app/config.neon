@@ -5,7 +5,7 @@ common:
     nette:
         session:
             autoStart: smart
-            save_path: "%tempDir%/sessions"
+#            save_path: "%tempDir%/sessions"
             expiration: "+ 3 days"
         application:
             catchExceptions: true
@@ -56,9 +56,9 @@ production < common:
         database:
             driver:   mysql
             host:     localhost
-            database: 
-            username: 
-            password: 
+            database: hana_slovnik
+            username: slovnik
+            password: p6NjCqUr9AGRHbCc
             profiler: false
             charset:  utf8
             lazy:     true

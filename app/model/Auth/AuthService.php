@@ -4,7 +4,7 @@
  * @author Hána František
  */
 
-class AuthService extends BaseService {
+class AuthService extends \BaseService {
     
     /**
      * vrací přihlašovací url

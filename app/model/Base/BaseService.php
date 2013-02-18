@@ -3,7 +3,7 @@
 /**
  * @author Hána František
  */
-abstract class BaseService extends Object {
+abstract class BaseService extends Nette\Object {
 
     /**
      * reference na třídu typu Table
