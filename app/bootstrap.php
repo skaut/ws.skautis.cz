@@ -19,7 +19,7 @@ require LIBS_DIR . '/Nette/loader.php';
 $configurator = new Nette\Config\Configurator;
 
 $configurator->setTempDirectory(dirname(__FILE__) . '/temp');
-$configurator->setDebugMode(array("89.177.96.123")); //moje IP
+//$configurator->setDebugMode(array("89.177.96.123")); //moje IP
 $configurator->enableDebugger(dirname(__FILE__) . '/log', "sinacek@gmail.com");
 
 
@@ -38,7 +38,7 @@ $container = $configurator->createContainer();
 
 // Setup router
 $router = new RouteList;
-$router[] = new Route('index.php', ':Default:default', Route::ONE_WAY);
+$router[] = new Route('index.php', 'Default:default', Route::ONE_WAY);
 $router[] = new Route('sign/<action>[/back-<backlink>]', array(
             "presenter" => "Auth",
             "action" => "default",
@@ -64,7 +64,7 @@ $container->router = $router;
 
 // Configure and run the application!
 $application = $container->application;
-$application->catchExceptions = $configurator->isProductionMode();
+//$application->catchExceptions = $configurator->isProductionMode();
 //$application->catchExceptions = TRUE;
 //$application->catchExceptions = FALSE;
 //$application->errorPresenter = 'Error';

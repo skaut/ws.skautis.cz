@@ -12,7 +12,9 @@ class TestPresenter extends BasePresenter {
         parent::startup();
         if (!$this->user->isLoggedIn()) {
             $this->backlink = $this->storeRequest('+ 3 days');
-            throw new SkautIS_AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.", $this->backlink);
+            $e = new SkautIS_AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
+            $e->backlink = $this->backlink;
+            throw $e;
         }
 
         $post = $this->request->post;

@@ -1,5 +1,7 @@
 <?php
 
+use Nette\Application\UI\Form;
+
 /**
  * @author sinacek
  */
@@ -38,7 +40,7 @@ class AppRequestPresenter extends BasePresenter {
         $this->template->wsdl = $this->wsdl;
         $this->template->generalGroups = $this->generalGroups;
         $this->template->names = array();
-        $this->sendEmails = !Debugger::isEnabled();
+        $this->sendEmails = !Nette\Diagnostics\Debugger::isEnabled();
     }
 
     public function actionDefault() {
@@ -55,7 +57,7 @@ class AppRequestPresenter extends BasePresenter {
     }
 
     public function createComponentAddForm($name) {
-        $form = new AppForm($this, $name);
+        $form = new Form($this, $name);
         $form->addText("name", "Název aplikace")
                 ->addRule(Form::FILLED, "Zadej název aplikace");
         $form->addText("desc", "Popis aplikace")
@@ -99,7 +101,7 @@ class AppRequestPresenter extends BasePresenter {
         return $form;
     }
 
-    public function addFormSubmitted(AppForm $form) {
+    public function addFormSubmitted(Form $form) {
         $values = $form->values;
 //        dump($values);
         //balicky sluzeb
