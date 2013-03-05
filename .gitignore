@@ -9,5 +9,6 @@ nbproject/*
 /app/temp/*
 /app/log/*
 /webtemp/
+/_upload/
 adminer.php
 htaccess
