@@ -1,5 +1,8 @@
 <?php
 
+use Nette\Diagnostics\Debugger,
+        Nette\Application\UI\Form;
+
 /**
  * @author sinacek
  */
@@ -36,7 +39,7 @@ class TestPresenter extends BasePresenter {
     }
 
     public function createComponentTestForm($name) {
-        $form = new AppForm($this, $name);
+        $form = new Form($this, $name);
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
                 ->addRule(Form::FILLED, "Musís vybrat WSDL")
@@ -61,7 +64,7 @@ class TestPresenter extends BasePresenter {
         return $form;
     }
 
-    public function testFormSubmitted(AppForm $form) {
+    public function testFormSubmitted(Form $form) {
         $sess = &$this->session->getSection("sisTest");
 
         $values = $form->getValues();
@@ -71,7 +74,7 @@ class TestPresenter extends BasePresenter {
         }
         $sess->defaults = $values;
 
-        $args = Neon::decode($values['args']);
+        $args = Nette\Utils\Neon::decode($values['args']);
         foreach ($args as $key => $value) {
             if($value instanceof DateTime){
                 $args[$key] = $value->format("c");
