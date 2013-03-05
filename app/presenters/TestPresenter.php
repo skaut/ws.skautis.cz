@@ -113,7 +113,12 @@ class TestPresenter extends BasePresenter {
         if (!isset($arguments[0]) || !is_array($arguments[0])) {
             $arguments[0] = array();
         }
-        $args = array_merge($this->context->skautIS->getStorage()->init, $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
+        $args = array_merge(
+                array(
+                    SkautIS::APP_ID => $this->context->skautIS->getAppId(),
+                    SkautIS::TOKEN => $this->context->skautIS->getToken(),
+                    ),
+                $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
 
         if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
             $matches = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /
