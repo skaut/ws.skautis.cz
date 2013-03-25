@@ -1,6 +1,7 @@
 <?php
 
-use Nette\Application\UI\Form;
+use Nette\Application\UI\Form,
+    Nette\Mail\Message;
 
 /**
  * @author sinacek
@@ -40,7 +41,7 @@ class AppRequestPresenter extends BasePresenter {
         $this->template->wsdl = $this->wsdl;
         $this->template->generalGroups = $this->generalGroups;
         $this->template->names = array();
-        $this->sendEmails = !Nette\Diagnostics\Debugger::isEnabled();
+        $this->sendEmails = Nette\Environment::isProduction();
     }
 
     public function actionDefault() {
@@ -112,7 +113,7 @@ class AppRequestPresenter extends BasePresenter {
             }
         }
         $values["generalGroups"] = $tmpGG;
-        
+
         foreach ($this->wsdl as $key => $value) {//ziska zakrtnute pole
             $tmp = array();
             foreach ($values[$key] as $fid => $fval) {
@@ -124,10 +125,11 @@ class AppRequestPresenter extends BasePresenter {
 
         $template = $this->template;
         $template->setFile(dirname(__FILE__) . '/../templates/AppRequest/mail.request.latte');
-        $template->registerFilter(new LatteFilter);
+//        $template->registerFilter(new LatteFilter);
+        $template->registerFilter(new Nette\Latte\Engine);
         $template->values = $values;
 
-        $mail = new Mail;
+        $mail = new Message;
         $mail->setHtmlBody($template);
         $mail->setSubject("Žádost o registraci aplikace ve skautISu");
         $mailUstredi = $mail;
