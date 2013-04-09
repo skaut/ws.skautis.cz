@@ -65,7 +65,7 @@ class TestPresenter extends BasePresenter {
     }
 
     public function testFormSubmitted(Form $form) {
-        $sess = &$this->session->getSection("sisTest");
+        $sess = $this->session->getSection("sisTest");
 
         $values = $form->getValues();
         if (!$this->context->skautIS->isLoggedIn()) {
