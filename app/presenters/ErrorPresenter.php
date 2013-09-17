@@ -18,7 +18,7 @@ class ErrorPresenter extends Nette\Application\UI\Presenter {
         } elseif ($exception instanceof SkautIS_AuthenticationException) {//vypršelo přihlášení do SkautISu
             $this->user->logout(TRUE);
             $this->flashMessage($exception->getMessage() != "" ? $exception->getMessage() : "Vypršelo přihlášení do SkautISu" , "danger");
-            $backlink = $exception->backlink ? $exception->backlink : NULL;
+            $backlink = isset($exception->backlink) ? $exception->backlink : NULL;
             $this->redirect(":Default:", array("backlink" => $backlink));
         } else {
             $this->setView('500'); // load template 500.latte
