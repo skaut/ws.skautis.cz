@@ -1,3 +1,4 @@
+{*}
 {block functionsContainer $arr}
 {? $data = $names[$arr]}
 
@@ -13,11 +14,12 @@
             {/for}
         {/formContainer}
 {/block}
-
+{*}
 
 
 {block content}
 <div class="row-fluid">
+    {*}
     <div class="span2 bs-docs-sidebar">
         <ul class="nav nav-list affix">
             {foreach $names as $key => $functions}
@@ -25,8 +27,9 @@
             {/foreach}
         </ul>
     </div>
-
-    <div class="span10">
+    {*}
+    
+    <div class="span12">
 
         <h1>Žádost o povolení aplikace</h1>
 {form addForm}
@@ -57,7 +60,7 @@
             <tr>
                 <th>{label nick/}</th><td>{input nick}</td>
                 <td class="span1"></td>
-                <th>{label ip/} <span rel="tooltip" title="IP adresa serveru, kde stránky běží"><i class="icon icon-info-sign"></i></span></th><td>{input ip}</td>
+                <th>{label ip/} <span rel="tooltip" title="IP adresa serveru, kde stránky běží."><i class="icon icon-info-sign"></i></span></th><td>{input ip}</td>
             </tr>
             <tr>
                 <th class="required">{label email/}*</th><td>{input email}</td>
@@ -71,7 +74,12 @@
             <tr>
                 <td colspan="2"><i>Políčka označená * jsou povinná</i></td>
             </tr>
+            <tr style="text-align: right">
+                <td colspan="4"></td>
+                <td colspan="1">{input send class=>"btn btn-large btn-primary"}</td>
+            </tr>
         </table>
+        {*}
         <h2>Skupiny funkcí</h2>
         <table>
             {formContainer generalGroups}
@@ -82,7 +90,7 @@
                 {/foreach}
             </tr>
         {/formContainer}    
-        </table>
+        </table>        
     {foreach $names as $key =>$functions}
         <div id="header-{$key}" style="margin-bottom: 60px;"></div>
         <h2>{$wsdl[$key]['url']}</h2>
@@ -92,7 +100,7 @@
         </table>
         <hr />
     {/foreach}
-        
+    
         <div class="navbar navbar-fixed-bottom">
             <div class="navbar-inner" style="text-align: center;">
                 <p class="nav" style="float: none">
@@ -100,6 +108,7 @@
                 </p>
             </div>
         </div>
+    {*}
 {/form addForm}
     </div>
 </div>

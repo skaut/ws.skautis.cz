@@ -24,6 +24,7 @@
             <tr><th>IP adresa serveru</th><td>{$values->ip}</td></tr>
             <tr><th>Poznámka</th><td>{$values->note}</td></tr>
         </table>
+        {*}
         {if !empty($values['generalGroups'])}
         <h2>Skupiny funcí</h2>
         <ul>
@@ -39,6 +40,7 @@
         </ul>
             {/if}
         {/foreach}
+        {*}
         <hr />
         <p>Odesláno z formuláře na {$baseUri}</p>
     </body>

@@ -73,24 +73,28 @@ class AppRequestPresenter extends BasePresenter {
                 ->addRule(Form::EMAIL, "Zadejte platný email");
         $form->addText("orgNum", "Reg. číslo jednotky");
         $form->addText("urlBase", "URL aplikace")
+                ->setDefaultValue("http://")
                 ->addRule(Form::URL, "Zadej platnou URL aplikace");
         $form->addText("urlLogin", "URL po přihlášení")
+                ->setDefaultValue("http://")
                 ->addRule(Form::URL, "Zadej platnou  URL po přihlášení");
         $form->addText("urlLogout", "URL po odhlášení")
+                ->setDefaultValue("http://")
                 ->addRule(Form::URL, "Zadej platnou URL po odhlášení");
-        $form->addText("urlInfo", "URL informační stránky");
+        $form->addText("urlInfo", "URL informační stránky")
+                ->setDefaultValue("http://");
         $form->addText("ip", "IP adresa serveru");
         $form->addTextArea("note", "Poznámka", 40, 5)
                 ->getControlPrototype()->setClass("input-xlarge");
 
-        $gg = $form->addContainer("generalGroups");
-        foreach ($this->generalGroups as $id => $val) {
-            $gg->addCheckbox($id, $val);
-        }
-
-        foreach ($this->wsdl as $key => $v) {
-            $this->prepareContainer($form, $key, $this->template->names[$key]);
-        }
+//        $gg = $form->addContainer("generalGroups");
+//        foreach ($this->generalGroups as $id => $val) {
+//            $gg->addCheckbox($id, $val);
+//        }
+//
+//        foreach ($this->wsdl as $key => $v) {
+//            $this->prepareContainer($form, $key, $this->template->names[$key]);
+//        }
 
         $form->addSubmit('send', 'Odeslat')
                 ->getControlPrototype()->setClass("btn btn-primary");
@@ -107,21 +111,21 @@ class AppRequestPresenter extends BasePresenter {
 //        dump($values);
         //balicky sluzeb
         $tmpGG = array();
-        foreach ($values["generalGroups"] as $ggid => $gval) {
-            if ($gval) {
-                $tmpGG[] = $ggid;
-            }
-        }
-        $values["generalGroups"] = $tmpGG;
-
-        foreach ($this->wsdl as $key => $value) {//ziska zakrtnute pole
-            $tmp = array();
-            foreach ($values[$key] as $fid => $fval) {
-                if ($fval)
-                    $tmp[] = $fid;
-            }
-            $values[$key] = $tmp;
-        }
+//        foreach ($values["generalGroups"] as $ggid => $gval) {
+//            if ($gval) {
+//                $tmpGG[] = $ggid;
+//            }
+//        }
+//        $values["generalGroups"] = $tmpGG;
+// 
+//        foreach ($this->wsdl as $key => $value) {//ziska zakrtnute pole
+//            $tmp = array();
+//            foreach ($values[$key] as $fid => $fval) {
+//                if ($fval)
+//                    $tmp[] = $fid;
+//            }
+//            $values[$key] = $tmp;
+//        }
 
         $template = $this->template;
         $template->setFile(dirname(__FILE__) . '/../templates/AppRequest/mail.request.latte');
