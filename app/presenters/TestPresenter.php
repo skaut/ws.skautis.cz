@@ -1,7 +1,8 @@
 <?php
 
 use Nette\Diagnostics\Debugger,
-        Nette\Application\UI\Form;
+        Nette\Application\UI\Form,
+        SkautIS\SkautIS;
 
 /**
  * @author sinacek
@@ -15,7 +16,7 @@ class TestPresenter extends BasePresenter {
         parent::startup();
         if (!$this->user->isLoggedIn()) {
             $this->backlink = $this->storeRequest('+ 3 days');
-            $e = new SkautIS_AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
+            $e = new \SkautIS\Exception\AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
             $e->backlink = $this->backlink;
             throw $e;
         }
