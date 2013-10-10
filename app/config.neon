@@ -27,8 +27,8 @@ common:
         userService:
             class: UserService( @skautIS )
         skautIS:
-            class: SkautIS
-            factory: SkautIS::getInstance(%skautisid%, %skautisTestMode%)
+            class: SkautIS\SkautIS
+            factory: SkautIS\SkautIS::getInstance(%skautisid%, %skautisTestMode%)
 
 development < common:
     nette:
