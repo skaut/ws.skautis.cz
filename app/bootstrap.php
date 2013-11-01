@@ -45,6 +45,11 @@ $router[] = new Route('sign/<action>[/back-<backlink>]', array(
             "backlink" => NULL
         ));
 
+$router[] = new Route('ws', array(
+            "presenter" => "Default",
+            "action" => "ws",
+        ), Route::ONE_WAY);
+
 $router[] = new Route('<presenter>[/<action>]', array(
             "presenter" => array(
                 Route::VALUE => 'default',
