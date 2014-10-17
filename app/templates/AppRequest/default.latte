@@ -48,28 +48,25 @@
                 <th class="required">{label urlLogin/}* <span rel="tooltip" title="Stránka, kam SkautIS přesměruje po úspěšném přihlášení"><i class="icon icon-info-sign"></i></span></th><td>{input urlLogin}</td>
             </tr>
             <tr>
-                <th>{label isTest/}</th><td>{input isTest}</td>
+                
+                <th class="required">{label username/}*</th><td>{input username}</td>
                 <td class="span1"></td>
                 <th class="required">{label urlLogout/}* <span rel="tooltip" title="Stránka, kam SkautIS přesměruje uživatele po odhlášení"><i class="icon icon-info-sign"></i></span></th><td>{input urlLogout}</td>
             </tr>
             <tr>
-                <th class="required">{label username/}*</th><td>{input username}</td>
+                <th>{label nick/}</th><td>{input nick}</td>
                 <td class="span1"></td>
                 <th>{label urlInfo/} <span rel="tooltip" title="Stránka, zobrazená při přihlašování na SkautISu"><i class="icon icon-info-sign"></i></span></th><td>{input urlInfo}</td>
             </tr>
             <tr>
-                <th>{label nick/}</th><td>{input nick}</td>
+                <th class="required">{label email/}*</th><td>{input email}</td>
                 <td class="span1"></td>
                 <th>{label ip/} <span rel="tooltip" title="IP adresa serveru, kde stránky běží."><i class="icon icon-info-sign"></i></span></th><td>{input ip}</td>
             </tr>
             <tr>
-                <th class="required">{label email/}*</th><td>{input email}</td>
-                <td class="span1"></td>
-                <th rowspan="3">{label note/}</th><td rowspan="3">{input note}</td>
-            </tr>
-            <tr>
                 <th>{label orgNum/} <span rel="tooltip" title="Číslo jednotky, která bude aplikaci využívat"><i class="icon icon-info-sign"></i></span></th><td>{input orgNum}</td>
                 <td class="span1"></td>
+                <th rowspan="2">{label note/}</th><td rowspan="2">{input note}</td>
             </tr>
             <tr>
                 <td colspan="2"><i>Políčka označená * jsou povinná</i></td>

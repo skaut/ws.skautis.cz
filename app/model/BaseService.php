@@ -33,6 +33,14 @@ abstract class BaseService extends Nette\Object {
         $this->skautIS = $skautIS;
         self::$storage = array();
     }
+    
+    public function getInfo(){
+        return array(
+            "ID_Login"=>$this->skautIS->getToken(),
+            "ID_Role"=>$this->skautIS->getRoleId(),
+            "ID_Unit"=>$this->skautIS->getUnitId(),
+        );
+    }
 
     /**
      * ukládá $val do lokálního úložiště
@@ -41,8 +49,9 @@ abstract class BaseService extends Nette\Object {
      * @return mixed 
      */
     protected function save($id, $val) {
-        if ($this->useCache)
+        if ($this->useCache) {
             self::$storage[$id] = $val;
+        }
         return $val;
     }
 
@@ -52,40 +61,11 @@ abstract class BaseService extends Nette\Object {
      * @return mixed | FALSE
      */
     protected function load($id) {
-        if ($this->useCache && array_key_exists($id, self::$storage))
+        if ($this->useCache && array_key_exists($id, self::$storage)) {
             return self::$storage[$id];
+        }
         return FALSE;
     }
-
-//    /**
-//     * vrátí pdf do prohlizece
-//     * @param type $template
-//     * @param string $filename
-//     * @return pdf 
-//     */
-//    function makePdf($template = NULL, $filename = NULL, $landscape = false) {
-//        $format = $landscape ? "A4-L" : "A4";
-//        if ($template === NULL)
-//            return FALSE;
-//        define('_MPDF_PATH', LIBS_DIR . '/mpdf/');
-//        require_once(_MPDF_PATH . 'mpdf.php');
-//        $mpdf = new mPDF(
-//                        'utf-8',
-//                        $format,
-//                        $default_font_size = 0,
-//                        $default_font = '',
-//                        $mgl = 10,
-//                        $mgr = 10,
-//                        $mgt = 10,
-//                        $mgb = 10,
-//                        $mgh = 9,
-//                        $mgf = 9,
-//                        $orientation = 'P'
-//        );
-//
-//        $mpdf->WriteHTML((string) $template, NULL);
-//        $mpdf->Output($filename, 'I');
-//    }
 
 }
 

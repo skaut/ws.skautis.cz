@@ -1,0 +1,39 @@
+#
+# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
+# http://nette.org/security-warning
+#
+parameters:
+
+php:
+    date.timezone: Europe/Prague
+    # zlib.output_compression: yes
+
+nette:
+    session:
+        autoStart: smart
+        expiration: "+ 3 days"
+    application:
+        #errorPresenter: App\Error
+        catchExceptions: true
+        mapping:
+            *: App\*Module\*Presenter
+    debugger:
+        email: %sinacek@gmail.com%
+        strictMode: FALSE
+        maxDepth: 6
+        maxLen: 500;
+
+services:
+    #router: Nette\Application\Routers\SimpleRouter('App:Default:default')
+    - App\RouterFactory
+    - MailService(%sendEmail%)
+    router: @App\RouterFactory::createRouter
+    authService:
+        class: AuthService( @skautIS )
+    userService:
+        class: UserService( @skautIS )
+    skautIS:
+        class: SkautIS\SkautIS
+        factory: SkautIS\SkautIS::getInstance(%skautisid%, %skautisTestMode%)

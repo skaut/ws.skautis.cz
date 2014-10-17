@@ -5,18 +5,8 @@
         <title>{block #title|striptags|trim}SkautIS Web Services{/block}</title>
         <meta name="keywords" content="" />
         <meta name="author" content="www.sinacek.cz" />
-
-        {control js 'jquery-1.8.2.min.js',
-        'jquery.ui.min.js',
-        'combobox.js',
-        'bootstrap.js',
-        'jquery.ajaxform.js',
-        'my.js'}
-
-           {control css 'bootstrap.min.css', 
-            'bootstrap-responsive.min.css',
-            'jquery-ui-1.8.css',
-            'site.css'}
+        {control css}
+        {control js}
         <script type="text/javascript">
             function changeRole(id){
                  $.post({link changeRole!}, { roleId : id });

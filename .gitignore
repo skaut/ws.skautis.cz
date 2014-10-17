@@ -5,10 +5,12 @@
 .DS_Store*
 
 nbproject/*
-/libs/*
-/app/temp/*
-/app/log/*
-/webtemp/
-/_upload/
+/vendor/*
+/temp/*
+/log/*
+/www/webtemp/
+/www/_upload/
+/www/images/*
 adminer.php
 htaccess
+/app/config/*.local.*

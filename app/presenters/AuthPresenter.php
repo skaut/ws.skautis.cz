@@ -1,5 +1,8 @@
 <?php
 
+namespace App;
+
+
 class AuthPresenter extends BasePresenter {
 
     protected function startup() {
@@ -12,7 +15,7 @@ class AuthPresenter extends BasePresenter {
      * @param bool $final - je to konečné přesměrování? použít při problémem se zacyklením
      */
     public function actionDefault($backlink) {
-        if (Environment::getUser()->isLoggedIn()) {
+        if ($this->user->isLoggedIn()) {
             if ($backlink) {
                 $this->restoreRequest($backlink);
             }
@@ -46,18 +49,18 @@ class AuthPresenter extends BasePresenter {
             ));
             
             if (!$this->context->userService->isLoggedIn()) {
-                throw new SkautIS_AuthenticationException("Nemáte platné přihlášení do skautISu");
+                throw new \SkautIS_AuthenticationException("Nemáte platné přihlášení do skautISu");
             }
             $me = $this->context->userService->getPersonalDetail();
 
             $this->user->setExpiration('+ 29 minutes'); // nastavíme expiraci
-            $this->user->setAuthenticator(new SkautISAuthenticator());
+            $this->user->setAuthenticator(new \SkautISAuthenticator());
             $this->user->login($me);
 
             if (isset($ReturnUrl)) {
                 $this->context->application->restoreRequest($ReturnUrl);
             }
-        } catch (SkautIS_AuthenticationException $e) {
+        } catch (\SkautIS_AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), "danger");
             $this->redirect(":Auth:");
         }
@@ -74,6 +77,7 @@ class AuthPresenter extends BasePresenter {
     
     function actionSkautisLogout() {
         $this->user->logout(TRUE);
+        $this->context->userService->resetLoginData();
         if ($this->request->post['skautIS_Logout']) {
             $this->presenter->flashMessage("Byl jsi úspěšně odhlášen ze SkautISu.");
         } else {

@@ -1,16 +1,14 @@
 <?php
 
-use Nette\Application\UI\Form,
-    Nette\Mail\Message;
+namespace App;
+
+use Nette\Application\UI\Form;
 
 /**
  * @author sinacek
  */
 class AppRequestPresenter extends BasePresenter {
 
-    const WS_MAIL = '"Webové služby" <webove.sluzby@skaut.cz>';
-
-    protected $sendEmails;
     protected $wsdl = array(
         "appMng" => array("url" => "ApplicationManagement", "label" => "Webová služba pro správu přístupů externích aplikací"),
         "evaluation" => array("url" => "Evaluation", "label" => "Webová služba pro práci s hodnocením kvality"),
@@ -41,14 +39,13 @@ class AppRequestPresenter extends BasePresenter {
         $this->template->wsdl = $this->wsdl;
         $this->template->generalGroups = $this->generalGroups;
         $this->template->names = array();
-        $this->sendEmails = Nette\Environment::isProduction();
     }
 
-    public function actionDefault() {
-        foreach ($this->wsdl as $key => $data) {
-            $this->template->names[$key] = $this->getFunctionNames("http://test-is.skaut.cz/JunakWebservice/" . $data['url'] . ".asmx?WSDL");
-        }
-    }
+//    public function actionDefault() {
+//        foreach ($this->wsdl as $key => $data) {
+//            $this->template->names[$key] = $this->getFunctionNames("http://test-is.skaut.cz/JunakWebservice/" . $data['url'] . ".asmx?WSDL");
+//        }
+//    }
 
     protected function prepareContainer(&$form, $containerName, $names) {
         $gEvent = $form->addContainer($containerName);
@@ -63,8 +60,8 @@ class AppRequestPresenter extends BasePresenter {
                 ->addRule(Form::FILLED, "Zadej název aplikace");
         $form->addText("desc", "Popis aplikace")
                 ->addRule(Form::FILLED, "Zadej popis aplikace");
-        $form->addCheckbox("isTest", "Testovací režim?")
-                ->setDefaultValue("TRUE");
+//        $form->addCheckbox("isTest", "Testovací režim?")
+//                ->setDefaultValue("TRUE");
         $form->addText("username", "Jméno a příjmení")
                 ->addRule(Form::FILLED, "Zadejte jméno a příjmení");
         $form->addText("nick", "Přezdívka");
@@ -106,11 +103,11 @@ class AppRequestPresenter extends BasePresenter {
         return $form;
     }
 
-    public function addFormSubmitted(Form $form) {
+    public function addFormSubmitted(Form $form, \MailService $mailService) {
         $values = $form->values;
 //        dump($values);
         //balicky sluzeb
-        $tmpGG = array();
+//        $tmpGG = array();
 //        foreach ($values["generalGroups"] as $ggid => $gval) {
 //            if ($gval) {
 //                $tmpGG[] = $ggid;
@@ -128,51 +125,30 @@ class AppRequestPresenter extends BasePresenter {
 //        }
 
         $template = $this->template;
-        $template->setFile(dirname(__FILE__) . '/../templates/AppRequest/mail.request.latte');
-//        $template->registerFilter(new LatteFilter);
-        $template->registerFilter(new Nette\Latte\Engine);
         $template->values = $values;
+        $mailService->sendRequest($template, $values);
 
-        $mail = new Message;
-        $mail->setHtmlBody($template);
-        $mail->setSubject("Žádost o registraci aplikace ve skautISu");
-        $mailUstredi = $mail;
-        $mailZadatel = $mail;
-
-        $mailZadatel->setFrom(self::WS_MAIL);
-        $mailZadatel->addTo($values->email, $values->username);
-
-        $mailUstredi->setFrom($values->email, $values->username);
-        $mailUstredi->addTo(self::WS_MAIL);
-        if ($this->sendEmails) {
-            $mailUstredi->send();
-            $mailZadatel->send();
-        } else {
-            echo $template;
-            die();
-        }
-
-//        $this->flashMessage("Odeslani emailu je vypnuté!", "danger");
         $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný kontaktní email.");
         $this->presenter->redirect("default");
     }
 
-    public function getFunctionNames($url) {
-        $client = new SoapClient($url);
-        $functions = $client->__getFunctions();
-
-        if (!function_exists("getFName")) {
-
-            function getFName($n) {
-                $tmp = preg_split("/[\s()]+/", $n);
-                return $tmp[1];
-            }
-
-        }
-
-        $ret = array_unique(array_map("getFName", $functions));
-        sort($ret);
-        return $ret;
-    }
+//    public function getFunctionNames($url) {
+//        $client = new \SoapClient($url);
+//        $functions = $client->__getFunctions();
+//
+//
+//        if (!function_exists(__NAMESPACE__ . "\getfname")) {
+//
+//            function getFName($n) {
+//                $tmp = preg_split("/[\s()]+/", $n);
+//                return $tmp[1];
+//            }
+//
+//        }
+//
+//        $ret = array_unique(array_map("getFName", $functions));
+//        sort($ret);
+//        return $ret;
+//    }
 
 }

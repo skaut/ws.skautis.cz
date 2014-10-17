@@ -17,8 +17,8 @@ class UserService extends BaseService {
      * vrací pole 
      * @return array všech dostupných rolí přihlášeného uživatele
      */
-    public function getAllSkautISRoles() {
-        return $this->skautIS->user->UserRoleAll(array("ID_User" => $this->getUserDetail()->ID));
+    public function getAllSkautISRoles($activeOnly = true) {
+        return $this->skautIS->user->UserRoleAll(array("ID_User" => $this->getUserDetail()->ID, "IsActive" => $activeOnly));
     }
 
     public function getUserDetail() {
@@ -58,12 +58,16 @@ class UserService extends BaseService {
     public function isLoggedIn() {
         return $this->skautIS->isLoggedIn();
     }
+    
+    public function resetLoginData(){
+        $this->skautIS->resetLoginData();
+    }
 
     /**
      *
-     * @param type $id - např. ID_EventGeneral, NULL = oveření nad celou tabulkou
-     * @param type $ID_Action - id ověřované akce - např EV_EventGeneral_UPDATE
-     * @param type $table - tabulka v DB skautisu
+     * @param type $table - např. ID_EventGeneral, NULL = oveření nad celou tabulkou
+     * @param type $id - id ověřované akce - např EV_EventGeneral_UPDATE
+     * @param type $ID_Action - tabulka v DB skautisu
      * @return BOOL|stdClass|array
      */
     public function actionVerify($table, $id = NULL, $ID_Action = NULL) {
@@ -74,10 +78,12 @@ class UserService extends BaseService {
             "ID_Action" => $ID_Action,
                 ));
         if ($ID_Action !== NULL) { //pokud je zadána konrétní funkce pro ověřování, tak se vrací BOOL
-            if ($res instanceof stdClass)
+            if ($res instanceof stdClass) {
                 return false;
-            if (is_array($res))
+            }
+            if (is_array($res)) {
                 return true;
+            }
         }
         if(is_array($res)){
             $tmp = array();

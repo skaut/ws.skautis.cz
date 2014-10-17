@@ -1,8 +1,10 @@
 <?php
 
+namespace App;
+
 use Nette\Diagnostics\Debugger,
-        Nette\Application\UI\Form,
-        SkautIS\SkautIS;
+    Nette\Application\UI\Form,
+    SkautIS\SkautIS;
 
 /**
  * @author sinacek
@@ -10,31 +12,38 @@ use Nette\Diagnostics\Debugger,
 class TestPresenter extends BasePresenter {
 
     public $wsdl;
-    protected $service;
+
+    //protected $service;
 
     protected function startup() {
         parent::startup();
-        if (!$this->user->isLoggedIn()) {
-            $this->backlink = $this->storeRequest('+ 3 days');
-            $e = new \SkautIS\Exception\AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
-            $e->backlink = $this->backlink;
-            throw $e;
-        }
+//        if (!$this->user->isLoggedIn()) {
+//            $this->backlink = $this->storeRequest('+ 3 days');
+//            $e = new \SkautIS\Exception\AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
+//            $e->backlink = $this->backlink;
+//            throw $e;
+//        }
 
         $post = $this->request->post;
         if (isset($post['skautIS_Token'])) {
             $this->context->skautIS->init($post);
         }
         $this->template->skautIsAppId = $this->context->skautIS->getAppId();
-        if (!$this->context->skautIS->isLoggedIn()) {// && $this->action != "default"
-            $this->accessFail();
-            $this->flashMessage("Chybí aktivní přihlášení do skautISu", "fail");
-            $this->redirect("default");
-        }
+//        if (!$this->context->skautIS->isLoggedIn()) {// && $this->action != "default"
+//            $this->flashMessage("Chybí aktivní přihlášení do skautISu", "fail");
+//            $this->redirect("default");
+//        }
         $this->wsdl = $this->context->skautIS->getWsdlList();
     }
 
     public function renderDefault() {
+        $info = $this->context->userService->getInfo();
+        if ($this->user->isLoggedIn()) {
+            $user = $this->context->userService->getUserDetail();
+            $info["ID_User"] = $user->ID;
+            $info["ID_Person"] = $user->ID_Person;
+        }
+        $this->template->info = Debugger::dump($info, TRUE);
         $this->template->request = Debugger::dump($this->session->getSection("sisTest")->request, TRUE);
         $this->template->response = Debugger::dump($this->session->getSection("sisTest")->response, TRUE);
     }
@@ -60,8 +69,10 @@ class TestPresenter extends BasePresenter {
         $form->onSuccess[] = array($this, $name . 'Submitted');
 
         $sess = $this->session->getSection("sisTest");
-        if (isset($sess->defaults))
+
+        if (isset($sess->defaults) && is_array($sess->defaults)) {
             $form->setDefaults($sess->defaults);
+        }
         return $form;
     }
 
@@ -69,26 +80,27 @@ class TestPresenter extends BasePresenter {
         $sess = $this->session->getSection("sisTest");
 
         $values = $form->getValues();
-        if (!$this->context->skautIS->isLoggedIn()) {
-            $this->flashMessage("Nemáte platné přihlášení do skautISu.", "fail");
-            $this->redirect(":Auth:");
-        }
+//        if (!$this->context->skautIS->isLoggedIn()) {
+//            $this->flashMessage("Nemáte platné přihlášení do skautISu.", "fail");
+//            $this->redirect(":Auth:");
+//        }
         $sess->defaults = $values;
 
-        $args = Nette\Utils\Neon::decode($values['args']);
-        foreach ($args as $key => $value) {
-            if($value instanceof DateTime){
-                $args[$key] = $value->format("c");
+        $args = \Nette\Neon\Neon::decode($values['args']);
+        if ($args instanceof Traversable) {
+            foreach ($args as $key => $value) {
+                if ($value instanceof DateTime) {
+                    $args[$key] = $value->format("c");
+                }
             }
-            
         }
 //        $args["StartDate"] = "2012-02-01T00:00:00";
 //        $args["EndDate"] = "2012-02-05T00:00:00";
-
         //dump($args);die();
         $cover = trim($values['cover']);
-        if ($cover == "")
+        if ($cover == "") {
             $cover = NULL;
+        }
         $sess->request = $this->prepareArgs(array($args, $cover), $values["service"]);
         try {
             $ret = $this->context->skautIS->{$values['wsdl']}->{$values["service"]}($args, $cover);
@@ -98,10 +110,10 @@ class TestPresenter extends BasePresenter {
             $sess->response = $e->getMessage();
             $this->redirect("this");
         }
-        
+
         $sess->response = $ret;
 
-        if (!$this->isAjax()){
+        if (!$this->isAjax()) {
             $this->redirect('this');
         } else {
             $this->invalidateControl('flash');
@@ -109,17 +121,16 @@ class TestPresenter extends BasePresenter {
             $this->invalidateControl('testResponse');
         }
     }
-    
-    protected function prepareArgs($arguments, $function_name){
+
+    protected function prepareArgs($arguments, $function_name) {
         if (!isset($arguments[0]) || !is_array($arguments[0])) {
             $arguments[0] = array();
         }
         $args = array_merge(
                 array(
-                    SkautIS::APP_ID => $this->context->skautIS->getAppId(),
-                    SkautIS::TOKEN => $this->context->skautIS->getToken(),
-                    ),
-                $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
+            SkautIS::APP_ID => $this->context->skautIS->getAppId(),
+                //SkautIS::TOKEN => $this->context->skautIS->getToken(),
+                ), $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
 
         if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
             $matches = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /
@@ -133,4 +144,5 @@ class TestPresenter extends BasePresenter {
         }
         return $args;
     }
+
 }
