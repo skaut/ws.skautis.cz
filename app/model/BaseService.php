@@ -13,9 +13,9 @@ abstract class BaseService extends Nette\Object {
 
     /**
      * slouží pro komunikaci se skautISem
-     * @var SkautIS
+     * @var \SkautIS\SkautIS
      */
-    protected $skautIS;
+    protected $skautis;
 
     /**
      * používat lokální úložiště?
@@ -30,15 +30,15 @@ abstract class BaseService extends Nette\Object {
     private static $storage;
 
     public function __construct($skautIS = NULL) {
-        $this->skautIS = $skautIS;
+        $this->skautis = $skautIS;
         self::$storage = array();
     }
     
     public function getInfo(){
         return array(
-            "ID_Login"=>$this->skautIS->getToken(),
-            "ID_Role"=>$this->skautIS->getRoleId(),
-            "ID_Unit"=>$this->skautIS->getUnitId(),
+            "ID_Login"=>$this->skautis->getToken(),
+            "ID_Role"=>$this->skautis->getRoleId(),
+            "ID_Unit"=>$this->skautis->getUnitId(),
         );
     }
 

@@ -25,15 +25,16 @@ nette:
         maxDepth: 6
         maxLen: 500;
 
+extensions:
+    skautis: SkautIS\Nette\SkautisExtension22
+
 services:
     #router: Nette\Application\Routers\SimpleRouter('App:Default:default')
     - App\RouterFactory
-    - MailService(%sendEmail%)
     router: @App\RouterFactory::createRouter
+    mailService:
+        class: MailService(%sendEmail%)
     authService:
-        class: AuthService( @skautIS )
+        class: AuthService( @skautis )
     userService:
-        class: UserService( @skautIS )
-    skautIS:
-        class: SkautIS\SkautIS
-        factory: SkautIS\SkautIS::getInstance(%skautisid%, %skautisTestMode%)
+        class: UserService( @skautis )

@@ -16,8 +16,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         parent::startup();
         $this->template->backlink = $this->getParameter("backlink");
         
-        $storage = $this->context->getByType('Nette\Http\Session')->getSection("__" . __CLASS__);
-        $this->context->skautIS->setStorage($storage, TRUE);
 //        if ($this->user->isLoggedIn()) //prodluzuje přihlášení při každém požadavku
 //            $this->context->authService->updateLogoutTime();
     }

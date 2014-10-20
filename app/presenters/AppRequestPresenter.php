@@ -103,7 +103,7 @@ class AppRequestPresenter extends BasePresenter {
         return $form;
     }
 
-    public function addFormSubmitted(Form $form, \MailService $mailService) {
+    public function addFormSubmitted(Form $form) {
         $values = $form->values;
 //        dump($values);
         //balicky sluzeb
@@ -123,11 +123,9 @@ class AppRequestPresenter extends BasePresenter {
 //            }
 //            $values[$key] = $tmp;
 //        }
-
         $template = $this->template;
         $template->values = $values;
-        $mailService->sendRequest($template, $values);
-
+        $this->context->mailService->sendRequest($template, $values);
         $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný kontaktní email.");
         $this->presenter->redirect("default");
     }

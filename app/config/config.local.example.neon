@@ -1,0 +1,11 @@
+nette:
+    application:
+        catchExceptions: false
+        debugger: true
+parameters:
+        sendEmail : FALSE
+
+skautis:
+    applicationId : ...
+    testMode : true 
+    profiler: true

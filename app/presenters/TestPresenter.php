@@ -26,14 +26,14 @@ class TestPresenter extends BasePresenter {
 
         $post = $this->request->post;
         if (isset($post['skautIS_Token'])) {
-            $this->context->skautIS->init($post);
+            $this->context->skautis->init($post);
         }
-        $this->template->skautIsAppId = $this->context->skautIS->getAppId();
-//        if (!$this->context->skautIS->isLoggedIn()) {// && $this->action != "default"
+        $this->template->skautIsAppId = $this->context->skautis->getAppId();
+//        if (!$this->context->skautis->isLoggedIn()) {// && $this->action != "default"
 //            $this->flashMessage("Chybí aktivní přihlášení do skautISu", "fail");
 //            $this->redirect("default");
 //        }
-        $this->wsdl = $this->context->skautIS->getWsdlList();
+        $this->wsdl = $this->context->skautis->getWsdlList();
     }
 
     public function renderDefault() {
@@ -80,7 +80,7 @@ class TestPresenter extends BasePresenter {
         $sess = $this->session->getSection("sisTest");
 
         $values = $form->getValues();
-//        if (!$this->context->skautIS->isLoggedIn()) {
+//        if (!$this->context->skautis->isLoggedIn()) {
 //            $this->flashMessage("Nemáte platné přihlášení do skautISu.", "fail");
 //            $this->redirect(":Auth:");
 //        }
@@ -103,7 +103,7 @@ class TestPresenter extends BasePresenter {
         }
         $sess->request = $this->prepareArgs(array($args, $cover), $values["service"]);
         try {
-            $ret = $this->context->skautIS->{$values['wsdl']}->{$values["service"]}($args, $cover);
+            $ret = $this->context->skautis->{$values['wsdl']}->{$values["service"]}($args, $cover);
         } catch (Exception $e) {
 //            dump($e);
             $this->flashMessage($e->getMessage(), "fail");
@@ -128,8 +128,8 @@ class TestPresenter extends BasePresenter {
         }
         $args = array_merge(
                 array(
-            SkautIS::APP_ID => $this->context->skautIS->getAppId(),
-                //SkautIS::TOKEN => $this->context->skautIS->getToken(),
+            SkautIS::APP_ID => $this->context->skautis->getAppId(),
+                //SkautIS::TOKEN => $this->context->skautis->getToken(),
                 ), $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
 
         if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "69adbd44ed722f19b31395894f300f12",
+    "hash": "c38c4d085c140e745a0dc4ca6bf6eb7d",
     "packages": [
         {
             "name": "dg/dibi",
@@ -1198,16 +1198,16 @@
         },
         {
             "name": "skautis/skautis",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinacek/SkautIS.git",
-                "reference": "90301130ff53ef07f6e7a3056c139e19d8c59c2d"
+                "reference": "aeff03e4d9ac3aead0a51a3a23bea7a8bf4229bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinacek/SkautIS/zipball/90301130ff53ef07f6e7a3056c139e19d8c59c2d",
-                "reference": "90301130ff53ef07f6e7a3056c139e19d8c59c2d",
+                "url": "https://api.github.com/repos/sinacek/SkautIS/zipball/aeff03e4d9ac3aead0a51a3a23bea7a8bf4229bb",
+                "reference": "aeff03e4d9ac3aead0a51a3a23bea7a8bf4229bb",
                 "shasum": ""
             },
             "require": {
@@ -1236,7 +1236,7 @@
                 "api",
                 "skautis"
             ],
-            "time": "2014-09-30 08:12:08"
+            "time": "2014-10-19 21:20:16"
         },
         {
             "name": "tracy/tracy",

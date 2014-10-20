@@ -11,6 +11,5 @@ nbproject/*
 /www/webtemp/
 /www/_upload/
 /www/images/*
-adminer.php
-htaccess
 /app/config/*.local.*
+!/app/config/*.example.*

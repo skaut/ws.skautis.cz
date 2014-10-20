@@ -12,8 +12,8 @@ class MailService extends BaseService {
 
     const EMAIL_SENDER = '"Webové služby" <webove.sluzby@skaut.cz>';
 
-    public function __construct($skautIS = NULL, $sendEmail = FALSE) {
-        parent::__construct($skautIS);
+    public function __construct($skautis = NULL, $sendEmail = FALSE) {
+        parent::__construct($skautis);
         $this->sendEmail = $sendEmail;
     }
 

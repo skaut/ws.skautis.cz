@@ -10,7 +10,7 @@ class UserService extends BaseService {
      * @return type 
      */
     public function getRoleId() {
-        return $this->skautIS->getRoleId();
+        return $this->skautis->getRoleId();
     }
 
     /**
@@ -18,13 +18,13 @@ class UserService extends BaseService {
      * @return array všech dostupných rolí přihlášeného uživatele
      */
     public function getAllSkautISRoles($activeOnly = true) {
-        return $this->skautIS->user->UserRoleAll(array("ID_User" => $this->getUserDetail()->ID, "IsActive" => $activeOnly));
+        return $this->skautis->user->UserRoleAll(array("ID_User" => $this->getUserDetail()->ID, "IsActive" => $activeOnly));
     }
 
     public function getUserDetail() {
         $id = __FUNCTION__;
         if (!($res = $this->load($id))) {//cache v rámci pozadavku
-            $res = $this->save($id, $this->skautIS->user->UserDetail());
+            $res = $this->save($id, $this->skautis->user->UserDetail());
         }
         return $res;
     }
@@ -34,10 +34,10 @@ class UserService extends BaseService {
      * @param ID_Role $id
      */
     public function updateSkautISRole($id) {
-        $unitId = $this->skautIS->user->LoginUpdate(array("ID_UserRole" => $id, "ID" => $this->skautIS->getToken()));
+        $unitId = $this->skautis->user->LoginUpdate(array("ID_UserRole" => $id, "ID" => $this->skautis->getToken()));
         if ($unitId) {
-            $this->skautIS->setRoleId($id);
-            $this->skautIS->setUnitId($unitId->ID_Unit);
+            $this->skautis->setRoleId($id);
+            $this->skautis->setUnitId($unitId->ID_Unit);
         }
     }
 
@@ -47,7 +47,7 @@ class UserService extends BaseService {
      */
     public function getPersonalDetail() {
         $user = $this->getUserDetail();
-        $person = $this->skautIS->org->personDetail((array("ID" => $user->ID_Person)));
+        $person = $this->skautis->org->personDetail((array("ID" => $user->ID_Person)));
         return $person;
     }
 
@@ -56,11 +56,11 @@ class UserService extends BaseService {
      * @return type 
      */
     public function isLoggedIn() {
-        return $this->skautIS->isLoggedIn();
+        return $this->skautis->isLoggedIn();
     }
     
     public function resetLoginData(){
-        $this->skautIS->resetLoginData();
+        $this->skautis->resetLoginData();
     }
 
     /**
@@ -72,7 +72,7 @@ class UserService extends BaseService {
      */
     public function actionVerify($table, $id = NULL, $ID_Action = NULL) {
         
-        $res = $this->skautIS->user->ActionVerify(array(
+        $res = $this->skautis->user->ActionVerify(array(
             "ID" => $id,
             "ID_Table" => $table,
             "ID_Action" => $ID_Action,
