@@ -68,16 +68,17 @@ class TestPresenter extends BasePresenter {
                 ->getControlPrototype()->setClass("btn btn-primary");
         $form->onSuccess[] = array($this, $name . 'Submitted');
 
-        $sess = $this->session->getSection("sisTest");
+        $sess = $this->getSession('sisTest');
 
-        if (isset($sess->defaults) && is_array($sess->defaults)) {
-            $form->setDefaults($sess->defaults);
+        if (isset($sess->defaults) && is_array((array)$sess->defaults)) {
+            $form->setDefaults((array)$sess->defaults);
         }
         return $form;
     }
 
     public function testFormSubmitted(Form $form) {
-        $sess = $this->session->getSection("sisTest");
+        $sess = $this->getSession('sisTest');
+                //$this->session->getSection("sisTest");
 
         $values = $form->getValues();
 //        if (!$this->context->skautis->isLoggedIn()) {
