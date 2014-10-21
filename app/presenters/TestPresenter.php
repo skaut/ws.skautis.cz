@@ -104,7 +104,7 @@ class TestPresenter extends BasePresenter {
         $sess->request = $this->prepareArgs(array($args, $cover), $values["service"]);
         try {
             $ret = $this->context->skautis->{$values['wsdl']}->{$values["service"]}($args, $cover);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 //            dump($e);
             $this->flashMessage($e->getMessage(), "fail");
             $sess->response = $e->getMessage();
