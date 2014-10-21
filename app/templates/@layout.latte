@@ -31,11 +31,10 @@
                                 <ul class="dropdown-menu">
                                     <li><a n:href=":Default:testsis">Testovací SkautIS</a></li>
                                     <li><a n:href=":Default:ws">Web Services</a></li>
-                                    <li><a n:href=":Default:tutorial">Testovací rozhraní</a></li>
                                 </ul>
                             </li>
                             
-                            <li {ifCurrent :Test:}class='active'{/ifCurrent}><a n:href=":Test:">Testování služeb</a></li>
+                            <li {ifCurrent :Test:}class='active'{/ifCurrent}><a n:href=":Test:">Testovací rozhraní</a></li>
                             <li {ifCurrent :AppRequest:}class='active'{/ifCurrent}><a n:href=":AppRequest:">Žádost o povolení aplikace</a></li>
                         </ul>
                         {if $user->isLoggedIn()}
