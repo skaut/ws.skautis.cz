@@ -26,6 +26,7 @@
                     <a class="brand" n:href=":Default:">SkautIS WS</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
+                        		{*
                              <li class="dropdown">
                                 <a class="dropdown-toggle active" data-toggle="dropdown" n:href=":Default:testsis">Základní informace<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -33,7 +34,9 @@
                                     <li><a n:href=":Default:ws">Web Services</a></li>
                                 </ul>
                             </li>
+                            *}
                             
+                            <li {ifCurrent :Default:}class='active'{/ifCurrent}><a n:href=":Default:">Základní informace</a></li>
                             <li {ifCurrent :Test:}class='active'{/ifCurrent}><a n:href=":Test:">Testovací rozhraní</a></li>
                             <li {ifCurrent :AppRequest:}class='active'{/ifCurrent}><a n:href=":AppRequest:">Žádost o povolení aplikace</a></li>
                         </ul>
@@ -69,7 +72,9 @@
         </div><!-- /content -->
             <hr style="clear: both" />
             <footer style="text-align: center;">
-                Vytvořil <a href="http://sinacek.cz">Sináček.cz</a> z <a href="http://osmnactka.net">18. skautského střediska Kruh Praha 6</a>
+                Vytvořil <a href="http://sinacek.cz">Sináček.cz</a> z <a href="http://osmnactka.net">18. skautského střediska Kruh Praha 6</a><br>
+                
+                Web můžete editovat na <a href="https://github.com/sinacek/ws.skautis.cz">Githubu</a>
             </footer>
         </div> <!-- /container -->
     </body>
