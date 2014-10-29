@@ -33,7 +33,7 @@ services:
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
     mailService:
-        class: MailService(%sendEmail%)
+        class: MailService(NULL, %sendEmail%)
     authService:
         class: AuthService( @skautis )
     userService:
