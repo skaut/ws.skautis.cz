@@ -8,52 +8,51 @@
 
 <div class="row-fluid">
     <div class="span12">
-            <h2>1) registrace vaší aplikace</h2>
+        <h2>1) registrace vaší aplikace</h2>
 
-            <p>K realnému SkautISu můžou přistupovat jen zaregistrované aplikace, svou registraci proveďte 
-                <a n:href=":AppRequest:">zde</a>. Do té doby (a pro testování!) můžete ovšem využívat Testovací SkautIS.
+        <p>Ke SkautISu mohou přistupovat jen zaregistrované aplikace, svou registraci proveďte <a n:href=":AppRequest:">zde</a>.
 
-            <p>Další informace pro vývojáře najdete na <a href="http://developers.skautis.cz/" target="_blank">http://developers.skautis.cz/</a></p>
+        <p>Další informace pro vývojáře najdete na <a href="http://developers.skautis.cz/" target="_blank">http://developers.skautis.cz/</a></p>
 
-            <div class="alert">
-                <h3>Testovací SkautIS</h3>
-                <p>
-                    Přihlášení do SkautIS apliakce je na adrese <a href="http://test-is.skaut.cz/">test-is.skaut.cz</a>. Přihlašovací údaje a API najdete na <a href="http://is.skaut.cz/napoveda/Testovaci-skautIS.ashx">is.skaut.cz/napoveda/Testovaci-skautIS.ashx</a>.
-                </p>
-            </div>
-
-
-            <h2>2) porozumění API</h2>
+        <div class="alert">
+            <h3>Testovací SkautIS</h3>
             <p>
-                Přehled všech služeb je na <a href="http://test-is.skaut.cz/JunakWebservice/">test-is.skaut.cz/JunakWebservice/</a> a částečná dokumentace na <a href="http://is.skaut.cz/napoveda/programatori.Default.aspx">is.skaut.cz/napoveda/programatori.Default.aspx</a>.
-                Vyzkoušet jak to funguje můžete na tomto webu v <a n:href=":Test:">Testovacím rozhraní</a>.
+                Přihlášení do SkautIS apliakce je na adrese <a href="http://test-is.skaut.cz/">test-is.skaut.cz</a>. Přihlašovací údaje a API najdete na <a href="http://is.skaut.cz/napoveda/Testovaci-skautIS.ashx">is.skaut.cz/napoveda/Testovaci-skautIS.ashx</a>.
             </p>
+        </div>
 
-            <h2>3) hotové knihovny a komponenty </h2>
-            <h3 id="php">PHP</h3>
-            <ul>
-                <li><strong>Knihovna na práci se SkautISem (Sin)</strong><br>
-                    Zdrojové kódy jsou na adrese <a href="https://github.com/sinacek/SkautIS">github.com/sinacek/SkautIS</a>.
-                    Návod na propojení s vlastním webem najdete na <a href="https://github.com/sinacek/SkautIS/wiki">github.com/sinacek/SkautIS/wiki</a>.
-                    Součástí knohovny je také rozšíření pro Nette(>2.2), které zjednodušuje napojení knihovny a přidává Skautis panel do debug baru Nette.<br />
-                    <img src='{$baseUri}/images/data/skautis-panel.png' />
-                    
-                <li><strong>Užitečné nástroje pro práci se skautISem (Pif)</strong><br>
-                    Nástroje najdete na <a href="https://github.com/zbycz/skautis-tools">https://github.com/zbycz/skautis-tools</a>.
-            </ul>
 
-            <h3 id="asp">ASP (.NET)</h3>
-            <ul>
-                <li><strong>Střediskový web (Vojtěch Vít)</strong><br>
-                    <a href="http://skautsis.codeplex.com/">Systém pro web střediska</a>
-                <li><strong>Registr organizačních jednotek</strong><br>
-                    Zdrojové kódy demo aplikace <a href="http://application.skautis.cz/UnitRegistry/">Registr organizačních jednotek</a> stáhnete <a href="{$baseUri}/_upload/UnitRegistry_Code.zip">zde</a>. Autorem aplikace je Jerry - Ondřej Peřina.
-            </ul>
+        <h2>2) porozumění API</h2>
+        <p>
+            Přehled všech služeb je na <a href="http://test-is.skaut.cz/JunakWebservice/">test-is.skaut.cz/JunakWebservice/</a> a částečná dokumentace na <a href="http://is.skaut.cz/napoveda/programatori.Default.aspx">is.skaut.cz/napoveda/programatori.Default.aspx</a>.
+            Vyzkoušet jak to funguje můžete na tomto webu v <a n:href=":Test:">Testovacím rozhraní</a>.
+        </p>
 
-            <h3 id="components">Hotové komponenty do webu</h3>
-            <ul>
-                <li>Hotová řešení a komponenty jednoduše vložitelné do webu najdete na <a href="https://is.skaut.cz/RemoteComponents/">is.skaut.cz/RemoteComponents</a>.
-                <li>Anonymní přístup k info o oddílech najdete na <a href="https://github.com/zbycz/skautis-tools">github.com/zbycz/skautis-tools</a>.
-            </ul>
+        <h2>3) hotové knihovny a komponenty </h2>
+        <h3 id="php">PHP</h3>
+        <ul>
+            <li><strong>Knihovna na práci se SkautISem (Sin)</strong><br>
+                Zdrojové kódy jsou na adrese <a href="https://github.com/skaut/Skautis">github.com/skaut/Skautis</a>.
+                Návod na propojení s vlastním webem najdete na <a href="https://github.com/skaut/SkautIS/wiki">github.com/skaut/SkautIS/wiki</a>.
+                Pro použití knihovny v projektu s Nette využijte rozšíření, které najdete na <a href="https://github.com/skaut/SkautisNette">github.com/skaut/SkautisNete</a>. Rozšíření přidává Skautis panel do debug baru Nette.<br />
+                <img src='{$baseUri}/images/data/skautis-panel.png' />
+
+            <li><strong>Užitečné nástroje pro práci se skautISem (Pif)</strong><br>
+                Nástroje najdete na <a href="https://github.com/zbycz/skautis-tools">https://github.com/zbycz/skautis-tools</a>.
+        </ul>
+
+        <h3 id="asp">ASP (.NET)</h3>
+        <ul>
+            <li><strong>Střediskový web (Vojtěch Vít)</strong><br>
+                <a href="http://skautsis.codeplex.com/">Systém pro web střediska</a>
+            <li><strong>Registr organizačních jednotek</strong><br>
+                Zdrojové kódy demo aplikace <a href="http://application.skautis.cz/UnitRegistry/">Registr organizačních jednotek</a> stáhnete <a href="{$baseUri}/_upload/UnitRegistry_Code.zip">zde</a>. Autorem aplikace je Jerry - Ondřej Peřina.
+        </ul>
+
+        <h3 id="components">Hotové komponenty do webu</h3>
+        <ul>
+            <li>Hotová řešení a komponenty jednoduše vložitelné do webu najdete na <a href="https://is.skaut.cz/RemoteComponents/">is.skaut.cz/RemoteComponents</a>.
+            <li>Anonymní přístup k info o oddílech najdete na <a href="https://github.com/zbycz/skautis-tools">github.com/zbycz/skautis-tools</a>.
+        </ul>
     </div>
 </div>
