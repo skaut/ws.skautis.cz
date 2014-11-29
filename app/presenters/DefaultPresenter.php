@@ -16,4 +16,8 @@ class DefaultPresenter extends BasePresenter {
         $this->redirect("default"); //historické přesměrování
     }
 
+    public function actionTestsis() {
+        $this->redirect("Test:"); //historické přesměrování
+    }
+
 }
