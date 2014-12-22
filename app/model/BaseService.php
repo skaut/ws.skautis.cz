@@ -13,7 +13,7 @@ abstract class BaseService extends Nette\Object {
 
     /**
      * slouží pro komunikaci se skautISem
-     * @var \SkautIS\SkautIS
+     * @var SkautisSkautis
      */
     protected $skautis;
 

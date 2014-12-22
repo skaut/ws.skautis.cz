@@ -1,16 +1,17 @@
 <?php
-use Nette\Object,
-    Nette\Security\IAuthenticator,
-    Nette\Security\Identity;
+namespace Sinacek;
+
+use Nette;
 
 /**
  * používat pouze pro data ze skautISu, nikdy nenechávat aby uživatel zadal sám svoje ID!
- * @author Hána František
+ * @author Hána František <sinacek@gmail.com>
  */
-class SkautISAuthenticator extends Object implements IAuthenticator {
+class SkautisAuthenticator extends Nette\Object implements Nette\Security\IAuthenticator {
 
     public function authenticate(array $credentials) {
-        return new Identity($credentials[0]->ID_User);
+        $data = $credentials[0];
+        return new Nette\Security\Identity($data->ID_User);
     }
 
 }

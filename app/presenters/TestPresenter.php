@@ -3,8 +3,7 @@
 namespace App;
 
 use Nette\Diagnostics\Debugger,
-    Nette\Application\UI\Form,
-    SkautIS\SkautIS;
+    Nette\Application\UI\Form;
 
 /**
  * @author sinacek
@@ -19,7 +18,7 @@ class TestPresenter extends BasePresenter {
         parent::startup();
 //        if (!$this->user->isLoggedIn()) {
 //            $this->backlink = $this->storeRequest('+ 3 days');
-//            $e = new \SkautIS\Exception\AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
+//            $e = new Skautis\Exception\AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
 //            $e->backlink = $this->backlink;
 //            throw $e;
 //        }
@@ -70,15 +69,15 @@ class TestPresenter extends BasePresenter {
 
         $sess = $this->getSession('sisTest');
 
-        if (isset($sess->defaults) && is_array((array)$sess->defaults)) {
-            $form->setDefaults((array)$sess->defaults);
+        if (isset($sess->defaults) && is_array((array) $sess->defaults)) {
+            $form->setDefaults((array) $sess->defaults);
         }
         return $form;
     }
 
     public function testFormSubmitted(Form $form) {
         $sess = $this->getSession('sisTest');
-                //$this->session->getSection("sisTest");
+        //$this->session->getSection("sisTest");
 
         $values = $form->getValues();
 //        if (!$this->context->skautis->isLoggedIn()) {
@@ -129,7 +128,7 @@ class TestPresenter extends BasePresenter {
         }
         $args = array_merge(
                 array(
-            SkautIS::APP_ID => $this->context->skautis->getAppId(),
+            \SkautIS\SkautIS::APP_ID => $this->context->skautis->getAppId(),
                 //SkautIS::TOKEN => $this->context->skautis->getToken(),
                 ), $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
 

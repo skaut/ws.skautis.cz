@@ -49,18 +49,18 @@ class AuthPresenter extends BasePresenter {
             ));
             
             if (!$this->context->userService->isLoggedIn()) {
-                throw new \SkautIS_AuthenticationException("Nemáte platné přihlášení do skautISu");
+                throw new \SkautIS\Exception\AuthenticationException("Nemáte platné přihlášení do skautISu");
             }
             $me = $this->context->userService->getPersonalDetail();
 
             $this->user->setExpiration('+ 29 minutes'); // nastavíme expiraci
-            $this->user->setAuthenticator(new \SkautISAuthenticator());
+            $this->user->setAuthenticator(new \Sinacek\SkautisAuthenticator());
             $this->user->login($me);
 
             if (isset($ReturnUrl)) {
                 $this->context->application->restoreRequest($ReturnUrl);
             }
-        } catch (\SkautIS_AuthenticationException $e) {
+        } catch (\SkautIS\Exception\AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), "danger");
             $this->redirect(":Auth:");
         }
