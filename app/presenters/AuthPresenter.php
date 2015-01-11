@@ -42,14 +42,10 @@ class AuthPresenter extends BasePresenter {
         }
 //        Debugger::log("AuthP: ".$post['skautIS_Token']." / ". $post['skautIS_IDRole'] . " / " . $post['skautIS_IDUnit'], "auth");
         try {
-            $this->context->authService->setInit(array(
-                "token" => $post['skautIS_Token'],
-                "roleId" => $post['skautIS_IDRole'],
-                "unitId" => $post['skautIS_IDUnit']
-            ));
+            $this->context->authService->setInit($post);
             
             if (!$this->context->userService->isLoggedIn()) {
-                throw new \SkautIS\Exception\AuthenticationException("Nemáte platné přihlášení do skautISu");
+                throw new \Skautis\Exception\AuthenticationException("Nemáte platné přihlášení do skautISu");
             }
             $me = $this->context->userService->getPersonalDetail();
 
@@ -60,7 +56,7 @@ class AuthPresenter extends BasePresenter {
             if (isset($ReturnUrl)) {
                 $this->context->application->restoreRequest($ReturnUrl);
             }
-        } catch (\SkautIS\Exception\AuthenticationException $e) {
+        } catch (\Skautis\Exception\AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), "danger");
             $this->redirect(":Auth:");
         }

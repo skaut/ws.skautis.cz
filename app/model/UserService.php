@@ -10,7 +10,7 @@ class UserService extends BaseService {
      * @return type 
      */
     public function getRoleId() {
-        return $this->skautis->getRoleId();
+        return $this->skautis->getUser()->getRoleId();
     }
 
     /**
@@ -56,11 +56,11 @@ class UserService extends BaseService {
      * @return type 
      */
     public function isLoggedIn() {
-        return $this->skautis->isLoggedIn();
+        return $this->skautis->getUser()->isLoggedIn();
     }
-    
-    public function resetLoginData(){
-        $this->skautis->resetLoginData();
+
+    public function resetLoginData() {
+        $this->skautis->getUser()->resetLoginData();
     }
 
     /**
@@ -71,12 +71,12 @@ class UserService extends BaseService {
      * @return BOOL|stdClass|array
      */
     public function actionVerify($table, $id = NULL, $ID_Action = NULL) {
-        
+
         $res = $this->skautis->user->ActionVerify(array(
             "ID" => $id,
             "ID_Table" => $table,
             "ID_Action" => $ID_Action,
-                ));
+        ));
         if ($ID_Action !== NULL) { //pokud je zadána konrétní funkce pro ověřování, tak se vrací BOOL
             if ($res instanceof stdClass) {
                 return false;
@@ -85,7 +85,7 @@ class UserService extends BaseService {
                 return true;
             }
         }
-        if(is_array($res)){
+        if (is_array($res)) {
             $tmp = array();
             foreach ($res as $v) {
                 $tmp[$v->ID] = $v;

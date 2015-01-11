@@ -13,7 +13,7 @@ abstract class BaseService extends Nette\Object {
 
     /**
      * slouží pro komunikaci se skautISem
-     * @var SkautisSkautis
+     * @var Skautis\Skautis
      */
     protected $skautis;
 
@@ -29,16 +29,18 @@ abstract class BaseService extends Nette\Object {
      */
     private static $storage;
 
-    public function __construct($skautIS = NULL) {
+    public function __construct(Skautis\Skautis $skautIS = NULL) {
         $this->skautis = $skautIS;
         self::$storage = array();
     }
-    
-    public function getInfo(){
+
+    public function getInfo() {
+        //dump($this->skautis->getUser());
+        
         return array(
-            "ID_Login"=>$this->skautis->getToken(),
-            "ID_Role"=>$this->skautis->getRoleId(),
-            "ID_Unit"=>$this->skautis->getUnitId(),
+            "ID_Login" => $this->skautis->getUser()->getLoginId(),
+            "ID_Role" => $this->skautis->getUser()->getRoleId(),
+            "ID_Unit" => $this->skautis->getUser()->getUnitId(),
         );
     }
 
@@ -68,4 +70,3 @@ abstract class BaseService extends Nette\Object {
     }
 
 }
-

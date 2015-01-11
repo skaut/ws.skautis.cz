@@ -19,9 +19,7 @@ class AuthService extends \BaseService {
      * @param array $arr 
      */
     public function setInit(array $arr) {
-        $this->skautis->setToken($arr['token']);
-        $this->skautis->setRoleId($arr['roleId']);
-        $this->skautis->setUnitId($arr['unitId']);
+        $this->skautis->setLoginData($arr);
     }
 
     /**
@@ -30,13 +28,6 @@ class AuthService extends \BaseService {
      */
     public function getLogoutUrl() {
         return $this->skautis->getLogoutUrl();
-    }
-
-    /**
-     * prodlouží dobu přihlášení do skautISu
-     */
-    public function updateLogoutTime() {
-        $this->skautis->updateLogoutTime();
     }
 
 }

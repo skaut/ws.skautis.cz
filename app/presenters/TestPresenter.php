@@ -11,28 +11,22 @@ use Nette\Diagnostics\Debugger,
 class TestPresenter extends BasePresenter {
 
     public $wsdl;
+    private $skautis;
 
-    //protected $service;
+    public function __construct(\Skautis\Skautis $skautis = NULL) {
+        parent::__construct();
+        $this->skautis = $skautis;
+    }
 
     protected function startup() {
         parent::startup();
-//        if (!$this->user->isLoggedIn()) {
-//            $this->backlink = $this->storeRequest('+ 3 days');
-//            $e = new Skautis\Exception\AuthenticationException("Pro testování musíte být přihlášeni do testovacího SkautISu.");
-//            $e->backlink = $this->backlink;
-//            throw $e;
-//        }
 
         $post = $this->request->post;
         if (isset($post['skautIS_Token'])) {
-            $this->context->skautis->init($post);
+            $this->skautis->init($post);
         }
-        $this->template->skautIsAppId = $this->context->skautis->getAppId();
-//        if (!$this->context->skautis->isLoggedIn()) {// && $this->action != "default"
-//            $this->flashMessage("Chybí aktivní přihlášení do skautISu", "fail");
-//            $this->redirect("default");
-//        }
-        $this->wsdl = $this->context->skautis->getWsdlList();
+        $this->template->skautIsAppId = $this->skautis->getConfig()->getAppId();
+        $this->wsdl = $this->skautis->getWsdlManager()->getSupportedWebServices();
     }
 
     public function renderDefault() {
@@ -52,7 +46,7 @@ class TestPresenter extends BasePresenter {
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
                 ->addRule(Form::FILLED, "Musís vybrat WSDL")
-                ->setDefaultValue("OrganizationUnit");
+                ->setDefaultValue("9");
         $form->addText("service", "Funkce")
                 ->setDefaultValue("unitAll")
                 ->addRule(FORM::FILLED, "Vypln service");
@@ -77,13 +71,7 @@ class TestPresenter extends BasePresenter {
 
     public function testFormSubmitted(Form $form) {
         $sess = $this->getSession('sisTest');
-        //$this->session->getSection("sisTest");
-
         $values = $form->getValues();
-//        if (!$this->context->skautis->isLoggedIn()) {
-//            $this->flashMessage("Nemáte platné přihlášení do skautISu.", "fail");
-//            $this->redirect(":Auth:");
-//        }
         $sess->defaults = $values;
 
         $args = \Nette\Neon\Neon::decode($values['args']);
@@ -94,18 +82,14 @@ class TestPresenter extends BasePresenter {
                 }
             }
         }
-//        $args["StartDate"] = "2012-02-01T00:00:00";
-//        $args["EndDate"] = "2012-02-05T00:00:00";
-        //dump($args);die();
         $cover = trim($values['cover']);
         if ($cover == "") {
             $cover = NULL;
         }
         $sess->request = $this->prepareArgs(array($args, $cover), $values["service"]);
         try {
-            $ret = $this->context->skautis->{$values['wsdl']}->{$values["service"]}($args, $cover);
+            $ret = $this->skautis->{$this->wsdl[$values['wsdl']]}->{$values["service"]}($args, $cover);
         } catch (\Exception $e) {
-//            dump($e);
             $this->flashMessage($e->getMessage(), "fail");
             $sess->response = $e->getMessage();
             $this->redirect("this");
@@ -126,11 +110,10 @@ class TestPresenter extends BasePresenter {
         if (!isset($arguments[0]) || !is_array($arguments[0])) {
             $arguments[0] = array();
         }
-        $args = array_merge(
-                array(
-            \SkautIS\SkautIS::APP_ID => $this->context->skautis->getAppId(),
-                //SkautIS::TOKEN => $this->context->skautis->getToken(),
-                ), $arguments[0]); //k argumentum připoji vlastni informace o aplikaci a uzivateli
+        if (!array_key_exists("ID_Application", $arguments[0])) {
+            $arguments[0]["ID_Application"] = $this->skautis->getConfig()->getAppId();
+        }
+        $args = $arguments[0];
 
         if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
             $matches = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /

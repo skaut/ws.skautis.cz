@@ -26,7 +26,7 @@ nette:
         maxLen: 500;
 
 extensions:
-    skautis: SkautIS\Nette\SkautisExtension22
+    skautis: Skautis\Nette\SkautisExtension
 
 services:
     #router: Nette\Application\Routers\SimpleRouter('App:Default:default')
@@ -35,6 +35,6 @@ services:
     mailService:
         class: MailService(NULL, %sendEmail%)
     authService:
-        class: AuthService( @skautis )
+        class: AuthService
     userService:
-        class: UserService( @skautis )
+        class: UserService
