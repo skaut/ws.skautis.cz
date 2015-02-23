@@ -32,9 +32,6 @@ services:
     #router: Nette\Application\Routers\SimpleRouter('App:Default:default')
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
-    mailService:
-        class: MailService(NULL, %sendEmail%)
-    authService:
-        class: AuthService
-    userService:
-        class: UserService
+    - MailService(NULL, %sendEmail%)
+    - AuthService
+    - UserService

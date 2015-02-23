@@ -13,7 +13,7 @@ class TestPresenter extends BasePresenter {
     public $wsdl;
     private $skautis;
 
-    public function __construct(\Skautis\Skautis $skautis = NULL) {
+    public function __construct(\Skautis\Skautis $skautis) {
         parent::__construct();
         $this->skautis = $skautis;
     }
@@ -30,9 +30,9 @@ class TestPresenter extends BasePresenter {
     }
 
     public function renderDefault() {
-        $info = $this->context->userService->getInfo();
+        $info = $this->userService->getInfo();
         if ($this->user->isLoggedIn()) {
-            $user = $this->context->userService->getUserDetail();
+            $user = $this->userService->getUserDetail();
             $info["ID_User"] = $user->ID;
             $info["ID_Person"] = $user->ID_Person;
         }

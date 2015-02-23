@@ -11,17 +11,23 @@ class AppRequestPresenter extends BasePresenter {
 
     protected $wsdl = array(
         "appMng" => array("url" => "ApplicationManagement", "label" => "Webová služba pro správu přístupů externích aplikací"),
+        "content" => array("url" => "ContentManagement", "label" => "Webová služba pro správu obsahu (redakční systém)."),
         "evaluation" => array("url" => "Evaluation", "label" => "Webová služba pro práci s hodnocením kvality"),
         "events" => array("url" => "Events", "label" => " Webová služba pro práci s akcemi (sněmy apod.)"),
         "exports" => array("url" => "Exports", "label" => "Webová služba pro export dat do jiných systémů"),
         "googleApps" => array("url" => "GoogleApps", "label" => "Webová služba pro práci s GoogleApps (zápis dat do databáze, komunikace s GoogleApps)"),
+        "grants" => array("url" => "Grants", "label" => "Webová služba pro práci s dotacemi"),
         "journal" => array("url" => "Journal", "label" => "Webová služba pro práci s časopisy a fakturami"),
+        "material" => array("url" => "Material", "label" => "Webová služba pro práci s materiálem a sklady"),
         "msg" => array("url" => "Message", "label" => "Interní zpravodajský systém"),
         "org" => array("url" => "OrganizationUnit", "label" => "Webová služba pro práci s organizačními jednotkami a osobami"),
+        "power" => array("url" => "Power", "label" => "Skautská energie"),
         "reports" => array("url" => "Reports", "label" => "Generování tiskových sestav"),
         "summary" => array("url" => "Summary", "label" => "Exporty/přehledy"),
+        "task" => array("url" => "Task", "label" => "Úkoly ve skautISu"),
         "telephony" => array("url" => "Telephony", "label" => "Skautská telefonní síť"),
         "user" => array("url" => "UserManagement", "label" => "Webová služba pro práci s uživateli (zakládání, přidělování rolí, přihlašování apod.)"),
+        //"vivant" => array("url" => "Vivant", "label" => "Webová služba pro exporty dat pro Vivant"), //slovenský skautis
         "welcome" => array("url" => "Welcome", "label" => "Webová služba pro práci s uvítacími balíčky"),
     );
     protected $generalGroups = array(
@@ -33,6 +39,17 @@ class AppRequestPresenter extends BasePresenter {
         "ggReport" => "Generování tiskových sestav (Report)",
         "ggOther" => "Ostatní funkce",
     );
+    
+    /**
+     *
+     * @var \MailService
+     */
+    protected $mailService;
+    
+    public function __construct(\MailService $ms) {
+        parent::__construct();
+        $this->mailService = $ms;
+    }
 
     protected function startup() {
         parent::startup();
@@ -125,7 +142,7 @@ class AppRequestPresenter extends BasePresenter {
 //        }
         $template = $this->template;
         $template->values = $values;
-        $this->context->mailService->sendRequest($template, $values);
+        $this->mailService->sendRequest($template, $values);
         $this->presenter->flashMessage("Žádost byla odeslána na ústředí a na zadaný kontaktní email.");
         $this->presenter->redirect("default");
     }

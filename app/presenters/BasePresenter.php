@@ -12,26 +12,43 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
      */
     protected $backlink;
 
+    /**
+     *
+     * @var string
+     */
+    protected $webtempUrl;
+
+    /**
+     *
+     * @var \UserService
+     */
+    protected $userService;
+
+    public function injectUserService(\UserService $us) {
+        $this->userService = $us;
+    }
+
     protected function startup() {
         parent::startup();
         $this->template->backlink = $this->getParameter("backlink");
-        
+        $this->webtempUrl = $this->context->getByType('Nette\Http\Request')->getUrl()->baseUrl . 'webtemp';
+
 //        if ($this->user->isLoggedIn()) //prodluzuje přihlášení při každém požadavku
 //            $this->context->authService->updateLogoutTime();
     }
 
     //upravuje roli ve skautISu
     public function handleChangeRole($roleId) {
-        $this->context->userService->updateSkautISRole($roleId);
+        $this->userService->updateSkautISRole($roleId);
         $this->redirect("this");
     }
 
     public function beforeRender() {
         parent::beforeRender();
         try {
-            if ($this->user->isLoggedIn() && $this->context->userService->isLoggedIn()) {
-                $this->template->myRoles = $this->context->userService->getAllSkautISRoles();
-                $this->template->myRole = $this->context->userService->getRoleId();
+            if ($this->user->isLoggedIn() && $this->userService->isLoggedIn()) {
+                $this->template->myRoles = $this->userService->getAllSkautISRoles();
+                $this->template->myRole = $this->userService->getRoleId();
             }
         } catch (Exception $ex) {
             $this->user->logout();
@@ -48,7 +65,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
 //            return CssMin::minify($code);
 //        }
 //        $compiler->addFilter("mini");
-        $control = new WebLoader\Nette\CssLoader($compiler, $this->context->httpRequest->url->baseUrl . 'webtemp');
+        $control = new WebLoader\Nette\CssLoader($compiler, $this->webtempUrl);
         $control->setMedia('screen');
         $files->addFiles(array(
             'bootstrap.min.css',
@@ -71,7 +88,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
             'netteForms.js',
             'my.js',
         ));
-        return new WebLoader\Nette\JavaScriptLoader($compiler, $this->context->httpRequest->url->baseUrl . 'webtemp');
+        return new WebLoader\Nette\JavaScriptLoader($compiler, $this->webtempUrl);
     }
 
 }

@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "dg/dibi",
-            "version": "v2.2.2",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/dibi.git",
-                "reference": "a118c2cf96a796d8118b3b0d2811c70aee9fd6c9"
+                "reference": "5970db58aaf3c24c76306a0acbf683692e0fc539"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/dibi/zipball/a118c2cf96a796d8118b3b0d2811c70aee9fd6c9",
-                "reference": "a118c2cf96a796d8118b3b0d2811c70aee9fd6c9",
+                "url": "https://api.github.com/repos/dg/dibi/zipball/5970db58aaf3c24c76306a0acbf683692e0fc539",
+                "reference": "5970db58aaf3c24c76306a0acbf683692e0fc539",
                 "shasum": ""
             },
             "require": {
@@ -27,13 +27,13 @@
                 "dg/dibi": "self.version"
             },
             "require-dev": {
-                "nette/tester": "~1.1",
+                "nette/tester": "~1.3",
                 "tracy/tracy": "~2.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -67,7 +67,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2014-06-30 15:08:04"
+            "time": "2015-01-25 16:24:28"
         },
         {
             "name": "janmarek/webloader",
@@ -1206,12 +1206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/SkautisNette.git",
-                "reference": "2ef7b431f15fe17053c3375c0d3cb149a46d89ad"
+                "reference": "d1adb80ab7d351dcba77ff2d0338cb112c0b436f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/SkautisNette/zipball/2ef7b431f15fe17053c3375c0d3cb149a46d89ad",
-                "reference": "2ef7b431f15fe17053c3375c0d3cb149a46d89ad",
+                "url": "https://api.github.com/repos/skaut/SkautisNette/zipball/d1adb80ab7d351dcba77ff2d0338cb112c0b436f",
+                "reference": "d1adb80ab7d351dcba77ff2d0338cb112c0b436f",
                 "shasum": ""
             },
             "require": {
@@ -1266,7 +1266,7 @@
                 "nette",
                 "skautis"
             ],
-            "time": "2015-01-03 12:01:49"
+            "time": "2015-01-25 19:51:52"
         },
         {
             "name": "skautis/skautis",
@@ -1274,12 +1274,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/Skautis.git",
-                "reference": "64ab99311b273523afaaeb678729c40632bd1871"
+                "reference": "e07dfb89e0d69e13664163738da2241e8604fdf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/Skautis/zipball/64ab99311b273523afaaeb678729c40632bd1871",
-                "reference": "64ab99311b273523afaaeb678729c40632bd1871",
+                "url": "https://api.github.com/repos/skaut/Skautis/zipball/e07dfb89e0d69e13664163738da2241e8604fdf2",
+                "reference": "e07dfb89e0d69e13664163738da2241e8604fdf2",
                 "shasum": ""
             },
             "require": {
@@ -1287,8 +1287,9 @@
                 "php": ">=5.4"
             },
             "require-dev": {
+                "fabpot/php-cs-fixer": "@stable",
                 "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "4.4.*"
+                "phpunit/phpunit": "4.5.*"
             },
             "suggest": {
                 "skautis/nette": "Integrace Skautis do Nette",
@@ -1323,7 +1324,7 @@
                 "soap",
                 "wsdl"
             ],
-            "time": "2014-12-29 17:34:54"
+            "time": "2015-02-21 14:03:37"
         },
         {
             "name": "tracy/tracy",
