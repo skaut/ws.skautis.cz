@@ -30,7 +30,7 @@ class RouterFactory {
 
         $router[] = new Route('<presenter>[/<action>]', array(
             "presenter" => array(
-                Route::VALUE => 'default',
+                Route::VALUE => 'Default',
                 Route::FILTER_TABLE => array(
                     'zadost' => 'AppRequest',
                     'testovani' => 'Test',
