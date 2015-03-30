@@ -34,10 +34,9 @@ class UserService extends BaseService {
      * @param ID_Role $id
      */
     public function updateSkautISRole($id) {
-        $unitId = $this->skautis->user->LoginUpdate(array("ID_UserRole" => $id, "ID" => $this->skautis->getToken()));
-        if ($unitId) {
-            $this->skautis->setRoleId($id);
-            $this->skautis->setUnitId($unitId->ID_Unit);
+        $response = $this->skautis->user->LoginUpdate(array("ID_UserRole" => $id, "ID" => $this->skautis->getUser()->getLoginId()));
+        if ($response) {
+            $this->skautis->getUser()->updateLoginData(NULL, $id, $response->ID_Unit);
         }
     }
 
