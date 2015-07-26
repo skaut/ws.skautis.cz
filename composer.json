@@ -7,7 +7,7 @@
                 "skautis/skautis": "2.*@dev",
                 "skautis/nette": "2.*@dev",
                 "janmarek/webloader": "2.2.*",
-                "dg/dibi" : "~2.2"
+                "dg/dibi" : "~2.3"
 	}
         
 }
