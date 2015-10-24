@@ -19,12 +19,11 @@ class ErrorPresenter extends \Nette\Application\UI\Presenter {
             $backlink = isset($exception->backlink) ? $exception->backlink : NULL;
             $this->redirect(":Default:", array("backlink" => $backlink));
         } elseif ($exception instanceof \Skautis\Exception) {
-            Debugger::log($exception, Debugger::WARNING); // and log exception
             $this->setView('SkautIS');
             $this->template->ex = $exception;
         } else {
             $this->setView('500'); // load template 500.latte
-            Debugger::log($exception, Debugger::ERROR); // and log exception
+            Debugger::log($exception, Debugger::EXCEPTION); // and log exception
         }
     }
 
