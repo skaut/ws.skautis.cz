@@ -3,13 +3,14 @@
 *.log
 *.db
 .DS_Store*
-
 nbproject/*
 /vendor/*
-/temp/*
-/log/*
+/temp-nette/*
+/log-nette/*
 /www/webtemp/
 /www/_upload/
 /www/images/*
 /app/config/*.local.*
 !/app/config/*.example.*
+/deploy.sh
+/deployment*

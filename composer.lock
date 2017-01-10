@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1efc973ac2f8689f07c40984d689d0be",
+    "content-hash": "88f400bffc1821635983fd0a0f959e87",
     "packages": [
         {
             "name": "dibi/dibi",
@@ -1478,7 +1478,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">= 5.3.0"
+        "php": ">= 5.5.0"
     },
     "platform-dev": []
 }
