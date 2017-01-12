@@ -95,9 +95,9 @@ class AppRequestPresenter extends BasePresenter {
         $form->addText("urlLogout", "URL po odhlášení")
                 ->setDefaultValue("http://")
                 ->addRule(Form::URL, "Zadej platnou URL po odhlášení");
-        $form->addText("urlInfo", "URL informační stránky")
-                ->setDefaultValue("http://");
-        $form->addText("ip", "IP adresa serveru");
+//        $form->addText("urlInfo", "URL informační stránky")
+//                ->setDefaultValue("http://");
+//        $form->addText("ip", "IP adresa serveru");
         $form->addTextArea("note", "Poznámka", 40, 5)
                 ->getControlPrototype()->setClass("input-xlarge");
 
