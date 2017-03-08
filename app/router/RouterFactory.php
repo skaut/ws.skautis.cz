@@ -2,19 +2,31 @@
 
 namespace App;
 
-use Nette\Application\Routers\RouteList,
-    Nette\Application\Routers\Route,
-    Nette\Application\Routers\SimpleRouter;
+use Nette\Application\Routers\Route;
+use Nette\Application\Routers\RouteList;
+use Nette\Application\Routers\SimpleRouter;
 
 /**
  * Router factory.
  */
-class RouterFactory {
+class RouterFactory
+{
+
+    /**
+     * RouterFactory constructor.
+     * @param bool $ssl
+     */
+    public function __construct($ssl)
+    {
+        // Disable https for development
+        Route::$defaultFlags = $ssl ? Route::SECURED : 0;
+    }
 
     /**
      * @return \Nette\Application\IRouter
      */
-    public function createRouter() {
+    public function createRouter()
+    {
         $router = new RouteList();
         $router[] = new Route('index.php', 'Default:default', Route::ONE_WAY);
         $router[] = new Route('sign/<action>[/back-<backlink>]', array(
@@ -26,7 +38,7 @@ class RouterFactory {
         $router[] = new Route('ws', array(
             "presenter" => "Default",
             "action" => "ws",
-                ), Route::ONE_WAY);
+        ), Route::ONE_WAY);
 
         $router[] = new Route('<presenter>[/<action>]', array(
             "presenter" => array(

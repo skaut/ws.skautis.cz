@@ -1,13 +1,19 @@
 # disable directory listing
 Options -Indexes
 
-RewriteCond %{HTTP_HOST} ^ws\.skauting\.cz [NC]
-RewriteRule ^(.*)$ http://ws.skautis.cz/$1 [R=301,L]
-
 # mod_rewrite
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	# RewriteBase /
+
+    RewriteCond %{HTTP_HOST} ^ws\.skauting\.cz$ [NC]
+    RewriteRule ^(.*)$ https://ws.skautis.cz%{REQUEST_URI} [L,R=301]
+
+    # http -> https
+    #RewriteCond %{HTTP_HOST} ^ws\.skautis\.cz$ [NC]
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://ws.skautis.cz%{REQUEST_URI} [L,R=301]
+
 
 	# front controller
 	RewriteCond %{REQUEST_FILENAME} !-f

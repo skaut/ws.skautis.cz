@@ -30,7 +30,7 @@ extensions:
 
 services:
     #router: Nette\Application\Routers\SimpleRouter('App:Default:default')
-    - App\RouterFactory
+    - App\RouterFactory(%ssl%)
     router: @App\RouterFactory::createRouter
     - MailService(NULL, %sendEmail%)
     - AuthService
