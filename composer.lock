@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "88f400bffc1821635983fd0a0f959e87",
+    "content-hash": "939bb4cd604e5cfccaaaa27bcb1bb2d1",
     "packages": [
         {
             "name": "dibi/dibi",
@@ -419,16 +419,16 @@
         },
         {
             "name": "nette/database",
-            "version": "v2.3.10",
+            "version": "v2.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/database.git",
-                "reference": "ed0dc48c58ddf9042f736f3c1ac431dfdd825019"
+                "reference": "28737ccbe10d2ada233e823075971a05b9cb11cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/database/zipball/ed0dc48c58ddf9042f736f3c1ac431dfdd825019",
-                "reference": "ed0dc48c58ddf9042f736f3c1ac431dfdd825019",
+                "url": "https://api.github.com/repos/nette/database/zipball/28737ccbe10d2ada233e823075971a05b9cb11cf",
+                "reference": "28737ccbe10d2ada233e823075971a05b9cb11cf",
                 "shasum": ""
             },
             "require": {
@@ -469,7 +469,7 @@
             ],
             "description": "Nette Database Component",
             "homepage": "https://nette.org",
-            "time": "2016-10-18T13:30:07+00:00"
+            "time": "2016-12-12T12:46:29+00:00"
         },
         {
             "name": "nette/deprecated",
@@ -1360,17 +1360,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/Skautis.git",
-                "reference": "308270868a0d2f07c1400c3900ee04299dc487bb"
+                "reference": "090fddb9d7d6da2467f52be9f6ff4db16724c1c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/Skautis/zipball/308270868a0d2f07c1400c3900ee04299dc487bb",
-                "reference": "308270868a0d2f07c1400c3900ee04299dc487bb",
+                "url": "https://api.github.com/repos/skaut/Skautis/zipball/090fddb9d7d6da2467f52be9f6ff4db16724c1c5",
+                "reference": "090fddb9d7d6da2467f52be9f6ff4db16724c1c5",
                 "shasum": ""
             },
             "require": {
                 "ext-soap": "*",
-                "php": ">=5.4"
+                "php": ">=5.6"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "@stable",
@@ -1410,20 +1410,20 @@
                 "soap",
                 "wsdl"
             ],
-            "time": "2016-10-16 17:28:54"
+            "time": "2017-03-07 09:02:13"
         },
         {
             "name": "tracy/tracy",
-            "version": "v2.3.11",
+            "version": "v2.3.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "152b7602115dd3a66f3190280951390097a15f65"
+                "reference": "80731c9eb4ee9b297cd23958644d21cfa53428b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/152b7602115dd3a66f3190280951390097a15f65",
-                "reference": "152b7602115dd3a66f3190280951390097a15f65",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/80731c9eb4ee9b297cd23958644d21cfa53428b4",
+                "reference": "80731c9eb4ee9b297cd23958644d21cfa53428b4",
                 "shasum": ""
             },
             "require": {
@@ -1465,7 +1465,7 @@
                 "debugger",
                 "nette"
             ],
-            "time": "2016-05-30T09:03:15+00:00"
+            "time": "2017-01-18T14:14:42+00:00"
         }
     ],
     "packages-dev": [],

@@ -1,13 +1,12 @@
 {
-	"name": "ws.skautis.cz",
-	"type": "project",
-	"require": {
-		"php": ">= 5.5.0",
-		"nette/nette": "~2.3",
-                "skautis/skautis": "2.*@dev",
-                "skautis/nette": "2.*@dev",
-                "janmarek/webloader": "2.2.*",
-                "dibi/dibi" : "3.0.*"
-	}
-        
+  "name": "ws.skautis.cz",
+  "type": "project",
+  "require": {
+    "php": ">= 5.5.0",
+    "nette/nette": "2.3.*",
+    "skautis/skautis": "2.*@dev",
+    "skautis/nette": "2.*@dev",
+    "janmarek/webloader": "2.2.*",
+    "dibi/dibi": "3.0.*"
+  }
 }
