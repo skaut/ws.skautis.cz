@@ -29,9 +29,8 @@ extensions:
     skautis: Skautis\Nette\SkautisExtension
 
 services:
-    #router: Nette\Application\Routers\SimpleRouter('App:Default:default')
     - App\RouterFactory(%ssl%)
     router: @App\RouterFactory::createRouter
-    - MailService(NULL, %sendEmail%)
+    - MailService(@nette.mailer)
     - AuthService
     - UserService

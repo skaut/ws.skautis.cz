@@ -1,34 +1,23 @@
 <?php
 
-use Nette\Mail\Message,
-    \Nette\Mail\SendmailMailer;
+use Nette\Application\UI\ITemplate;
+use Nette\Mail\Message;
 
-/**
- * @author Hána František
- */
-class MailService extends BaseService {
+class MailService extends Nette\Object
+{
 
-    protected $sendEmail;
+    public $mailer;
 
     const EMAIL_SENDER = '"Webové služby" <webove.sluzby@skaut.cz>';
 
-    public function __construct(Skautis\Skautis $skautis = NULL, $sendEmail = FALSE) {
-        parent::__construct($skautis);
-        $this->sendEmail = $sendEmail;
+    public function __construct(\Nette\Mail\IMailer $mailer)
+    {
+        $this->mailer = $mailer;
+
     }
 
-    private function send(Message $mail) {
-        if ($this->sendEmail) {
-            $mailer = new SendmailMailer();
-            $mailer->send($mail);
-            return TRUE;
-        } else {
-            echo $mail->getHtmlBody() . "<hr>";
-            die();
-        }
-    }
-
-    public function sendRequest(\Nette\Application\UI\ITemplate $template, $values) {
+    public function sendRequest(ITemplate $template, $values)
+    {
         $template->setFile(dirname(__FILE__) . "/mail.request.latte");
         $mail = new Message;
         $mail->setHtmlBody($template);
@@ -42,7 +31,7 @@ class MailService extends BaseService {
         $mailUstredi->setFrom($values->email, $values->username);
         $mailUstredi->addTo(self::EMAIL_SENDER);
 
-        return $this->send($mailUstredi) && $this->send($mailZadatel);
+        return $this->mailer->send($mailUstredi) && $this->send($mailZadatel);
     }
 
 }

@@ -7,6 +7,7 @@
     "skautis/skautis": "2.*@dev",
     "skautis/nette": "2.*@dev",
     "janmarek/webloader": "2.2.*",
+    "nextras/mail-panel": "^2.3",
     "dibi/dibi": "3.0.*"
   }
 }
