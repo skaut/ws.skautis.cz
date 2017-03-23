@@ -2,7 +2,8 @@
 
 namespace App;
 
-class AuthPresenter extends BasePresenter {
+class AuthPresenter extends BasePresenter
+{
 
     /**
      *
@@ -10,17 +11,19 @@ class AuthPresenter extends BasePresenter {
      */
     protected $authService;
 
-    public function __construct(\AuthService $as) {
+    public function __construct(\AuthService $as)
+    {
         parent::__construct();
         $this->authService = $as;
     }
 
     /**
      * pokud je uziatel uz prihlasen, staci udelat referesh
-     * @param string $backlink 
+     * @param string $backlink
      * @param bool $final - je to konečné přesměrování? použít při problémem se zacyklením
      */
-    public function actionDefault($backlink) {
+    public function actionDefault($backlink)
+    {
         if ($this->user->isLoggedIn()) {
             if ($backlink) {
                 $this->restoreRequest($backlink);
@@ -33,15 +36,17 @@ class AuthPresenter extends BasePresenter {
      * přesměruje na stránku s přihlášením
      * @param string $backlink
      */
-    function actionLogOnSkautIs($backlink = NULL) {
+    function actionLogOnSkautIs($backlink = NULL)
+    {
         $this->redirectUrl($this->authService->getLoginUrl($backlink));
     }
 
     /**
      * zajistuje spracovani prihlaseni na skautIS
-     * @param string $ReturnUrl 
+     * @param string $ReturnUrl
      */
-    function actionSkautIS($ReturnUrl = NULL) {
+    function actionSkautIS($ReturnUrl = NULL)
+    {
         $post = $this->request->post;
         if (!isset($post['skautIS_Token'])) { //pokud není nastavený token, tak zde nemá co dělat
             $this->redirect(":Default:");
@@ -73,11 +78,13 @@ class AuthPresenter extends BasePresenter {
      * zajištuje odhlašení ze skautISu
      * SkautIS sem přesměruje po svém odhlášení
      */
-    function actionLogoutSIS() {
+    function actionLogoutSIS()
+    {
         $this->redirectUrl($this->authService->getLogoutUrl());
     }
 
-    function actionSkautisLogout() {
+    function actionSkautisLogout()
+    {
         $this->user->logout(TRUE);
         $this->userService->resetLoginData();
         if ($this->request->post['skautIS_Logout']) {

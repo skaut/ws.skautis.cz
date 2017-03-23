@@ -1,11 +1,16 @@
-nette:
-    application:
-        catchExceptions: false
-        debugger: true
 parameters:
-        sendEmail : FALSE
+    ssl : FALSE
 
 skautis:
     applicationId : ...
-    testMode : true 
+    testMode : true #isTestMode?
     profiler: true
+
+tracy:
+	bar:
+		- Nextras\MailPanel\MailPanel(%tempDir%/mail-panel-latte)
+
+services:
+	nette.mailer:
+		class: Nette\Mail\IMailer
+		factory: Nextras\MailPanel\FileMailer(%tempDir%/mail-panel-mails)

@@ -3,25 +3,29 @@
 /**
  * @author Hána František
  */
-class UserService extends BaseService {
+class UserService extends BaseService
+{
 
     /**
      * varcí ID role aktuálně přihlášeného uživatele
-     * @return type 
+     * @return type
      */
-    public function getRoleId() {
+    public function getRoleId()
+    {
         return $this->skautis->getUser()->getRoleId();
     }
 
     /**
-     * vrací pole 
+     * vrací pole
      * @return array všech dostupných rolí přihlášeného uživatele
      */
-    public function getAllSkautISRoles($activeOnly = true) {
+    public function getAllSkautISRoles($activeOnly = true)
+    {
         return $this->skautis->user->UserRoleAll(array("ID_User" => $this->getUserDetail()->ID, "IsActive" => $activeOnly));
     }
 
-    public function getUserDetail() {
+    public function getUserDetail()
+    {
         $id = __FUNCTION__;
         if (!($res = $this->load($id))) {//cache v rámci pozadavku
             $res = $this->save($id, $this->skautis->user->UserDetail());
@@ -33,7 +37,8 @@ class UserService extends BaseService {
      * změní přihlášenou roli do skautISu
      * @param ID_Role $id
      */
-    public function updateSkautISRole($id) {
+    public function updateSkautISRole($id)
+    {
         $response = $this->skautis->user->LoginUpdate(array("ID_UserRole" => $id, "ID" => $this->skautis->getUser()->getLoginId()));
         if ($response) {
             $this->skautis->getUser()->updateLoginData(NULL, $id, $response->ID_Unit);
@@ -42,9 +47,10 @@ class UserService extends BaseService {
 
     /**
      * vrací kompletní seznam informací o přihlášené osobě
-     * @return type 
+     * @return type
      */
-    public function getPersonalDetail() {
+    public function getPersonalDetail()
+    {
         $user = $this->getUserDetail();
         $person = $this->skautis->org->personDetail((array("ID" => $user->ID_Person)));
         return $person;
@@ -52,13 +58,15 @@ class UserService extends BaseService {
 
     /**
      * kontroluje jestli je přihlášení platné
-     * @return type 
+     * @return type
      */
-    public function isLoggedIn() {
-        return $this->skautis->getUser()->isLoggedIn();
+    public function isLoggedIn($hardCheck = FALSE)
+    {
+        return $this->skautis->getUser()->isLoggedIn($hardCheck);
     }
 
-    public function resetLoginData() {
+    public function resetLoginData()
+    {
         $this->skautis->getUser()->resetLoginData();
     }
 
@@ -69,7 +77,8 @@ class UserService extends BaseService {
      * @param type $ID_Action - tabulka v DB skautisu
      * @return BOOL|stdClass|array
      */
-    public function actionVerify($table, $id = NULL, $ID_Action = NULL) {
+    public function actionVerify($table, $id = NULL, $ID_Action = NULL)
+    {
 
         $res = $this->skautis->user->ActionVerify(array(
             "ID" => $id,

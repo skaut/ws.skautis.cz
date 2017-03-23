@@ -3,7 +3,8 @@
 /**
  * @author Hána František
  */
-abstract class BaseService extends Nette\Object {
+abstract class BaseService extends Nette\Object
+{
 
     /**
      * reference na třídu typu Table
@@ -25,18 +26,20 @@ abstract class BaseService extends Nette\Object {
 
     /**
      * krátkodobé lokální úložiště pro ukládání odpovědí ze skautISU
-     * @var type 
+     * @var type
      */
     private static $storage;
 
-    public function __construct(Skautis\Skautis $skautIS = NULL) {
+    public function __construct(Skautis\Skautis $skautIS = NULL)
+    {
         $this->skautis = $skautIS;
         self::$storage = array();
     }
 
-    public function getInfo() {
+    public function getInfo()
+    {
         //dump($this->skautis->getUser());
-        
+
         return array(
             "ID_Login" => $this->skautis->getUser()->getLoginId(),
             "ID_Role" => $this->skautis->getUser()->getRoleId(),
@@ -48,9 +51,10 @@ abstract class BaseService extends Nette\Object {
      * ukládá $val do lokálního úložiště
      * @param mixed $id
      * @param mixed $val
-     * @return mixed 
+     * @return mixed
      */
-    protected function save($id, $val) {
+    protected function save($id, $val)
+    {
         if ($this->useCache) {
             self::$storage[$id] = $val;
         }
@@ -62,7 +66,8 @@ abstract class BaseService extends Nette\Object {
      * @param string|int $id
      * @return mixed | FALSE
      */
-    protected function load($id) {
+    protected function load($id)
+    {
         if ($this->useCache && array_key_exists($id, self::$storage)) {
             return self::$storage[$id];
         }

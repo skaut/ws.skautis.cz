@@ -2,23 +2,28 @@
 
 namespace App;
 
-use Nette\Diagnostics\Debugger,
-    Nette\Application\UI\Form;
+use Nette\Application\UI\Form;
+use Nette\Neon\Neon;
+use Skautis\Skautis;
+use Tracy\Debugger;
 
 /**
  * @author sinacek
  */
-class TestPresenter extends BasePresenter {
+class TestPresenter extends BasePresenter
+{
 
     public $wsdl;
     private $skautis;
 
-    public function __construct(\Skautis\Skautis $skautis) {
+    public function __construct(Skautis $skautis)
+    {
         parent::__construct();
         $this->skautis = $skautis;
     }
 
-    protected function startup() {
+    protected function startup()
+    {
         parent::startup();
 
         $post = $this->request->post;
@@ -29,7 +34,8 @@ class TestPresenter extends BasePresenter {
         $this->wsdl = $this->skautis->getWsdlManager()->getSupportedWebServices();
     }
 
-    public function renderDefault() {
+    public function renderDefault()
+    {
         $info = $this->userService->getInfo();
         if ($this->user->isLoggedIn()) {
             $user = $this->userService->getUserDetail();
@@ -41,40 +47,42 @@ class TestPresenter extends BasePresenter {
         $this->template->response = Debugger::dump($this->session->getSection("sisTest")->response, TRUE);
     }
 
-    public function createComponentTestForm($name) {
+    public function createComponentTestForm($name)
+    {
         $form = new Form($this, $name);
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
-                ->addRule(Form::FILLED, "Musís vybrat WSDL")
-                ->setDefaultValue("9");
+            ->addRule(Form::FILLED, "Musís vybrat WSDL")
+            ->setDefaultValue("9");
         $form->addText("service", "Funkce")
-                ->setDefaultValue("unitAll")
-                ->addRule(FORM::FILLED, "Vypln service");
+            ->setDefaultValue("unitAll")
+            ->addRule(FORM::FILLED, "Vypln service");
         $form->addText("cover", "Obal", 40)
-                ->getControlPrototype()
-                ->placeholder("Alternativní obal požadavku");
+            ->getControlPrototype()
+            ->placeholder("Alternativní obal požadavku");
         $form->addTextArea("args", "Parametry", 40, 13)
-                ->setDefaultValue("ID_UnitParent : 24404")
-                ->getControlPrototype()->setClass("input-xlarge");
+            ->setDefaultValue("ID_UnitParent : 24404")
+            ->getControlPrototype()->setClass("input-xlarge");
 
         $form->addSubmit('send', 'Odeslat')
-                ->getControlPrototype()->setClass("btn btn-primary");
+            ->getControlPrototype()->setClass("btn btn-primary");
         $form->onSuccess[] = array($this, $name . 'Submitted');
 
         $sess = $this->getSession('sisTest');
 
-        if (isset($sess->defaults) && is_array((array) $sess->defaults)) {
-            $form->setDefaults((array) $sess->defaults);
+        if (isset($sess->defaults) && is_array((array)$sess->defaults)) {
+            $form->setDefaults((array)$sess->defaults);
         }
         return $form;
     }
 
-    public function testFormSubmitted(Form $form) {
+    public function testFormSubmitted(Form $form)
+    {
         $sess = $this->getSession('sisTest');
         $values = $form->getValues();
         $sess->defaults = $values;
 
-        $args = \Nette\Neon\Neon::decode($values['args']);
+        $args = Neon::decode($values['args']);
         if ($args instanceof Traversable) {
             foreach ($args as $key => $value) {
                 if ($value instanceof DateTime) {
@@ -100,13 +108,14 @@ class TestPresenter extends BasePresenter {
         if (!$this->isAjax()) {
             $this->redirect('this');
         } else {
-            $this->invalidateControl('flash');
-            $this->invalidateControl('form');
-            $this->invalidateControl('testResponse');
+            $this->redrawControl('flash');
+            $this->redrawControl('form');
+            $this->redrawControl('testResponse');
         }
     }
 
-    protected function prepareArgs($arguments, $function_name) {
+    protected function prepareArgs($arguments, $function_name)
+    {
         if (!isset($arguments[0]) || !is_array($arguments[0])) {
             $arguments[0] = array();
         }

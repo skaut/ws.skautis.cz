@@ -4,13 +4,15 @@ namespace App;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
-use Tracy\Debugger;
 use Skautis\Exception;
 use Skautis\Wsdl\AuthenticationException;
+use Tracy\Debugger;
 
-class ErrorPresenter extends Presenter {
+class ErrorPresenter extends Presenter
+{
 
-    public function renderDefault($exception) {
+    public function renderDefault($exception)
+    {
         if ($this->isAjax()) { // AJAX request? Just note this error in payload.
             $this->payload->error = TRUE;
             $this->terminate();

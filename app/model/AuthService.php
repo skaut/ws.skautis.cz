@@ -3,30 +3,34 @@
 /**
  * @author Hána František
  */
-class AuthService extends \BaseService {
+class AuthService extends \BaseService
+{
 
     /**
      * vrací přihlašovací url
      * @param string $backlink
-     * @return string 
+     * @return string
      */
-    public function getLoginUrl($backlink) {
+    public function getLoginUrl($backlink)
+    {
         return $this->skautis->getLoginUrl($backlink);
     }
 
     /**
      * nastavuje základní udaje po prihlášení do SkautISu
-     * @param array $arr 
+     * @param array $arr
      */
-    public function setInit(array $arr) {
+    public function setInit(array $arr)
+    {
         $this->skautis->setLoginData($arr);
     }
 
     /**
      * vrací url pro odhlášení
-     * @return string 
+     * @return string
      */
-    public function getLogoutUrl() {
+    public function getLogoutUrl()
+    {
         return $this->skautis->getLogoutUrl();
     }
 
