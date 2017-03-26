@@ -2,6 +2,8 @@
 
 namespace App;
 
+use \Skautis\Wsdl\AuthenticationException;
+
 class AuthPresenter extends BasePresenter
 {
 
@@ -36,7 +38,7 @@ class AuthPresenter extends BasePresenter
      * přesměruje na stránku s přihlášením
      * @param string $backlink
      */
-    function actionLogOnSkautIs($backlink = NULL)
+    public function actionLogOnSkautIs($backlink = NULL)
     {
         $this->redirectUrl($this->authService->getLoginUrl($backlink));
     }
@@ -45,7 +47,7 @@ class AuthPresenter extends BasePresenter
      * zajistuje spracovani prihlaseni na skautIS
      * @param string $ReturnUrl
      */
-    function actionSkautIS($ReturnUrl = NULL)
+    public function actionSkautIS($ReturnUrl = NULL)
     {
         $post = $this->request->post;
         if (!isset($post['skautIS_Token'])) { //pokud není nastavený token, tak zde nemá co dělat
@@ -56,7 +58,7 @@ class AuthPresenter extends BasePresenter
             $this->authService->setInit($post);
 
             if (!$this->userService->isLoggedIn()) {
-                throw new \Skautis\Exception\AuthenticationException("Nemáte platné přihlášení do skautISu");
+                throw new AuthenticationException("Nemáte platné přihlášení do skautISu");
             }
             $me = $this->userService->getPersonalDetail();
 
@@ -67,7 +69,7 @@ class AuthPresenter extends BasePresenter
             if (isset($ReturnUrl)) {
                 $this->restoreRequest($ReturnUrl);
             }
-        } catch (\Skautis\Exception\AuthenticationException $e) {
+        } catch (AuthenticationException $e) {
             $this->flashMessage($e->getMessage(), "danger");
             $this->redirect(":Auth:");
         }
@@ -78,12 +80,12 @@ class AuthPresenter extends BasePresenter
      * zajištuje odhlašení ze skautISu
      * SkautIS sem přesměruje po svém odhlášení
      */
-    function actionLogoutSIS()
+    public function actionLogoutSIS()
     {
         $this->redirectUrl($this->authService->getLogoutUrl());
     }
 
-    function actionSkautisLogout()
+    public function actionSkautisLogout()
     {
         $this->user->logout(TRUE);
         $this->userService->resetLoginData();
@@ -93,7 +95,6 @@ class AuthPresenter extends BasePresenter
             $this->flashMessage("Odhlášení ze skautISu se nezdařilo", "danger");
         }
         $this->redirect(":Default:");
-        //$this->redirectUrl($this->service->getLogoutUrl());
     }
 
 }
