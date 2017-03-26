@@ -11,5 +11,6 @@
 /www/images/*
 /app/config/*.local.*
 !/app/config/*.example.*
+!/app/config/config.ci.local.neon
 /deploy.sh
 /deployment*

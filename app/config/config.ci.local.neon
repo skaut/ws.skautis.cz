@@ -1,0 +1,6 @@
+skautis:
+    applicationId: c9f6e8b1-2863-4fa6-9b5f-8b7e6f6aac91
+    testMode: true
+
+parameters:
+    sendEmail: FALSE

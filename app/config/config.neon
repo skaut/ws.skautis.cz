@@ -15,7 +15,6 @@ nette:
         autoStart: smart
         expiration: "+ 3 days"
     application:
-        #errorPresenter: App\Error
         mapping:
             *: App\*Module\*Presenter
     debugger:
