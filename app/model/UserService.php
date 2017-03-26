@@ -19,9 +19,9 @@ class UserService extends BaseService
      * vrací pole
      * @return array všech dostupných rolí přihlášeného uživatele
      */
-    public function getAllSkautISRoles($activeOnly = true)
+    public function getAllSkautISRoles($activeOnly = TRUE)
     {
-        return $this->skautis->user->UserRoleAll(array("ID_User" => $this->getUserDetail()->ID, "IsActive" => $activeOnly));
+        return $this->skautis->user->UserRoleAll(["ID_User" => $this->getUserDetail()->ID, "IsActive" => $activeOnly]);
     }
 
     public function getUserDetail()
@@ -39,7 +39,7 @@ class UserService extends BaseService
      */
     public function updateSkautISRole($id)
     {
-        $response = $this->skautis->user->LoginUpdate(array("ID_UserRole" => $id, "ID" => $this->skautis->getUser()->getLoginId()));
+        $response = $this->skautis->user->LoginUpdate(["ID_UserRole" => $id, "ID" => $this->skautis->getUser()->getLoginId()]);
         if ($response) {
             $this->skautis->getUser()->updateLoginData(NULL, $id, $response->ID_Unit);
         }
@@ -52,7 +52,7 @@ class UserService extends BaseService
     public function getPersonalDetail()
     {
         $user = $this->getUserDetail();
-        $person = $this->skautis->org->personDetail((array("ID" => $user->ID_Person)));
+        $person = $this->skautis->org->personDetail((["ID" => $user->ID_Person]));
         return $person;
     }
 
@@ -80,21 +80,21 @@ class UserService extends BaseService
     public function actionVerify($table, $id = NULL, $ID_Action = NULL)
     {
 
-        $res = $this->skautis->user->ActionVerify(array(
+        $res = $this->skautis->user->ActionVerify([
             "ID" => $id,
             "ID_Table" => $table,
             "ID_Action" => $ID_Action,
-        ));
+        ]);
         if ($ID_Action !== NULL) { //pokud je zadána konrétní funkce pro ověřování, tak se vrací BOOL
             if ($res instanceof stdClass) {
-                return false;
+                return FALSE;
             }
             if (is_array($res)) {
-                return true;
+                return TRUE;
             }
         }
         if (is_array($res)) {
-            $tmp = array();
+            $tmp = [];
             foreach ($res as $v) {
                 $tmp[$v->ID] = $v;
             }

@@ -1,25 +1,49 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="Content-Language" content="cs" />
-        <title>Požadavek na aplikaci do SkautIS.cz</title>
-        <style type="text/css">
-            table, th, td { border:#cccccc solid 1px;}
-        </style>
-    </head>
-    <body>
-        <h1>Žádost o schválení aplikace</h1>
-        <table width="500px">
-            <tr><th>Název</th><td>({$values->orgNum}) {$values->name} </td></tr>
-            <tr><th>Popis</th><td>({$values->email}) {$values->desc} </td></tr>
-            <tr><th>Jméno, příjmení (Přezdívka)</th><td>{$values->username} ({$values->nick}) </td></tr>
-            <tr><th>URL aplikace</th><td>{$values->urlBase} </td></tr>
-            <tr><th>URL po přihlášení</th><td>{$values->urlLogin} </td></tr>
-            <tr><th>URL po odhlášení</th><td>{$values->urlLogout} </td></tr>
-            <tr><th>Poznámka</th><td>{$values->note} </td></tr>
-        </table>
-        <hr />
-        <p>Odesláno z formuláře na {$baseUri}</p>
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="cs"/>
+    <title>Požadavek na aplikaci do SkautIS.cz</title>
+    <style type="text/css">
+        table, th, td {
+            border: #cccccc solid 1px;
+        }
+    </style>
+</head>
+<body>
+<h1>Žádost o schválení aplikace</h1>
+<table width="500px">
+    <tr>
+        <th>Název</th>
+        <td>({$values->orgNum}) {$values->name} </td>
+    </tr>
+    <tr>
+        <th>Popis</th>
+        <td>({$values->email}) {$values->desc} </td>
+    </tr>
+    <tr>
+        <th>Jméno, příjmení (Přezdívka)</th>
+        <td>{$values->username} ({$values->nick})</td>
+    </tr>
+    <tr>
+        <th>URL aplikace</th>
+        <td>{$values->urlBase} </td>
+    </tr>
+    <tr>
+        <th>URL po přihlášení</th>
+        <td>{$values->urlLogin} </td>
+    </tr>
+    <tr>
+        <th>URL po odhlášení</th>
+        <td>{$values->urlLogout} </td>
+    </tr>
+    <tr>
+        <th>Poznámka</th>
+        <td>{$values->note} </td>
+    </tr>
+</table>
+<hr/>
+<p>Odesláno z formuláře na {$baseUri}</p>
+</body>
 </html>

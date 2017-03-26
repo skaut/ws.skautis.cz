@@ -35,9 +35,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         parent::startup();
         $this->template->backlink = $this->getParameter("backlink");
         $this->webtempUrl = $this->context->getByType('Nette\Http\Request')->getUrl()->baseUrl . 'webtemp';
-
-//        if ($this->user->isLoggedIn()) //prodluzuje přihlášení při každém požadavku
-//            $this->context->authService->updateLogoutTime();
     }
 
     //upravuje roli ve skautISu
@@ -67,20 +64,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $files = new WebLoader\FileCollection(WWW_DIR . '/css');
         $compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
 
-        //s minimalizací zlobí bootstrap
-//        $compiler->addFilter(new VariablesFilter(array('foo' => 'bar')));        
-//        function mini($code) {
-//            return CssMin::minify($code);
-//        }
-//        $compiler->addFilter("mini");
         $control = new WebLoader\Nette\CssLoader($compiler, $this->webtempUrl);
         $control->setMedia('screen');
-        $files->addFiles(array(
+        $files->addFiles([
             'bootstrap.min.css',
             'bootstrap-responsive.min.css',
             'jquery-ui-1.8.css',
             'site.css'
-        ));
+        ]);
         return $control;
     }
 
@@ -88,7 +79,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         $files = new WebLoader\FileCollection(WWW_DIR . '/js');
         $compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
-        $files->addFiles(array(
+        $files->addFiles([
             'jquery-v1.11.1.js',
             'jquery.ui.min.js',
             'bootstrap.js',
@@ -96,7 +87,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             'nette.ajax.js',
             'netteForms.js',
             'my.js',
-        ));
+        ]);
         return new WebLoader\Nette\JavaScriptLoader($compiler, $this->webtempUrl);
     }
 

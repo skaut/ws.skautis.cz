@@ -1,106 +1,61 @@
-{*}
-{block functionsContainer $arr}
-{? $data = $names[$arr]}
-
-        {formContainer $arr}
-            {? $tmpSize = count($data)}
-            {? $posun = ceil($tmpSize/3)}
-            {for $i=0;$i<$posun;$i++}
-<tr>
-    <td>{input $data[$i]} {label $data[$i]/}</td>
-    <td n:if="$i+$posun < $tmpSize">{input $data[$i+$posun]} {label $data[$i+$posun]/}</td>
-    <td n:if="$i+$posun*2 < $tmpSize">{input $data[$i+$posun*2]} {label $data[$i+$posun*2]/}</td>
-</tr>
-            {/for}
-        {/formContainer}
-{/block}
-{*}
-
-
 {block content}
 <div class="row-fluid">
-    {*}
-    <div class="span2 bs-docs-sidebar">
-        <ul class="nav nav-list affix">
-            {foreach $names as $key => $functions}
-            <li><a href="#header-{$key}"><i class="icon-chevron-right"></i>{$wsdl[$key]['url']}</a></li>
-            {/foreach}
-        </ul>
-    </div>
-    {*}
-    
     <div class="span12">
-
         <h1>Žádost o povolení aplikace</h1>
-{form addForm}
-        <ul class="errors" n:if="$form->hasErrors()">
-            <li n:foreach="$form->errors as $error">{$error}</li>
-        </ul>
-        <table>
-            <tr>
-                <th class="required">{label name/}*</th><td>{input name}</td>
-                <td class="span1"></td>
-                <th class="required">{label urlBase/}*</th><td>{input urlBase}</td>
-            </tr>
-            <tr>
-                <th class="required">{label desc/}*</th><td>{input desc}</td>
-                <td class="span1"></td>
-                <th class="required">{label urlLogin/}* <span rel="tooltip" title="Stránka, kam SkautIS přesměruje po úspěšném přihlášení"><i class="icon icon-info-sign"></i></span></th><td>{input urlLogin}</td>
-            </tr>
-            <tr>
-                
-                <th class="required">{label username/}*</th><td>{input username}</td>
-                <td class="span1"></td>
-                <th class="required">{label urlLogout/}* <span rel="tooltip" title="Stránka, kam SkautIS přesměruje uživatele po odhlášení"><i class="icon icon-info-sign"></i></span></th><td>{input urlLogout}</td>
-            </tr>
-            <tr>
-                <th>{label nick/}</th><td>{input nick}</td>
-                <td class="span1"></td>
-                <th class="required">{label email/}*</th><td>{input email}</td>
-            </tr>
-            <tr>
-                <th>{label orgNum/} <span rel="tooltip" title="Číslo jednotky, která bude aplikaci využívat"><i class="icon icon-info-sign"></i></span></th><td>{input orgNum}</td>
-                <td class="span1"></td>
-                <th rowspan="2">{label note/}</th><td rowspan="2">{input note}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><i>Políčka označená * jsou povinná</i></td>
-            </tr>
-            <tr style="text-align: right">
-                <td colspan="4"></td>
-                <td colspan="1">{input send class=>"btn btn-large btn-primary"}</td>
-            </tr>
-        </table>
-        {*}
-        <h2>Skupiny funkcí</h2>
-        <table>
-            {formContainer generalGroups}
-            <tr>
-                {foreach $generalGroups as $id=>$val}
-                    <td>{input $id} {label $id/}</td>
-                    {if !($iterator->getCounter()%3)}</tr><tr>{/if}    
-                {/foreach}
-            </tr>
-        {/formContainer}    
-        </table>        
-    {foreach $names as $key =>$functions}
-        <div id="header-{$key}" style="margin-bottom: 60px;"></div>
-        <h2>{$wsdl[$key]['url']}</h2>
-        <p><i>{$wsdl[$key]['label']}</i></p>
-        <table>
-                {include #functionsContainer, arr=>$key}
-        </table>
-        <hr />
-    {/foreach}
-    
-        <div class="navbar navbar-fixed-bottom">
-            <div class="navbar-inner" style="text-align: center;">
-                <p class="nav" style="float: none">
-                    Pokud jsi vyplnil povinné údaje a označil všechny služby, které chceš použít, můžeš to {input send}
-                </p>
-            </div>
-        </div>
-    {*}
-{/form addForm}
+        {form addForm}
+            <ul class="errors" n:if="$form->hasErrors()">
+                <li n:foreach="$form->errors as $error">{$error}</li>
+            </ul>
+            <table>
+                <tr>
+                    <th class="required">{label name/}*</th>
+                    <td>{input name}</td>
+                    <td class="span1"></td>
+                    <th class="required">{label urlBase/}*</th>
+                    <td>{input urlBase}</td>
+                </tr>
+                <tr>
+                    <th class="required">{label desc/}*</th>
+                    <td>{input desc}</td>
+                    <td class="span1"></td>
+                    <th class="required">{label urlLogin/}* <span rel="tooltip"
+                                                                  title="Stránka, kam SkautIS přesměruje po úspěšném přihlášení"><i
+                                    class="icon icon-info-sign"></i></span></th>
+                    <td>{input urlLogin}</td>
+                </tr>
+                <tr>
+
+                    <th class="required">{label username/}*</th>
+                    <td>{input username}</td>
+                    <td class="span1"></td>
+                    <th class="required">{label urlLogout/}* <span rel="tooltip"
+                                                                   title="Stránka, kam SkautIS přesměruje uživatele po odhlášení"><i
+                                    class="icon icon-info-sign"></i></span></th>
+                    <td>{input urlLogout}</td>
+                </tr>
+                <tr>
+                    <th>{label nick/}</th>
+                    <td>{input nick}</td>
+                    <td class="span1"></td>
+                    <th class="required">{label email/}*</th>
+                    <td>{input email}</td>
+                </tr>
+                <tr>
+                    <th>{label orgNum/} <span rel="tooltip" title="Číslo jednotky, která bude aplikaci využívat"><i
+                                    class="icon icon-info-sign"></i></span></th>
+                    <td>{input orgNum}</td>
+                    <td class="span1"></td>
+                    <th rowspan="2">{label note/}</th>
+                    <td rowspan="2">{input note}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><i>Políčka označená * jsou povinná</i></td>
+                </tr>
+                <tr style="text-align: right">
+                    <td colspan="4"></td>
+                    <td colspan="1">{input send class=>"btn btn-large btn-primary"}</td>
+                </tr>
+            </table>
+        {/form addForm}
     </div>
 </div>

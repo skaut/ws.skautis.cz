@@ -18,12 +18,12 @@ class ErrorPresenter extends Presenter
             $this->terminate();
         } elseif ($exception instanceof BadRequestException) {
             $code = $exception->getCode();
-            $this->setView(in_array($code, array(403, 404, 405, 410, 500)) ? $code : '4xx'); // load template 403.latte or 404.latte or ... 4xx.latte
+            $this->setView(in_array($code, [403, 404, 405, 410, 500]) ? $code : '4xx'); // load template 403.latte or 404.latte or ... 4xx.latte
         } elseif ($exception instanceof AuthenticationException) {//vypršelo přihlášení do SkautISu
             $this->user->logout(TRUE);
             $this->flashMessage($exception->getMessage() != "" ? $exception->getMessage() : "Vypršelo přihlášení do SkautISu", "danger");
             $backlink = isset($exception->backlink) ? $exception->backlink : NULL;
-            $this->redirect(":Default:", array("backlink" => $backlink));
+            $this->redirect(":Default:", ["backlink" => $backlink]);
         } elseif ($exception instanceof Exception) {
             $this->setView('SkautIS');
             $this->template->ex = $exception;

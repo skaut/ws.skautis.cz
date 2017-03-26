@@ -66,7 +66,7 @@ class TestPresenter extends BasePresenter
 
         $form->addSubmit('send', 'Odeslat')
             ->getControlPrototype()->setClass("btn btn-primary");
-        $form->onSuccess[] = array($this, $name . 'Submitted');
+        $form->onSuccess[] = [$this, $name . 'Submitted'];
 
         $sess = $this->getSession('sisTest');
 
@@ -94,7 +94,7 @@ class TestPresenter extends BasePresenter
         if ($cover == "") {
             $cover = NULL;
         }
-        $sess->request = $this->prepareArgs(array($args, $cover), $values["service"]);
+        $sess->request = $this->prepareArgs([$args, $cover], $values["service"]);
         try {
             $ret = $this->skautis->{$this->wsdl[$values['wsdl']]}->{$values["service"]}($args, $cover);
         } catch (\Exception $e) {
@@ -117,22 +117,22 @@ class TestPresenter extends BasePresenter
     protected function prepareArgs($arguments, $function_name)
     {
         if (!isset($arguments[0]) || !is_array($arguments[0])) {
-            $arguments[0] = array();
+            $arguments[0] = [];
         }
         if (!array_key_exists("ID_Application", $arguments[0])) {
             $arguments[0]["ID_Application"] = $this->skautis->getConfig()->getAppId();
         }
         $args = $arguments[0];
 
-        if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
+        if (isset($arguments[1]) && $arguments[1] !== NULL) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
             $matches = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /
             $matches[] = 0; //zakladni obal 0=>...
             foreach ($matches as $value) {
-                $args = array($value => $args);
+                $args = [$value => $args];
             }
         } else {
             $function_name = strtolower(substr($function_name, 0, 1)) . substr($function_name, 1); //nahrazuje lcfirst
-            $args = array(array($function_name . "Input" => $args));
+            $args = [[$function_name . "Input" => $args]];
         }
         return $args;
     }

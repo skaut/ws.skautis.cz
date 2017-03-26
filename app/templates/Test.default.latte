@@ -4,30 +4,30 @@
     <div class="span5">
         <h2>Testovací formulář</h2>
         {form testForm}
-        <ul class="errors" n:if="$form->hasErrors()">
-            <li n:foreach="$form->errors as $error">{$error}</li>
-        </ul>
-        <table>
-            <tr>
-                <th class="required">{label wsdl/}</th>
-                <td>{input wsdl}</td>
-            </tr>
-            <tr>
-                <th class="required">{label service/}</th>
-                <td>{input service}</td>
-            </tr>
-            <tr>
-                <th>{label cover/}</th>
-                <td>{input cover}</td>
-            </tr>
-            <tr>
-                <td colspan="2">{input args}</td>
-            </tr>
-            <tr>
-                <th></th>
-                <td style="text-align: right;">{input send}</td>
-            </tr>
-        </table>
+            <ul class="errors" n:if="$form->hasErrors()">
+                <li n:foreach="$form->errors as $error">{$error}</li>
+            </ul>
+            <table>
+                <tr>
+                    <th class="required">{label wsdl/}</th>
+                    <td>{input wsdl}</td>
+                </tr>
+                <tr>
+                    <th class="required">{label service/}</th>
+                    <td>{input service}</td>
+                </tr>
+                <tr>
+                    <th>{label cover/}</th>
+                    <td>{input cover}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">{input args}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td style="text-align: right;">{input send}</td>
+                </tr>
+            </table>
         {/form testForm}
 
     </div>
@@ -44,18 +44,20 @@
         <div class="well well-small">
             {$response|noescape}
         </div>
-        
+
     </div>
 </div>
 
 
 <h2>Návod k testovacímu rozhraní</h2>
-<img src="{$baseUri}/images/data/tutorial.png" alt="obrázek testovacího rozhraní" class="well" />
+<img src="{$baseUri}/images/data/tutorial.png" alt="obrázek testovacího rozhraní" class="well"/>
 <ol>
-    <li>(Povinné) Výběr webové služby - kompletní senzam je na <a href="http://test-is.skaut.cz/JunakWebservice/">test-is.skaut.cz/JunakWebservice/</a></li>
+    <li>(Povinné) Výběr webové služby - kompletní senzam je na <a href="http://test-is.skaut.cz/JunakWebservice/">test-is.skaut.cz/JunakWebservice/</a>
+    </li>
     <li>(Povinné) Název volané funkce z vybrané služby.</li>
     <li>
-        (Volitelné) Některé funkce potřebují další atribut. Například funkce <a href="http://test-is.skaut.cz/JunakWebservice/OrganizationUnit.asmx?op=PersonInsert">PersonInsert</a>
+        (Volitelné) Některé funkce potřebují další atribut. Například funkce <a
+                href="http://test-is.skaut.cz/JunakWebservice/OrganizationUnit.asmx?op=PersonInsert">PersonInsert</a>
         potřebuje zadat jako <i>Obal</i> řetězec person.
     </li>
     <li>Jednotlivé parametry zapsané v syntaxi <a href="http://ne-on.org/">neon</a>.</li>

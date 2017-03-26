@@ -51,7 +51,7 @@ class AuthPresenter extends BasePresenter
         if (!isset($post['skautIS_Token'])) { //pokud není nastavený token, tak zde nemá co dělat
             $this->redirect(":Default:");
         }
-//        Debugger::log("AuthP: ".$post['skautIS_Token']." / ". $post['skautIS_IDRole'] . " / " . $post['skautIS_IDUnit'], "auth");
+        //        Debugger::log("AuthP: ".$post['skautIS_Token']." / ". $post['skautIS_IDRole'] . " / " . $post['skautIS_IDUnit'], "auth");
         try {
             $this->authService->setInit($post);
 

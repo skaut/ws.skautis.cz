@@ -2,8 +2,7 @@
 *.rar
 *.log
 *.db
-.DS_Store*
-nbproject/*
+.DS_Store
 /vendor/*
 /temp-nette/*
 /log-nette/*

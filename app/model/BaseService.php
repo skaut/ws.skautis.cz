@@ -33,18 +33,18 @@ abstract class BaseService extends Nette\Object
     public function __construct(Skautis\Skautis $skautIS = NULL)
     {
         $this->skautis = $skautIS;
-        self::$storage = array();
+        self::$storage = [];
     }
 
     public function getInfo()
     {
         //dump($this->skautis->getUser());
 
-        return array(
+        return [
             "ID_Login" => $this->skautis->getUser()->getLoginId(),
             "ID_Role" => $this->skautis->getUser()->getRoleId(),
             "ID_Unit" => $this->skautis->getUser()->getUnitId(),
-        );
+        ];
     }
 
     /**

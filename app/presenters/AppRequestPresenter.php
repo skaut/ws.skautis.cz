@@ -22,7 +22,6 @@ class AppRequestPresenter extends BasePresenter
         $this->mailService = $ms;
     }
 
-
     public function createComponentAddForm($name)
     {
         $form = new Form($this, $name);
@@ -50,7 +49,7 @@ class AppRequestPresenter extends BasePresenter
             ->getControlPrototype()->setClass("input-xlarge");
         $form->addSubmit('send', 'Odeslat')
             ->getControlPrototype()->setClass("btn btn-primary");
-        $form->onSuccess[] = array($this, $name . 'Submitted');
+        $form->onSuccess[] = [$this, $name . 'Submitted'];
         return $form;
     }
 

@@ -29,27 +29,27 @@ class RouterFactory
     {
         $router = new RouteList();
         $router[] = new Route('index.php', 'Default:default', Route::ONE_WAY);
-        $router[] = new Route('sign/<action>[/back-<backlink>]', array(
+        $router[] = new Route('sign/<action>[/back-<backlink>]', [
             "presenter" => "Auth",
             "action" => "default",
             "backlink" => NULL
-        ));
+        ]);
 
-        $router[] = new Route('ws', array(
+        $router[] = new Route('ws', [
             "presenter" => "Default",
             "action" => "ws",
-        ), Route::ONE_WAY);
+        ], Route::ONE_WAY);
 
-        $router[] = new Route('<presenter>[/<action>]', array(
-            "presenter" => array(
+        $router[] = new Route('<presenter>[/<action>]', [
+            "presenter" => [
                 Route::VALUE => 'Default',
-                Route::FILTER_TABLE => array(
+                Route::FILTER_TABLE => [
                     'zadost' => 'AppRequest',
                     'testovani' => 'Test',
-                ),
-            ),
+                ],
+            ],
             "action" => "default",
-        ));
+        ]);
         $router[] = new SimpleRouter('Default:default');
         return $router;
     }

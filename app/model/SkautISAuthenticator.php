@@ -1,4 +1,5 @@
 <?php
+
 namespace Sinacek;
 
 use Nette;
