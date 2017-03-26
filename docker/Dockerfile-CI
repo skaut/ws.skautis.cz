@@ -1,0 +1,20 @@
+FROM php:7.1-apache
+
+MAINTAINER Frantisek Hana <sinacek@skaut.cz>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update
+
+ADD lamp.sh /lamp.sh
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
+
+RUN /lamp.sh
+
+RUN apt-get -y install build-essential chrpath libssl-dev libxft-dev \
+    libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev
+
+ENV HOME /var/www/html
+
+WORKDIR /var/www/html

@@ -1,0 +1,16 @@
+box: fmasa/lebeda:7.1-ci
+
+build:
+    steps:
+        - script:
+            name: add Github token
+            code: composer config -g github-oauth.github.com $GITHUB_OAUTH_TOKEN
+        - script:
+            name: install composer dependencies
+            code: composer install --no-interaction
+        - appnific/expandenv:
+            input_file: app/config/config.ci.local.neon
+            output_file: app/config/config.local.neon
+        - script:
+            name: test coding standard
+            code: vendor/bin/phpcs app --standard=ruleset.xml

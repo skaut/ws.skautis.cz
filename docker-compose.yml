@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+    app:
+        container_name: wsskautis.app
+        image: fmasa/lebeda:7.1
+        volumes:
+            - www:/var/www
+            - .:/var/www/html
+            - /var/www/html/nette-temp
+        ports:
+            - 80:80
+        environment:
+            DEVELOPMENT_MACHINE: 'true'
+        networks:
+            main:
+                aliases:
+                    - wsskautis.loc
+
+volumes:
+    www:
+
+networks:
+    main:
