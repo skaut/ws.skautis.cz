@@ -37,13 +37,13 @@ class AppRequestPresenter extends BasePresenter
             ->addRule(Form::EMAIL, "Zadejte platný email");
         $form->addText("orgNum", "Reg. číslo jednotky");
         $form->addText("urlBase", "URL aplikace")
-            ->setDefaultValue("http://")
+            ->setDefaultValue("https://")
             ->addRule(Form::URL, "Zadej platnou URL aplikace");
         $form->addText("urlLogin", "URL po přihlášení")
-            ->setDefaultValue("http://")
+            ->setDefaultValue("https://")
             ->addRule(Form::URL, "Zadej platnou  URL po přihlášení");
         $form->addText("urlLogout", "URL po odhlášení")
-            ->setDefaultValue("http://")
+            ->setDefaultValue("https://")
             ->addRule(Form::URL, "Zadej platnou URL po odhlášení");
         $form->addTextArea("note", "Poznámka", 40, 5)
             ->getControlPrototype()->setClass("input-xlarge");
