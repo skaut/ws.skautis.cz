@@ -10,16 +10,17 @@ use Nette\Application\UI\Form;
 class AppRequestPresenter extends BasePresenter
 {
 
-    /**
-     *
-     * @var \MailService
-     */
+    /** @var \MailService */
     protected $mailService;
 
-    public function __construct(\MailService $ms)
+    /** @var  \WsService */
+    protected $wsService;
+
+    public function __construct(\MailService $ms, \WsService $ws)
     {
         parent::__construct();
         $this->mailService = $ms;
+        $this->wsService = $ws;
     }
 
     public function createComponentAddForm($name)

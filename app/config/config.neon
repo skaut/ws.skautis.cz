@@ -18,10 +18,10 @@ nette:
         mapping:
             *: App\*Module\*Presenter
     debugger:
-        email: %sinacek@gmail.com%
+        email: sinacek@gmail.com
         strictMode: TRUE
         maxDepth: 6
-        maxLen: 500;
+        maxLen: 500
 
 extensions:
     skautis: Skautis\Nette\SkautisExtension
@@ -32,3 +32,4 @@ services:
     - MailService(@nette.mailer)
     - AuthService
     - UserService
+    - WsService
