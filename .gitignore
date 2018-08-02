@@ -14,3 +14,4 @@
 !/app/config/config.ci.local.neon
 /deploy.sh
 /deployment*
+/.vs
