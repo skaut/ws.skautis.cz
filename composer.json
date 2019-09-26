@@ -11,9 +11,7 @@
     "dibi/dibi": "3.0.*"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.8",
-    "codeception/codeception": "^2.2",
-    "codeception/mockery-module": "^0.2.2"
+    "squizlabs/php_codesniffer": "^2.8"
   },
   "minimum-stability": "RC"
 }
