@@ -1,5 +1,5 @@
 {
-  "name": "ws.skautis.cz",
+  "name": "skaut/ws.skautis.cz",
   "type": "project",
   "require": {
     "php": ">= 5.6",
