@@ -3,8 +3,9 @@
 use Nette\Application\UI\ITemplate;
 use Nette\Mail\Message;
 
-class MailService extends Nette\Object
+class MailService
 {
+    use Nette\SmartObject;
 
     public $mailer;
 

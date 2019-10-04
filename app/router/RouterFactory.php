@@ -18,8 +18,7 @@ class RouterFactory
      */
     public function __construct($ssl)
     {
-        // Disable https for development
-        Route::$defaultFlags = $ssl ? Route::SECURED : 0;
+ 
     }
 
     /**
