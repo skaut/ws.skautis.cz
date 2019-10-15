@@ -22,8 +22,8 @@ class MailService extends Nette\Object
         $mail = new Message;
         $mail->setHtmlBody($template);
         $mail->setSubject("Žádost o registraci aplikace ve skautISu");
-        $mailUstredi = $mail;
-        $mailZadatel = $mail;
+        $mailUstredi = clone $mail;
+        $mailZadatel = clone $mail;
 
         $mailZadatel->setFrom(self::EMAIL_SENDER);
         $mailZadatel->addTo($values->email, $values->username);
