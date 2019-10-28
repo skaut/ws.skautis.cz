@@ -54,6 +54,7 @@ class TestPresenter extends BasePresenter
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
             ->addRule(Form::FILLED, "Musís vybrat WSDL")
+            // Pozice OrganisationUnit v poli.
             ->setDefaultValue("12");
         $form->addText("service", "Funkce")
             ->setDefaultValue("unitAll")

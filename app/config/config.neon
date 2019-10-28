@@ -25,7 +25,7 @@ di:
     debugger: true
 
 tracy:
-    email: jindrich.pilar@gmail.com #sinacek@gmail.com
+    email: sinacek@gmail.com
     strictMode: true
     maxDepth: 6
     maxLength: 500
