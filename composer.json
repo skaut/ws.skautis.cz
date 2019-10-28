@@ -1,19 +1,16 @@
 {
-  "name": "ws.skautis.cz",
+  "name": "skaut/ws.skautis.cz",
   "type": "project",
   "require": {
-    "php": ">= 5.6",
-    "nette/nette": "2.3.*",
-    "skautis/skautis": "2.*@dev",
-    "skautis/nette": "2.*@dev",
-    "janmarek/webloader": "2.5.*",
+    "php": ">= 7.2",
+    "nette/nette": "^3.0",
+    "skautis/skautis": "3.0.0-alpha",
+    "skautis/nette": "3.0.0-alpha",
     "nextras/mail-panel": "^2.3",
-    "dibi/dibi": "3.0.*"
+    "dibi/dibi": "^3.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.8",
-    "codeception/codeception": "^2.2",
-    "codeception/mockery-module": "^0.2.2"
+    "squizlabs/php_codesniffer": "^3.4"
   },
-  "minimum-stability": "RC"
+  "minimum-stability": "stable"
 }

@@ -5,8 +5,20 @@
     <title>{block #title|striptags|trim}SkautIS Web Services{/block}</title>
     <meta name="keywords" content=""/>
     <meta name="author" content="www.sinacek.cz"/>
-    {control css}
-    {control js}
+
+    <link rel="stylesheet" href="{$baseUrl}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$baseUrl}/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="{$baseUrl}/css/jquery-ui-1.8.css">
+    <link rel="stylesheet" href="{$baseUrl}/css/site.css">
+
+    <script type="text/javascript" src="{$baseUrl}/js/jquery-v1.11.1.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/js/jquery.ui.min.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/js/combobox.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/js/nette.ajax.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/js/netteForms.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/js/my.js"></script>
+
     <script type="text/javascript">
         function changeRole(id) {
             $.post({link changeRole!}, { roleId: id});

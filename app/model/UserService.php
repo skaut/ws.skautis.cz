@@ -8,7 +8,7 @@ class UserService extends BaseService
 
     /**
      * varcí ID role aktuálně přihlášeného uživatele
-     * @return type
+     * @return int|null
      */
     public function getRoleId()
     {
@@ -58,7 +58,7 @@ class UserService extends BaseService
 
     /**
      * kontroluje jestli je přihlášení platné
-     * @return type
+     * @return bool
      */
     public function isLoggedIn($hardCheck = FALSE)
     {

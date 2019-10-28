@@ -10,18 +10,25 @@ php:
     date.timezone: Europe/Prague
     # zlib.output_compression: yes
 
-nette:
-    session:
-        autoStart: smart
-        expiration: "+ 3 days"
-    application:
-        mapping:
-            *: App\*Module\*Presenter
-    debugger:
-        email: sinacek@gmail.com
-        strictMode: TRUE
-        maxDepth: 6
-        maxLen: 500
+session:
+    autoStart: smart
+    expiration: "+ 3 days"
+
+
+
+application:
+    mapping:
+        *: App\*Module\*Presenter
+    debugger: true
+
+di:
+    debugger: true
+
+tracy:
+    email: sinacek@gmail.com
+    strictMode: true
+    maxDepth: 6
+    maxLength: 500
 
 extensions:
     skautis: Skautis\Nette\SkautisExtension

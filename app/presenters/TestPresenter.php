@@ -5,6 +5,7 @@ namespace App;
 use Nette\Application\UI\Form;
 use Nette\Neon\Neon;
 use Skautis\Skautis;
+use Skautis\Wsdl\WebServiceName;
 use Tracy\Debugger;
 
 /**
@@ -31,7 +32,7 @@ class TestPresenter extends BasePresenter
             $this->skautis->init($post);
         }
         $this->template->skautIsAppId = $this->skautis->getConfig()->getAppId();
-        $this->wsdl = $this->skautis->getWsdlManager()->getSupportedWebServices();
+        $this->wsdl = array_values(WebServiceName::getConstants());
     }
 
     public function renderDefault()
@@ -53,7 +54,8 @@ class TestPresenter extends BasePresenter
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
             ->addRule(Form::FILLED, "Musís vybrat WSDL")
-            ->setDefaultValue("9");
+            // Pozice OrganisationUnit v poli.
+            ->setDefaultValue("12");
         $form->addText("service", "Funkce")
             ->setDefaultValue("unitAll")
             ->addRule(FORM::FILLED, "Vypln service");

@@ -3,8 +3,9 @@
 /**
  * @author Hána František
  */
-abstract class BaseService extends Nette\Object
+abstract class BaseService
 {
+    use Nette\SmartObject;
 
     /**
      * reference na třídu typu Table
