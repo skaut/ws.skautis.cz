@@ -7,11 +7,9 @@ use Nette\Neon\Neon;
 use Skautis\Skautis;
 use Tracy\Debugger;
 
-/**
- * @author sinacek
- */
 class TestPresenter extends BasePresenter
 {
+    private const SESSION_NAMESPACE = 'sisTest';
 
     public $wsdl;
     private $skautis;
@@ -42,9 +40,11 @@ class TestPresenter extends BasePresenter
             $info["ID_User"] = $user->ID;
             $info["ID_Person"] = $user->ID_Person;
         }
-        $this->template->info = Debugger::dump($info, TRUE);
-        $this->template->request = Debugger::dump($this->session->getSection("sisTest")->request, TRUE);
-        $this->template->response = Debugger::dump($this->session->getSection("sisTest")->response, TRUE);
+        $this->template->setParameters ([
+            'info' => Debugger::dump($info, TRUE),
+            'request' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->request, TRUE),
+            'response' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->response, TRUE),
+        ]);
     }
 
     public function createComponentTestForm($name)
@@ -53,7 +53,7 @@ class TestPresenter extends BasePresenter
         $form->getElementPrototype()->class("aja");
         $form->addSelect("wsdl", "WSDL", $this->wsdl)
             ->addRule(Form::FILLED, "Musís vybrat WSDL")
-            ->setDefaultValue("9");
+            ->setDefaultValue("12");
         $form->addText("service", "Funkce")
             ->setDefaultValue("unitAll")
             ->addRule(FORM::FILLED, "Vypln service");
@@ -68,7 +68,7 @@ class TestPresenter extends BasePresenter
             ->getControlPrototype()->setClass("btn btn-primary");
         $form->onSuccess[] = [$this, $name . 'Submitted'];
 
-        $sess = $this->getSession('sisTest');
+        $sess = $this->getSession(self::SESSION_NAMESPACE);
 
         if (isset($sess->defaults) && is_array((array)$sess->defaults)) {
             $form->setDefaults((array)$sess->defaults);
@@ -78,7 +78,7 @@ class TestPresenter extends BasePresenter
 
     public function testFormSubmitted(Form $form)
     {
-        $sess = $this->getSession('sisTest');
+        $sess = $this->getSession(self::SESSION_NAMESPACE);
         $values = $form->getValues();
         $sess->defaults = $values;
 

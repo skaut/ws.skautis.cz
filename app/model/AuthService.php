@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @author Hána František
- */
 class AuthService extends \BaseService
 {
 

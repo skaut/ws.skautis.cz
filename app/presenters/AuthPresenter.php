@@ -2,18 +2,18 @@
 
 namespace App;
 
+use AuthService;
 use \Skautis\Wsdl\AuthenticationException;
 
 class AuthPresenter extends BasePresenter
 {
 
     /**
-     *
-     * @var \AuthService
+     * @var AuthService
      */
     protected $authService;
 
-    public function __construct(\AuthService $as)
+    public function __construct(AuthService $as)
     {
         parent::__construct();
         $this->authService = $as;
@@ -63,7 +63,7 @@ class AuthPresenter extends BasePresenter
             $me = $this->userService->getPersonalDetail();
 
             $this->user->setExpiration('+ 29 minutes'); // nastavíme expiraci
-            $this->user->setAuthenticator(new \Sinacek\SkautisAuthenticator());
+            $this->user->setAuthenticator(new \Skautis\Authenticator());
             $this->user->login($me);
 
             if (isset($ReturnUrl)) {

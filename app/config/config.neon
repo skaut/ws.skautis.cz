@@ -10,13 +10,12 @@ php:
     date.timezone: Europe/Prague
     # zlib.output_compression: yes
 
-nette:
-    session:
-        autoStart: smart
-        expiration: "+ 3 days"
-    application:
-        mapping:
-            *: App\*Module\*Presenter
+session:
+    autoStart: smart
+    expiration: "+ 3 days"
+application:
+    mapping:
+        *: App\*Module\*Presenter
     debugger:
         email: sinacek@gmail.com
         strictMode: TRUE
@@ -27,9 +26,8 @@ extensions:
     skautis: Skautis\Nette\SkautisExtension
 
 services:
-    - App\RouterFactory(%ssl%)
+    - App\RouterFactory
     router: @App\RouterFactory::createRouter
     - MailService(@nette.mailer)
     - AuthService
     - UserService
-    - WsService

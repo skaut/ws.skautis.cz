@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @author Hána František
- */
 class UserService extends BaseService
 {
 
@@ -68,39 +65,6 @@ class UserService extends BaseService
     public function resetLoginData()
     {
         $this->skautis->getUser()->resetLoginData();
-    }
-
-    /**
-     *
-     * @param type $table - např. ID_EventGeneral, NULL = oveření nad celou tabulkou
-     * @param type $id - id ověřované akce - např EV_EventGeneral_UPDATE
-     * @param type $ID_Action - tabulka v DB skautisu
-     * @return BOOL|stdClass|array
-     */
-    public function actionVerify($table, $id = NULL, $ID_Action = NULL)
-    {
-
-        $res = $this->skautis->user->ActionVerify([
-            "ID" => $id,
-            "ID_Table" => $table,
-            "ID_Action" => $ID_Action,
-        ]);
-        if ($ID_Action !== NULL) { //pokud je zadána konrétní funkce pro ověřování, tak se vrací BOOL
-            if ($res instanceof stdClass) {
-                return FALSE;
-            }
-            if (is_array($res)) {
-                return TRUE;
-            }
-        }
-        if (is_array($res)) {
-            $tmp = [];
-            foreach ($res as $v) {
-                $tmp[$v->ID] = $v;
-            }
-            return $tmp;
-        }
-        return $res;
     }
 
 }

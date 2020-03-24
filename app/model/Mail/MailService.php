@@ -1,16 +1,17 @@
 <?php
 
 use Nette\Application\UI\ITemplate;
+use Nette\Mail\IMailer;
 use Nette\Mail\Message;
 
-class MailService extends Nette\Object
+class MailService
 {
-
+    /** @var IMailer */
     public $mailer;
 
     const EMAIL_SENDER = '"Webové služby" <webove.sluzby@skaut.cz>';
 
-    public function __construct(\Nette\Mail\IMailer $mailer)
+    public function __construct(IMailer $mailer)
     {
         $this->mailer = $mailer;
 

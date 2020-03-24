@@ -2,28 +2,15 @@
 
 namespace App;
 
+use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 use Nette\Application\Routers\SimpleRouter;
 
-/**
- * Router factory.
- */
 class RouterFactory
 {
-
     /**
-     * RouterFactory constructor.
-     * @param bool $ssl
-     */
-    public function __construct($ssl)
-    {
-        // Disable https for development
-        Route::$defaultFlags = $ssl ? Route::SECURED : 0;
-    }
-
-    /**
-     * @return \Nette\Application\IRouter
+     * @return IRouter
      */
     public function createRouter()
     {

@@ -3,6 +3,7 @@
 namespace App;
 
 use Nette;
+use UserService;
 use WebLoader;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
@@ -21,11 +22,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     /**
      *
-     * @var \UserService
+     * @var UserService
      */
     protected $userService;
 
-    public function injectUserService(\UserService $us)
+    public function injectUserService(UserService $us)
     {
         $this->userService = $us;
     }

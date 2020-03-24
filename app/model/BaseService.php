@@ -3,7 +3,7 @@
 /**
  * @author Hána František
  */
-abstract class BaseService extends Nette\Object
+abstract class BaseService
 {
 
     /**
@@ -38,8 +38,6 @@ abstract class BaseService extends Nette\Object
 
     public function getInfo()
     {
-        //dump($this->skautis->getUser());
-
         return [
             "ID_Login" => $this->skautis->getUser()->getLoginId(),
             "ID_Role" => $this->skautis->getUser()->getRoleId(),

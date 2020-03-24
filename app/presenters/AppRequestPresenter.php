@@ -2,25 +2,19 @@
 
 namespace App;
 
+use MailService;
 use Nette\Application\UI\Form;
 
-/**
- * @author sinacek
- */
 class AppRequestPresenter extends BasePresenter
 {
 
-    /** @var \MailService */
+    /** @var MailService */
     protected $mailService;
 
-    /** @var  \WsService */
-    protected $wsService;
-
-    public function __construct(\MailService $ms, \WsService $ws)
+    public function __construct(MailService $ms)
     {
         parent::__construct();
         $this->mailService = $ms;
-        $this->wsService = $ws;
     }
 
     public function createComponentAddForm($name)
