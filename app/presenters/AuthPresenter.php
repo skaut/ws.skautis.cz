@@ -21,8 +21,9 @@ class AuthPresenter extends BasePresenter
 
     /**
      * pokud je uziatel uz prihlasen, staci udelat referesh
+     *
      * @param string $backlink
-     * @param bool $final - je to konečné přesměrování? použít při problémem se zacyklením
+     * @param bool   $final    - je to konečné přesměrování? použít při problémem se zacyklením
      */
     public function actionDefault($backlink)
     {
@@ -36,18 +37,20 @@ class AuthPresenter extends BasePresenter
 
     /**
      * přesměruje na stránku s přihlášením
+     *
      * @param string $backlink
      */
-    public function actionLogOnSkautIs($backlink = NULL)
+    public function actionLogOnSkautIs($backlink = null)
     {
         $this->redirectUrl($this->authService->getLoginUrl($backlink));
     }
 
     /**
      * zajistuje spracovani prihlaseni na skautIS
+     *
      * @param string $ReturnUrl
      */
-    public function actionSkautIS($ReturnUrl = NULL)
+    public function actionSkautIS($ReturnUrl = null)
     {
         $post = $this->request->post;
         if (!isset($post['skautIS_Token'])) { //pokud není nastavený token, tak zde nemá co dělat
@@ -87,7 +90,7 @@ class AuthPresenter extends BasePresenter
 
     public function actionSkautisLogout()
     {
-        $this->user->logout(TRUE);
+        $this->user->logout(true);
         $this->userService->resetLoginData();
         if ($this->request->post['skautIS_Logout']) {
             $this->flashMessage("Byl jsi úspěšně odhlášen ze SkautISu.");

@@ -40,11 +40,13 @@ class TestPresenter extends BasePresenter
             $info["ID_User"] = $user->ID;
             $info["ID_Person"] = $user->ID_Person;
         }
-        $this->template->setParameters ([
-            'info' => Debugger::dump($info, TRUE),
-            'request' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->request, TRUE),
-            'response' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->response, TRUE),
-        ]);
+        $this->template->setParameters(
+            [
+            'info' => Debugger::dump($info, true),
+            'request' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->request, true),
+            'response' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->response, true),
+            ]
+        );
     }
 
     public function createComponentTestForm($name)
@@ -92,7 +94,7 @@ class TestPresenter extends BasePresenter
         }
         $cover = trim($values['cover']);
         if ($cover == "") {
-            $cover = NULL;
+            $cover = null;
         }
         $sess->request = $this->prepareArgs([$args, $cover], $values["service"]);
         try {
@@ -124,7 +126,7 @@ class TestPresenter extends BasePresenter
         }
         $args = $arguments[0];
 
-        if (isset($arguments[1]) && $arguments[1] !== NULL) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
+        if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
             $matches = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /
             $matches[] = 0; //zakladni obal 0=>...
             foreach ($matches as $value) {

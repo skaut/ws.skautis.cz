@@ -49,7 +49,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         parent::beforeRender();
         try {
-            if ($this->user->isLoggedIn() && $this->userService->isLoggedIn(TRUE)) {
+            if ($this->user->isLoggedIn() && $this->userService->isLoggedIn(true)) {
                 $this->template->myRoles = $this->userService->getAllSkautISRoles();
                 $this->template->myRole = $this->userService->getRoleId();
             } else {
@@ -67,12 +67,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
         $control = new WebLoader\Nette\CssLoader($compiler, $this->webtempUrl);
         $control->setMedia('screen');
-        $files->addFiles([
+        $files->addFiles(
+            [
             'bootstrap.min.css',
             'bootstrap-responsive.min.css',
             'jquery-ui-1.8.css',
             'site.css'
-        ]);
+            ]
+        );
         return $control;
     }
 
@@ -80,7 +82,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         $files = new WebLoader\FileCollection(WWW_DIR . '/js');
         $compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
-        $files->addFiles([
+        $files->addFiles(
+            [
             'jquery-v1.11.1.js',
             'jquery.ui.min.js',
             'bootstrap.js',
@@ -88,7 +91,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             'nette.ajax.js',
             'netteForms.js',
             'my.js',
-        ]);
+            ]
+        );
         return new WebLoader\Nette\JavaScriptLoader($compiler, $this->webtempUrl);
     }
 

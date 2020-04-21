@@ -5,7 +5,8 @@ class AuthService extends \BaseService
 
     /**
      * vrací přihlašovací url
-     * @param string $backlink
+     *
+     * @param  string $backlink
      * @return string
      */
     public function getLoginUrl($backlink)
@@ -15,6 +16,7 @@ class AuthService extends \BaseService
 
     /**
      * nastavuje základní udaje po prihlášení do SkautISu
+     *
      * @param array $arr
      */
     public function setInit(array $arr)
@@ -24,6 +26,7 @@ class AuthService extends \BaseService
 
     /**
      * vrací url pro odhlášení
+     *
      * @return string
      */
     public function getLogoutUrl()

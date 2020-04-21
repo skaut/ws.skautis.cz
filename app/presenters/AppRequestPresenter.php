@@ -8,7 +8,9 @@ use Nette\Application\UI\Form;
 class AppRequestPresenter extends BasePresenter
 {
 
-    /** @var MailService */
+    /**
+ * @var MailService 
+*/
     protected $mailService;
 
     public function __construct(MailService $ms)

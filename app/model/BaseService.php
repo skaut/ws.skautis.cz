@@ -8,29 +8,33 @@ abstract class BaseService
 
     /**
      * reference na třídu typu Table
+     *
      * @var instance of BaseTable
      */
     protected $table;
 
     /**
      * slouží pro komunikaci se skautISem
+     *
      * @var Skautis\Skautis
      */
     protected $skautis;
 
     /**
      * používat lokální úložiště?
+     *
      * @var bool
      */
-    private $useCache = TRUE;
+    private $useCache = true;
 
     /**
      * krátkodobé lokální úložiště pro ukládání odpovědí ze skautISU
+     *
      * @var type
      */
     private static $storage;
 
-    public function __construct(Skautis\Skautis $skautIS = NULL)
+    public function __construct(Skautis\Skautis $skautIS = null)
     {
         $this->skautis = $skautIS;
         self::$storage = [];
@@ -47,8 +51,9 @@ abstract class BaseService
 
     /**
      * ukládá $val do lokálního úložiště
-     * @param mixed $id
-     * @param mixed $val
+     *
+     * @param  mixed $id
+     * @param  mixed $val
      * @return mixed
      */
     protected function save($id, $val)
@@ -61,7 +66,8 @@ abstract class BaseService
 
     /**
      * vrací objekt z lokálního úložiště
-     * @param string|int $id
+     *
+     * @param  string|int $id
      * @return mixed | FALSE
      */
     protected function load($id)
@@ -69,7 +75,7 @@ abstract class BaseService
         if ($this->useCache && array_key_exists($id, self::$storage)) {
             return self::$storage[$id];
         }
-        return FALSE;
+        return false;
     }
 
 }
