@@ -7,8 +7,8 @@ use Nette\Mail\Message;
 class MailService
 {
     /**
- * @var IMailer 
-*/
+     * @var IMailer 
+     */
     public $mailer;
 
     const EMAIL_SENDER = '"Webové služby" <webove.sluzby@skaut.cz>';
