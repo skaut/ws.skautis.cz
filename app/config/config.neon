@@ -22,6 +22,8 @@ application:
         maxDepth: 6
         maxLen: 500
 
+    catchExceptions: true
+
 extensions:
     skautis: Skautis\Nette\SkautisExtension
 
