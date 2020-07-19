@@ -15,8 +15,8 @@ class RouterFactory
     public function createRouter()
     {
         $router = new RouteList();
-        $router[] = new Route('index.php', 'Default:default', Route::ONE_WAY);
-        $router[] = new Route(
+        $router->addRoute('index.php', 'Default:default', Route::ONE_WAY);
+        $router->addRoute(
             'sign/<action>[/back-<backlink>]', [
             "presenter" => "Auth",
             "action" => "default",
@@ -24,14 +24,14 @@ class RouterFactory
             ]
         );
 
-        $router[] = new Route(
+        $router->addRoute(
             'ws', [
             "presenter" => "Default",
             "action" => "ws",
             ], Route::ONE_WAY
         );
 
-        $router[] = new Route(
+        $router->addRoute(
             '<presenter>[/<action>]', [
             "presenter" => [
                 Route::VALUE => 'Default',
@@ -43,7 +43,7 @@ class RouterFactory
             "action" => "default",
             ]
         );
-        $router[] = new SimpleRouter('Default:default');
+        //$router[] = new SimpleRouter('Default:default');
         return $router;
     }
 

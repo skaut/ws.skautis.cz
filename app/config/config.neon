@@ -16,13 +16,13 @@ session:
 application:
     mapping:
         *: App\*Module\*Presenter
-    debugger:
-        email: sinacek@gmail.com
-        strictMode: TRUE
-        maxDepth: 6
-        maxLen: 500
+    catchExceptions: false
 
-    catchExceptions: true
+tracy:
+    email: sinacek@gmail.com
+    strictMode: TRUE
+    maxDepth: 6
+    maxLength: 500
 
 extensions:
     skautis: Skautis\Nette\SkautisExtension

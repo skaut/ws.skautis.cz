@@ -11,8 +11,6 @@
 
     <file>app</file>
 
-    <exclude-pattern>tests/_*</exclude-pattern>
-
     <rule ref="SlevomatCodingStandard.Variables.UnusedVariable">
         <properties>
             <property name="ignoreUnusedValuesWhenOnlyKeysAreUsedInForeach" value="true"/>

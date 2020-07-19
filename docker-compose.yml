@@ -3,7 +3,7 @@ version: '2'
 services:
     app:
         container_name: wsskautis.app
-        image: fmasa/lebeda:7.1
+        image: fmasa/lebeda:7.4
         volumes:
             - www:/var/www
             - .:/var/www/html
