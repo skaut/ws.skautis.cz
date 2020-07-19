@@ -1,18 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Nette\Application\UI\Form;
 use Nette\Neon\Neon;
 use Skautis\Skautis;
+use Throwable;
 use Tracy\Debugger;
+
+use function array_key_exists;
+use function array_reverse;
+use function is_array;
+use function preg_split;
+use function strtolower;
+use function substr;
+use function trim;
 
 class TestPresenter extends BasePresenter
 {
     private const SESSION_NAMESPACE = 'sisTest';
 
-    public $wsdl;
-    private $skautis;
+    /** @var string[] */
+    public array $wsdl;
+
+    private Skautis $skautis;
 
     public function __construct(Skautis $skautis)
     {
@@ -20,7 +33,7 @@ class TestPresenter extends BasePresenter
         $this->skautis = $skautis;
     }
 
-    protected function startup()
+    protected function startup(): void
     {
         parent::startup();
 
@@ -28,86 +41,93 @@ class TestPresenter extends BasePresenter
         if (isset($post['skautIS_Token'])) {
             $this->skautis->init($post);
         }
+
         $this->template->skautIsAppId = $this->skautis->getConfig()->getAppId();
-        $this->wsdl = $this->skautis->getWsdlManager()->getSupportedWebServices();
+        $this->wsdl                   = $this->skautis->getWsdlManager()->getSupportedWebServices();
     }
 
-    public function renderDefault()
+    public function renderDefault(): void
     {
         $info = $this->userService->getInfo();
         if ($this->user->isLoggedIn()) {
-            $user = $this->userService->getUserDetail();
-            $info["ID_User"] = $user->ID;
-            $info["ID_Person"] = $user->ID_Person;
+            $user              = $this->userService->getUserDetail();
+            $info['ID_User']   = $user->ID;
+            $info['ID_Person'] = $user->ID_Person;
         }
+
         $this->template->setParameters(
             [
-            'info' => Debugger::dump($info, true),
-            'request' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->request, true),
-            'response' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->response, true),
+                'info' => Debugger::dump($info, true),
+                'request' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->request, true),
+                'response' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->response, true),
             ]
         );
     }
 
-    public function createComponentTestForm($name)
+    public function createComponentTestForm(string $name): Form
     {
         $form = new Form($this, $name);
-        $form->getElementPrototype()->class("aja");
-        $form->addSelect("wsdl", "WSDL", $this->wsdl)
-            ->addRule(Form::FILLED, "Musís vybrat WSDL")
-            ->setDefaultValue("12");
-        $form->addText("service", "Funkce")
-            ->setDefaultValue("unitAll")
-            ->addRule(FORM::FILLED, "Vypln service");
-        $form->addText("cover", "Obal", 40)
+        $form->getElementPrototype()->class('aja');
+        $form->addSelect('wsdl', 'WSDL', $this->wsdl)
+            ->addRule(Form::FILLED, 'Musís vybrat WSDL')
+            ->setDefaultValue('12');
+        $form->addText('service', 'Funkce')
+            ->setDefaultValue('unitAll')
+            ->addRule(Form::FILLED, 'Vypln service');
+        $form->addText('cover', 'Obal', 40)
             ->getControlPrototype()
-            ->placeholder("Alternativní obal požadavku");
-        $form->addTextArea("args", "Parametry", 40, 13)
-            ->setDefaultValue("ID_UnitParent : 24404")
-            ->getControlPrototype()->setClass("input-xlarge");
+            ->placeholder('Alternativní obal požadavku');
+        $form->addTextArea('args', 'Parametry', 40, 13)
+            ->setDefaultValue('ID_UnitParent : 24404')
+            ->getControlPrototype()->setClass('input-xlarge');
 
         $form->addSubmit('send', 'Odeslat')
-            ->getControlPrototype()->setClass("btn btn-primary");
+            ->getControlPrototype()->setClass('btn btn-primary');
         $form->onSuccess[] = [$this, $name . 'Submitted'];
 
         $sess = $this->getSession(self::SESSION_NAMESPACE);
 
-        if (isset($sess->defaults) && is_array((array)$sess->defaults)) {
-            $form->setDefaults((array)$sess->defaults);
+        if (isset($sess->defaults) && is_array((array) $sess->defaults)) {
+            $form->setDefaults((array) $sess->defaults);
         }
+
         return $form;
     }
 
-    public function testFormSubmitted(Form $form)
+    public function testFormSubmitted(Form $form): void
     {
-        $sess = $this->getSession(self::SESSION_NAMESPACE);
-        $values = $form->getValues();
+        $sess           = $this->getSession(self::SESSION_NAMESPACE);
+        $values         = $form->getValues();
         $sess->defaults = $values;
 
         $args = Neon::decode($values['args']);
         if ($args instanceof Traversable) {
             foreach ($args as $key => $value) {
-                if ($value instanceof DateTime) {
-                    $args[$key] = $value->format("c");
+                if (! ($value instanceof DateTime)) {
+                    continue;
                 }
+
+                $args[$key] = $value->format('c');
             }
         }
+
         $cover = trim($values['cover']);
-        if ($cover == "") {
+        if ($cover === '') {
             $cover = null;
         }
-        $sess->request = $this->prepareArgs([$args, $cover], $values["service"]);
+
+        $sess->request = $this->prepareArgs([$args, $cover], $values['service']);
         try {
-            $ret = $this->skautis->{$this->wsdl[$values['wsdl']]}->{$values["service"]}($args, $cover);
-        } catch (\Exception $e) {
-            $this->flashMessage($e->getMessage(), "fail");
+            $ret = $this->skautis->{$this->wsdl[$values['wsdl']]}->{$values['service']}($args, $cover);
+        } catch (Throwable $e) {
+            $this->flashMessage($e->getMessage(), 'fail');
             $sess->response = $e->getMessage();
-            $this->redirect("this");
+            $this->redirect('this');
         }
 
         $sess->response = $ret;
 
-        if (!$this->isAjax()) {
+        if (! $this->isAjax()) {
             $this->redirect('this');
         } else {
             $this->redrawControl('flash');
@@ -116,27 +136,35 @@ class TestPresenter extends BasePresenter
         }
     }
 
-    protected function prepareArgs($arguments, $function_name)
+    /**
+     * @param mixed $arguments
+     * @param mixed $functionName
+     *
+     * @return mixed[]
+     */
+    protected function prepareArgs($arguments, $functionName): array
     {
-        if (!isset($arguments[0]) || !is_array($arguments[0])) {
+        if (! isset($arguments[0]) || ! is_array($arguments[0])) {
             $arguments[0] = [];
         }
-        if (!array_key_exists("ID_Application", $arguments[0])) {
-            $arguments[0]["ID_Application"] = $this->skautis->getConfig()->getAppId();
+
+        if (! array_key_exists('ID_Application', $arguments[0])) {
+            $arguments[0]['ID_Application'] = $this->skautis->getConfig()->getAppId();
         }
+
         $args = $arguments[0];
 
         if (isset($arguments[1]) && $arguments[1] !== null) {//pokud je zadan druhy parametr tak lze prejmenovat obal dat
-            $matches = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /
+            $matches   = array_reverse(preg_split('~/~', $arguments[1])); //rozdeli to na stringy podle /
             $matches[] = 0; //zakladni obal 0=>...
             foreach ($matches as $value) {
                 $args = [$value => $args];
             }
         } else {
-            $function_name = strtolower(substr($function_name, 0, 1)) . substr($function_name, 1); //nahrazuje lcfirst
-            $args = [[$function_name . "Input" => $args]];
+            $functionName = strtolower(substr($functionName, 0, 1)) . substr($functionName, 1); //nahrazuje lcfirst
+            $args         = [[$functionName . 'Input' => $args]];
         }
+
         return $args;
     }
-
 }

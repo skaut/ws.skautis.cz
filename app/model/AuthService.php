@@ -1,15 +1,24 @@
 <?php
 
-class AuthService extends \BaseService
+declare(strict_types=1);
+
+namespace Model;
+
+use Skautis\Skautis;
+
+class AuthService
 {
+    protected Skautis $skautis;
+
+    public function __construct(Skautis $skautIS)
+    {
+        $this->skautis = $skautIS;
+    }
 
     /**
      * vrací přihlašovací url
-     *
-     * @param  string $backlink
-     * @return string
      */
-    public function getLoginUrl($backlink)
+    public function getLoginUrl(?string $backlink): string
     {
         return $this->skautis->getLoginUrl($backlink);
     }
@@ -17,21 +26,18 @@ class AuthService extends \BaseService
     /**
      * nastavuje základní udaje po prihlášení do SkautISu
      *
-     * @param array $arr
+     * @param string[] $arr
      */
-    public function setInit(array $arr)
+    public function setInit(array $arr): void
     {
         $this->skautis->setLoginData($arr);
     }
 
     /**
      * vrací url pro odhlášení
-     *
-     * @return string
      */
-    public function getLogoutUrl()
+    public function getLogoutUrl(): string
     {
         return $this->skautis->getLogoutUrl();
     }
-
 }

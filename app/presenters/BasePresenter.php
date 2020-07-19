@@ -1,101 +1,49 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
+use Exception;
+use Model\UserService;
 use Nette;
-use UserService;
-use WebLoader;
+use Throwable;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+    protected ?string $backlink;
 
-    /**
-     * backlink
-     */
-    protected $backlink;
+    protected UserService $userService;
 
-    /**
-     *
-     * @var string
-     */
-    protected $webtempUrl;
-
-    /**
-     *
-     * @var UserService
-     */
-    protected $userService;
-
-    public function injectUserService(UserService $us)
+    public function injectUserService(UserService $us): void
     {
         $this->userService = $us;
     }
 
-    protected function startup()
+    protected function startup(): void
     {
         parent::startup();
-        $this->template->backlink = $this->getParameter("backlink");
-        $this->webtempUrl = $this->getHttpRequest ()->getUrl()->baseUrl . 'webtemp';
+        $this->template->backlink = $this->getParameter('backlink');
     }
 
-    //upravuje roli ve skautISu
-    public function handleChangeRole($roleId)
+    public function handleChangeRole(?int $roleId= null): void
     {
         $this->userService->updateSkautISRole($roleId);
-        $this->redirect("this");
+        $this->redirect('this');
     }
 
-    public function beforeRender()
+    public function beforeRender(): void
     {
         parent::beforeRender();
         try {
-            if ($this->user->isLoggedIn() && $this->userService->isLoggedIn(true)) {
-                $this->template->myRoles = $this->userService->getAllSkautISRoles();
-                $this->template->myRole = $this->userService->getRoleId();
-            } else {
-                throw new \Exception("Uživatel by odhlášen");
+            if (! $this->user->isLoggedIn() || ! $this->userService->isLoggedIn(true)) {
+                throw new Exception('Uživatel by odhlášen');
             }
-        } catch (\Exception $ex) {
+
+            $this->template->myRoles = $this->userService->getAllSkautISRoles();
+            $this->template->myRole  = $this->userService->getRoleId();
+        } catch (Throwable $ex) {
             $this->user->logout();
         }
     }
-
-    public function createComponentCss()
-    {
-//        $files = new WebLoader\FileCollection(WWW_DIR . '/css');
-//        $compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/webtemp');
-//
-//        $control = new WebLoader\Nette\CssLoader($compiler, $this->webtempUrl);
-//        $control->setMedia('screen');
-//        $files->addFiles(
-//            [
-//            'bootstrap.min.css',
-//            'bootstrap-responsive.min.css',
-//            'jquery-ui-1.8.css',
-//            'site.css'
-//            ]
-//        );
-//        return $control;
-        return "";
-    }
-
-    public function createComponentJs()
-    {
-//        $files = new WebLoader\FileCollection(WWW_DIR . '/js');
-//        $compiler = WebLoader\Compiler::createJsCompiler($files, WWW_DIR . '/webtemp');
-//        $files->addFiles(
-//            [
-//            'jquery-v1.11.1.js',
-//            'jquery.ui.min.js',
-//            'bootstrap.js',
-//            'combobox.js',
-//            'nette.ajax.js',
-//            'netteForms.js',
-//            'my.js',
-//            ]
-//        );
-//        return new WebLoader\Nette\JavaScriptLoader($compiler, $this->webtempUrl);
-        return "";
-    }
-
 }

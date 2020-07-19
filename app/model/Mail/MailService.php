@@ -1,30 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Model;
+
 use Nette\Application\UI\ITemplate;
 use Nette\Mail\IMailer;
 use Nette\Mail\Message;
 
+use function dirname;
+
 class MailService
 {
-    /**
-     * @var IMailer 
-     */
-    public $mailer;
+    public IMailer $mailer;
 
-    const EMAIL_SENDER = '"Webové služby" <webove.sluzby@skaut.cz>';
+    public const EMAIL_SENDER = '"Webové služby" <webove.sluzby@skaut.cz>';
 
     public function __construct(IMailer $mailer)
     {
         $this->mailer = $mailer;
-
     }
 
-    public function sendRequest(ITemplate $template, $values)
+    /** @param mixed $values */
+    public function sendRequest(ITemplate $template, $values): bool
     {
-        $template->setFile(dirname(__FILE__) . "/mail.request.latte");
-        $mail = new Message;
+        $template->setFile(dirname(__FILE__) . '/mail.request.latte');
+        $mail = new Message();
         $mail->setHtmlBody($template);
-        $mail->setSubject("Žádost o registraci aplikace ve skautISu");
+        $mail->setSubject('Žádost o registraci aplikace ve skautISu');
         $mailUstredi = $mail;
         $mailZadatel = $mail;
 
@@ -36,5 +39,4 @@ class MailService
 
         return $this->mailer->send($mailUstredi) && $this->send($mailZadatel);
     }
-
 }

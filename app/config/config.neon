@@ -30,6 +30,6 @@ extensions:
 services:
     - App\RouterFactory
     router: @App\RouterFactory::createRouter
-    - MailService(@nette.mailer)
-    - AuthService
-    - UserService
+    - Model\MailService(@nette.mailer)
+    - Model\AuthService
+    - Model\UserService
