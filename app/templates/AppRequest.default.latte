@@ -25,8 +25,8 @@
                 </tr>
                 <tr>
 
-                    <th class="required">{label username/}*</th>
-                    <td>{input username}</td>
+                    <th class="required">{label firstName/}*</th>
+                    <td>{input firstName}</td>
                     <td class="span1"></td>
                     <th class="required">{label urlLogout/}* <span rel="tooltip"
                                                                    title="Stránka, kam SkautIS přesměruje uživatele po odhlášení"><i
@@ -34,19 +34,23 @@
                     <td>{input urlLogout}</td>
                 </tr>
                 <tr>
-                    <th>{label nick/}</th>
-                    <td>{input nick}</td>
+                    <th class="required">{label lastName/}*</th>
+                    <td>{input lastName}</td>
                     <td class="span1"></td>
                     <th class="required">{label email/}*</th>
                     <td>{input email}</td>
                 </tr>
                 <tr>
+                    <th>{label nick/}</th>
+                    <td>{input nick}</td>
+                    <td class="span1"></td>
+                    <th rowspan="3">{label note/}</th>
+                    <td rowspan="3">{input note}</td>
+                </tr>
+                <tr>
                     <th>{label orgNum/} <span rel="tooltip" title="Číslo jednotky, která bude aplikaci využívat"><i
                                     class="icon icon-info-sign"></i></span></th>
                     <td>{input orgNum}</td>
-                    <td class="span1"></td>
-                    <th rowspan="2">{label note/}</th>
-                    <td rowspan="2">{input note}</td>
                 </tr>
                 <tr>
                     <td colspan="2"><i>Políčka označená * jsou povinná</i></td>

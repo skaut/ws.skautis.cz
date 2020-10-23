@@ -24,8 +24,10 @@ class AppRequestPresenter extends BasePresenter
             ->addRule(Form::FILLED, 'Zadej název aplikace');
         $form->addText('desc', 'Popis aplikace')
             ->addRule(Form::FILLED, 'Zadej popis aplikace');
-        $form->addText('username', 'Jméno a příjmení')
-            ->addRule(Form::FILLED, 'Zadejte jméno a příjmení');
+        $form->addText('firstName', 'Jméno')
+            ->addRule(Form::FILLED, 'Zadejte jméno');
+        $form->addText('lastName', 'Příjmení')
+            ->addRule(Form::FILLED, 'Zadejte příjmení');
         $form->addText('nick', 'Přezdívka');
         $form->addText('email', 'Kontaktní email')
             ->addRule(Form::FILLED, 'Zadejte email')
@@ -48,7 +50,7 @@ class AppRequestPresenter extends BasePresenter
             ->getControlPrototype()->setClass('input-xlarge');
         $form->addSubmit('send', 'Odeslat')
             ->getControlPrototype()->setClass('btn btn-primary');
-        $form->onSuccess[] = [$this, $name . 'Submitted'];
+        $form->onSuccess[] = [$this, 'addFormSubmitted'];
 
         return $form;
     }
@@ -56,10 +58,8 @@ class AppRequestPresenter extends BasePresenter
     public function addFormSubmitted(Form $form): void
     {
         $values           = $form->values;
-        $template         = $this->template;
-        $template->values = $values;
-        $this->mailService->sendRequest($template, $values);
-        $this->presenter->flashMessage('Žádost byla odeslána na ústředí a na zadaný kontaktní email.');
-        $this->presenter->redirect('default');
+        $this->mailService->sendRequest($values);
+        $this->flashMessage('Žádost byla odeslána na ústředí a na zadaný kontaktní email.');
+        $this->redirect('default');
     }
 }
