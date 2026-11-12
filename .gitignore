@@ -17,3 +17,5 @@
 /.vs
 .idea
 temp
+# Local HTTPS certificates
+/docker/certs/

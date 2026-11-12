@@ -1,29 +1,45 @@
 {
   "name": "skautis/ws.skautis.cz",
   "type": "project",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/skaut/Skautis.git",
+      "no-api": true
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/skaut/SkautisNette.git",
+      "no-api": true
+    }
+  ],
   "require": {
-    "php": ">= 7.4",
-    "nette/application": "~3.0",
-    "nette/bootstrap": "~3.0",
-    "nette/caching": " ~3.0",
-    "nette/di": " ~3.0",
-    "nette/forms": " ~3.0",
-    "nette/http": " ~3.0",
-    "nette/mail": " ~3.0",
-    "nette/robot-loader": "^3.0",
-    "nette/security": " ~3.0",
-    "nette/utils": " ~3.0",
-    "skautis/nette": "^2.1",
-    "skautis/skautis": "^v2.2.0",
-    "nextras/mail-panel": "^v2.5.2",
-    "dibi/dibi": "^v3.2.4"
+    "php": "^8.4",
+    "nette/application": "^3.2",
+    "nette/bootstrap": "^3.2",
+    "nette/caching": "^3.2",
+    "nette/di": "^3.2",
+    "nette/forms": "^3.2",
+    "nette/http": "^3.3",
+    "nette/mail": "^4.0",
+    "nette/robot-loader": "^4.0",
+    "nette/security": "^3.2",
+    "nette/utils": "^4.1",
+    "skaut/skautis-nette": "^3.1",
+    "skaut/skautis": "^3.1",
+    "nextras/mail-panel": "^2.7",
+    "dibi/dibi": "^3.2.4"
   },
+  "minimum-stability": "RC",
+  "prefer-stable": true,
   "require-dev": {
-    "squizlabs/php_codesniffer": "^3.5",
-    "codeception/codeception": "^3.1",
-    "codeception/mockery-module": "^0.4.0",
-    "slevomat/coding-standard": "^6.3.10",
-    "doctrine/coding-standard": "^8.1"
+    "squizlabs/php_codesniffer": "^4.0.4",
+    "slevomat/coding-standard": "^8.31",
+    "doctrine/coding-standard": "^14.0"
   },
-  "minimum-stability": "RC"
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
 }

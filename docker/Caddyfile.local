@@ -1,0 +1,6 @@
+
+https://wsskautis.loc {
+    tls /etc/caddy/certs/wsskautis.loc.pem /etc/caddy/certs/wsskautis.loc-key.pem
+
+    reverse_proxy app:80
+}

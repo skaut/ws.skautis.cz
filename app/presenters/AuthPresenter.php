@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App;
 
 use Model\AuthService;
-use Skautis\SkautISAuthenticator;
-use Skautis\Wsdl\AuthenticationException;
+use Nette\Security\SimpleIdentity;
+use Skaut\Skautis\Wsdl\AuthenticationException;
 
 class AuthPresenter extends BasePresenter
 {
@@ -47,7 +47,7 @@ class AuthPresenter extends BasePresenter
      */
     public function actionSkautIS(?string $ReturnUrl = null): void
     {
-        $post = $this->request->post;
+        $post = $this->getRequest()->getPost();
         if (! isset($post['skautIS_Token'])) { //pokud není nastavený token, tak zde nemá co dělat
             $this->redirect(':Default:');
         }
@@ -63,8 +63,7 @@ class AuthPresenter extends BasePresenter
             $me = $this->userService->getPersonalDetail();
 
             $this->user->setExpiration('+ 29 minutes'); // nastavíme expiraci
-            $this->user->setAuthenticator(new SkautISAuthenticator());
-            $this->user->login($me);
+            $this->user->login(new SimpleIdentity($me->ID_User));
 
             if (isset($ReturnUrl)) {
                 $this->restoreRequest($ReturnUrl);
@@ -74,7 +73,7 @@ class AuthPresenter extends BasePresenter
             $this->redirect(':Auth:');
         }
 
-        $this->presenter->redirect(':Default:');
+        $this->redirect(':Default:');
     }
 
     /**
@@ -90,7 +89,7 @@ class AuthPresenter extends BasePresenter
     {
         $this->user->logout(true);
         $this->userService->resetLoginData();
-        if ($this->request->post['skautIS_Logout']) {
+        if ($this->getRequest()->getPost()['skautIS_Logout'] ?? false) {
             $this->flashMessage('Byl jsi úspěšně odhlášen ze SkautISu.');
         } else {
             $this->flashMessage('Odhlášení ze skautISu se nezdařilo', 'danger');

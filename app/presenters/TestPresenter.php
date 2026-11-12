@@ -6,7 +6,7 @@ namespace App;
 
 use Nette\Application\UI\Form;
 use Nette\Neon\Neon;
-use Skautis\Skautis;
+use Skaut\Skautis\Skautis;
 use Throwable;
 use Tracy\Debugger;
 
@@ -37,13 +37,13 @@ class TestPresenter extends BasePresenter
     {
         parent::startup();
 
-        $post = $this->request->post;
+        $post = $this->getRequest()->getPost();
         if (isset($post['skautIS_Token'])) {
             $this->skautis->init($post);
         }
 
         $this->template->skautIsAppId = $this->skautis->getConfig()->getAppId();
-        $this->wsdl                   = $this->skautis->getWsdlManager()->getSupportedWebServices();
+        $this->wsdl = \Skaut\Skautis\Wsdl\WebServiceName::getAll();
     }
 
     public function renderDefault(): void
@@ -58,8 +58,8 @@ class TestPresenter extends BasePresenter
         $this->template->setParameters(
             [
                 'info' => Debugger::dump($info, true),
-                'request' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->request, true),
-                'response' => Debugger::dump($this->session->getSection(self::SESSION_NAMESPACE)->response, true),
+                'request' => Debugger::dump($this->getSession()->getSection(self::SESSION_NAMESPACE)->request, true),
+                'response' => Debugger::dump($this->getSession()->getSection(self::SESSION_NAMESPACE)->response, true),
             ]
         );
     }

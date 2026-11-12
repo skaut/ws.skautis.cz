@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Model;
 
-use Skautis\Skautis;
+use Skaut\Skautis\Skautis;
 use stdClass;
 
 class UserService

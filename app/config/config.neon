@@ -25,7 +25,7 @@ tracy:
     maxLength: 500
 
 extensions:
-    skautis: Skautis\Nette\SkautisExtension
+    skautis: Skaut\SkautisNette\SkautisExtension
 
 services:
     - App\RouterFactory

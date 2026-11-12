@@ -31,9 +31,15 @@
             <a class="brand" n:href=":Default:">SkautIS WS</a>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li {ifCurrent :Default:}class='active'{/ifCurrent}><a n:href=":Default:">Základní informace</a></li>
-                    <li {ifCurrent :Test:}class='active'{/ifCurrent}><a n:href=":Test:">Testovací rozhraní</a></li>
-                    <li {ifCurrent :AppRequest:}class='active'{/ifCurrent}><a n:href=":AppRequest:">Žádost o povolení aplikace</a></li>
+                    <li n:class="isLinkCurrent(':Default:') ? active">
+                        <a n:href=":Default:">Základní informace</a>
+                    </li>
+                    <li n:class="isLinkCurrent(':Test:') ? active">
+                        <a n:href=":Test:">Testovací rozhraní</a>
+                    </li>
+                    <li n:class="isLinkCurrent(':AppRequest:') ? active">
+                        <a n:href=":AppRequest:">Žádost o povolení aplikace</a>
+                    </li>
                 </ul>
                 {if $user->isLoggedIn()}
                     <p class="navbar-text pull-right">
