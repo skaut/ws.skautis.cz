@@ -19,7 +19,7 @@ application:
     catchExceptions: false
 
 tracy:
-    email: sinacek@gmail.com
+    email: veronika.petrikova@skaut.cz
     strictMode: TRUE
     maxDepth: 6
     maxLength: 500
