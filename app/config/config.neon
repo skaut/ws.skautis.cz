@@ -19,13 +19,13 @@ application:
     catchExceptions: false
 
 tracy:
-    email: sinacek@gmail.com
+    email: veronika.petrikova@skaut.cz
     strictMode: TRUE
     maxDepth: 6
     maxLength: 500
 
 extensions:
-    skautis: Skautis\Nette\SkautisExtension
+    skautis: Skaut\SkautisNette\SkautisExtension
 
 services:
     - App\RouterFactory

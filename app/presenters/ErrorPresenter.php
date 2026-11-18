@@ -6,8 +6,8 @@ namespace App;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
-use Skautis\Exception;
-use Skautis\Wsdl\AuthenticationException;
+use Skaut\Skautis\Exception;
+use Skaut\Skautis\Wsdl\AuthenticationException;
 use Tracy\Debugger;
 
 use function in_array;

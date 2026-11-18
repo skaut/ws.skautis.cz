@@ -13,7 +13,7 @@ class RouterFactory
     /**
      * @return RouteList
      */
-    public function createRouter()
+    public function createRouter(): RouteList
     {
         $router = new RouteList();
         $router->addRoute('index.php', 'Default:default', Route::ONE_WAY);

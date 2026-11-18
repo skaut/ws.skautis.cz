@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    //Combobox
-    $( ".combobox" ).combobox(); //nejde předávat parametry
     
     //bootstrap tooltip
     if ($("[rel=tooltip]").length) {

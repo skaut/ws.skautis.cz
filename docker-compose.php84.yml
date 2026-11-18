@@ -1,0 +1,33 @@
+
+
+name: ws-skautis-php84
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.php84
+    ports:
+      - "127.0.0.1:8091:80"
+    volumes:
+      - ./:/var/www/html
+      - php84_vendor:/var/www/html/vendor
+      - php84_temp:/var/www/html/temp-nette
+      - php84_logs:/var/www/html/log-nette
+    environment:
+      DEVELOPMENT_MACHINE: "true"
+
+  caddy:
+    image: caddy:2
+    ports:
+      - "127.0.0.1:443:443"
+    volumes:
+      - ./docker/Caddyfile.local:/etc/caddy/Caddyfile:ro
+      - ./docker/certs:/etc/caddy/certs:ro
+    depends_on:
+      - app
+
+volumes:
+  php84_vendor:
+  php84_temp:
+  php84_logs:
